@@ -13,8 +13,6 @@ const WishlistPage = () => {
 
     return (
         <div className="wishlist-page">
-            <Header />
-
             <div className="page-content">
                 <h1>찜한 영화 ({wishMovies.length})</h1>
                 <ContentGrid
