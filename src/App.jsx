@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
@@ -25,7 +24,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/Loading" element={<Loading />} />
-        <Route path="/Home" element={<Home />} /> 
         {/*<Route path="/my-cinema" element={<CinemaPage pageMode="MY" />} />
         <Route path="/user/:userId" element={<CinemaPage pageMode="USER" />} />
         <Route path="/opposite" element={<CinemaPage pageMode="OPPOSITE" />} />
