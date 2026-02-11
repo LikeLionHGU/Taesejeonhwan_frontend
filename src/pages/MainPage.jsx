@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ToggleSwitch from '../components/common/ToggleSwitch';
-import MainBanner from '../components/main/MainBanner';
-import UserGrid from '../components/main/UserGrid'; 
+//import ToggleSwitch from '../components/common/ToggleSwitch';
+//import MainBanner from '../components/main/MainBanner';
+//import UserGrid from '../components/main/UserGrid'; 
 
 // 메인 페이지
 const MainPage = () => {

@@ -1,5 +1,6 @@
-import React from "react";
-import GoogleLoginBtn from "../GoogleLoginBtn.svg";
+import.meta.env.VITE_APP_GOOGLE_AUTH_REDIRECT_URI
+import GoogleLoginBtn from "../assets/GoogleLoginBtn.svg";
+import styled from "styled-components";
 
 
 /*
@@ -11,14 +12,18 @@ google oauth에서 만든 client id와 redirecton url 그리고 어떤 토큰을
 
 */
 
-const GoogleLogin = () => {
+const Login = () => {
   const handleGoogleLogin = () => { 
   
-  console.log("redirect_uri:", process.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI);
+
 //이부분이변경사항-> 토큰 받아오는 주소 바꿈
   const nonce = Math.random().toString(36).substring(2) + Date.now().toString(36);
 
-  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}&redirect_uri=${encodeURIComponent(process0.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI)}&response_type=id_token&response_mode=fragment&scope=${encodeURIComponent("openid email profile")}&nonce=${nonce}`;
+  const apiRUrl = import.meta.env.VITE_APP_GOOGLE_AUTH_REDIRECT_URI;
+  const apiCUrl = import.meta.env.VITE_APP_GOOGLE_AUTH_CLIENT_ID;
+
+
+ window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${apiCUrl}&redirect_uri=${encodeURIComponent(apiRUrl)}&response_type=id_token&response_mode=fragment&scope=${encodeURIComponent("openid email profile")}&nonce=${nonce}`;
   };
   //  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI}&response_type=code&scope=email profile`;
 
@@ -29,7 +34,7 @@ const GoogleLogin = () => {
   );
 };
 
-export default GoogleLogin;
+export default Login;
 
 const Wrapper = styled.div`
   display: flex;
