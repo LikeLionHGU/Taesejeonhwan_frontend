@@ -16,7 +16,7 @@ const IntroSection = ({ onNext }) => {
     }else{
       console.log('토큰이 없습니다.');
     }
-  }, [onNext]);
+  },[onNext]);
 
 const uesrLogin = (token) => {
 localStorage.setItem('id_token', token);
