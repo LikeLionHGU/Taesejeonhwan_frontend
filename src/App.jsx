@@ -4,9 +4,9 @@ import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
 import Loading from './pages/LoadingTest';
-//import CinemaPage from './pages/CinemaPage';
-//import WishlistPage from './pages/WishlistPage';
-//import Header from './components/common/Header';
+import CinemaPage from './pages/CinemaPage';
+import WishlistPage from './pages/WishlistPage';
+import Header from './components/common/Header';
 
 function App() {
   const location = useLocation();
@@ -17,17 +17,17 @@ function App() {
 
   return (
     <>
-      {/*{shouldShowHeader && <Header />}*/}
+      /*{shouldShowHeader && <Header />}*/
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/Loading" element={<Loading />} />
-        {/*<Route path="/my-cinema" element={<CinemaPage pageMode="MY" />} />
+        <Route path="/my-cinema" element={<CinemaPage pageMode="MY" />} />
         <Route path="/user/:userId" element={<CinemaPage pageMode="USER" />} />
         <Route path="/opposite" element={<CinemaPage pageMode="OPPOSITE" />} />
-       <Route path="/wishlist" element={<WishlistPage />} /> */} 
+       <Route path="/wishlist" element={<WishlistPage />} /> 
       </Routes>
       
     </>
