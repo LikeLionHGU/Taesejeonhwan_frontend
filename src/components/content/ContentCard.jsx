@@ -9,7 +9,7 @@ const ContentCard = ({ movie, onClick }) => {
                 <span>{movie.title}</span>
                 {/* 별점이 있다면 표시하고 아니면 없게해야 할 듯 (찜하기에서는 안 떠야 해서..!) */}
                 {movie.rating && <span>⭐ {movie.rating}</span>}
-            </div>
+            </div>26
         </div>
     );
 };
