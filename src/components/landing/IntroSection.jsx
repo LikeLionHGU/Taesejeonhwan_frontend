@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Login from '../../pages/Login'
+import '../../styles/LandingPageStyle.css'
 
 const IntroSection = ({ onNext }) => {
 

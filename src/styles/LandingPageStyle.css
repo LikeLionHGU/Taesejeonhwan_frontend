@@ -1,14 +1,17 @@
 /*step 0: 랜딩페이지*/
+@import url('https://fonts.google.com');
 
-.LoginBtnimg{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  
-  background-color: #FFFFFF;
-  border: 1px solid #DADCE0;
-  border-radius: 4px;
-  cursor: pointer;
+.intro-section{
+display: flex;
+}
+.intro-Eng{
+display: flex;
+color: #0066FF;
+ font-family: 'Archivo Black',sans-serif;
+
+}
+.intro-Kor{
+ display: flex;
+
 
 }
