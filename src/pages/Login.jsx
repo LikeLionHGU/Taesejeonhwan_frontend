@@ -29,13 +29,3 @@ const Login = () => {
 
 export default Login;
 
-//여기에 스타일 넣기 -> 현수님
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LoginBtn = styled.img`
-  cursor: pointer;
-`;
