@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import api from '../../api/api';
+import api from '../../api/sendAccessTokenToBackend';
+//api 파일명 변경했어요! -> sendAccessTokenToBackend
+
 
 const AddReview = ({ isOpen, onClose, contentId }) => {
     const [rating, setRating] = useState(5);
