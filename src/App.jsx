@@ -7,6 +7,8 @@ import Loading from './pages/LoadingTest';
 import CinemaPage from './pages/CinemaPage';
 import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
+import ProfileSettingSection from './components/landing/ProfileSettingSection';
+import SelectPreferenceSection from './components/landing/SelectPreferenceSection';
 
 function App() {
   const location = useLocation();
