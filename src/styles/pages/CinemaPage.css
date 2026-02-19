@@ -1,50 +1,41 @@
-/* 전체 페이지 래퍼 */
 .cinema-page-wrapper {
     min-height: 100vh;
     padding-bottom: 80px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ☀️ 라이트 모드 */
 .cinema-page-wrapper.light-mode {
     background-color: #FFFFFF;
     color: var(--color-text-main);
 }
 
-/* 중앙 정렬 컨테이너 */
 .cinema-content-area {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 20px;
 }
 
-/* 페이지 타이틀 */
 .page-title {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 30px;
 }
 
-/* 그리드 섹션 */
 .grid-section {
     margin-top: 40px;
 }
 
-/* 필터 및 추가 버튼 행 */
 .filter-row {
     display: flex;
     justify-content: flex-end;
-    /* 오른쪽 정렬 */
     margin-bottom: 20px;
 }
 
-/* 평 추가 버튼 (파란색) */
 .add-content-btn {
     background-color: #007AFF;
     color: white;
     border: none;
     border-radius: 20px;
-    /* 둥근 버튼 */
     padding: 8px 16px;
     font-size: 14px;
     font-weight: 600;
