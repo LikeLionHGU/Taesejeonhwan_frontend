@@ -1,28 +1,19 @@
-/* 1. 스위치 배경 (트랙) */
 .toggle-container {
     width: 50px;
     height: 26px;
     background-color: #e0e0e0;
-    /* 꺼졌을 때 (Light Mode) 회색 */
     border-radius: 30px;
-    /* 둥글게 */
     position: relative;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* 색깔 스르륵 바뀌게 */
 
-    /* 약간의 안쪽 그림자 (퀄리티 up) */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* 2. 켜졌을 때 (Dark Mode) 배경색 */
-/* "on" 클래스가 붙으면 파란색으로 변함 */
 .toggle-container.on {
     background-color: #007AFF;
-    /* 우리 메인 컬러 (파랑) */
 }
 
-/* 3. 움직이는 동그라미 (핸들) */
 .toggle-circle {
     width: 22px;
     height: 22px;
@@ -32,15 +23,11 @@
     top: 2px;
     left: 2px;
 
-    /* 부드러운 이동 애니메이션 */
     transition: transform 0.3s ease;
 
-    /* 동그라미 그림자 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* 4. 켜졌을 때 동그라미 위치 이동 */
 .toggle-container.on .toggle-circle {
     transform: translateX(24px);
-    /* 오른쪽으로 24px 이동 */
 }
