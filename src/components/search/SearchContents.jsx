@@ -1,5 +1,5 @@
 import React from 'react';
-import './SearchItem.css'; // 스타일은 통합해서 관리
+import './SearchItem.css';
 
 const SearchContents = ({ data, onClick }) => {
     return (

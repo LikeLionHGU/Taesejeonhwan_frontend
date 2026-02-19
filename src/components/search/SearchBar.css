@@ -1,11 +1,8 @@
-/* 검색창 컨테이너 */
 .search-bar-wrapper {
     position: relative;
     width: 300px;
-    /* 헤더 내 검색창 너비 */
 }
 
-/* 입력창 스타일 */
 .search-input-box {
     display: flex;
     align-items: center;
@@ -37,18 +34,15 @@
     color: #333;
 }
 
-/* 드롭다운 (결과창) */
 .search-dropdown {
     position: absolute;
     top: 45px;
-    /* 입력창 바로 아래 */
     left: 0;
     width: 100%;
     max-height: 400px;
     overflow-y: auto;
 
     background-color: rgba(30, 30, 30, 0.95);
-    /* 피그마처럼 어두운 배경 */
     backdrop-filter: blur(10px);
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
