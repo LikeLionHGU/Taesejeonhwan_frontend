@@ -1,0 +1,122 @@
+.profile-setup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    font-family: 'Pretendard', sans-serif; /* 폰트는 프로젝트에 맞게 변경 */
+}
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 60px;
+    color: #000;
+}
+.avatar-list {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 60px;
+}
+.avatar-item {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    background-color: #F5F5F5;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.avatar-item:hover {
+    transform: translateY(-5px);
+}
+.avatar-item img {
+    width: 70%;
+    object-fit: contain;
+}
+.check-badge {
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 24px;
+    height: 24px;
+    background-color: #D3D3D3;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    transition: background-color;
+}
+
+.check-badge.active {
+    background-color: #0066FF; 
+}
+.input-section {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-wrapper {
+    display: flex;
+    width: 100%;
+    border: 1px solid #EAEAEA;
+    border-radius: 12px;
+    padding: 8px 10px;
+    background-color: #FAFAFA;
+}
+
+.input-wrapper input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.check-btn {
+    background-color: #EFEFEF;
+    color: #666;
+    border: none;
+    border-radius: 8px;
+    padding: 0 16px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.check-btn:hover {
+    background-color: #E2E2E2;
+}
+.success-msg {
+    margin-top: 10px;
+    color: #3B71F7;
+    font-size: 13px;
+    align-self: flex-end;
+    margin-right: 10px;
+}
+.next-btn {
+    background-color: #3B71F7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.next-btn:hover {
+    background-color: #2a5bd6;
+}

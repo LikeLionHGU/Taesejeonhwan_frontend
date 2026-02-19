@@ -7,6 +7,7 @@ import Loading from './pages/LoadingTest';
 import CinemaPage from './pages/CinemaPage';
 import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
+import ProfileSettingSection from './components/landing/ProfileSettingSection';
 
 function App() {
   const location = useLocation();
@@ -17,7 +18,7 @@ function App() {
 
   return (
     <>
-      /*{shouldShowHeader && <Header />}*/
+      {shouldShowHeader && <Header />}
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -28,6 +29,7 @@ function App() {
         <Route path="/user/:userId" element={<CinemaPage pageMode="USER" />} />
         <Route path="/opposite" element={<CinemaPage pageMode="OPPOSITE" />} />
        <Route path="/wishlist" element={<WishlistPage />} /> 
+       <Route path="/profile" element={<ProfileSettingSection />} />
       </Routes>
       
     </>
