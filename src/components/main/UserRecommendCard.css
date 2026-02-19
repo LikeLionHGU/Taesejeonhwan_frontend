@@ -1,45 +1,26 @@
-/* =========================================
-   기본 레이아웃 (공통)
-   ========================================= */
 .user-recommend-card {
     border-radius: 20px;
     padding: 24px 30px;
 
-    /* 레이아웃 */
     display: flex;
     flex-direction: column;
     gap: 20px;
 
-    /* 애니메이션 */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* =========================================
-   ☀️ Light Mode 스타일 (기본)
-   ========================================= */
-/* 부모(MainPage)가 light-mode일 때 적용됨 */
 .main-page-wrapper.light-mode .user-recommend-card {
     background-color: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-    /* 부드러운 그림자 */
     border: 1px solid #F0F0F0;
 }
 
-/* =========================================
-   🌙 Dark Mode 스타일
-   ========================================= */
-/* 부모(MainPage)가 dark-mode일 때 적용됨 */
 .main-page-wrapper.dark-mode .user-recommend-card {
     background-color: #1E293B;
-    /* BP2 box color */
     box-shadow: none;
     border: 1px solid #2A3648;
-    /* 살짝 밝은 테두리 */
 }
 
-/* =========================================
-   1. 상단 프로필 영역
-   ========================================= */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -63,11 +44,9 @@
 .nickname {
     font-size: 16px;
     font-weight: 600;
-    /* 다크모드 대응을 위해 색상 상속 */
     color: inherit;
 }
 
-/* 팔로우 버튼 */
 .follow-btn {
     background-color: #007AFF;
     color: white;
@@ -84,9 +63,6 @@
     background-color: #0056b3;
 }
 
-/* =========================================
-   2. 키워드 태그 (Keyword Badge)
-   ========================================= */
 .keyword-row {
     display: flex;
     flex-wrap: wrap;
@@ -101,29 +77,20 @@
     transition: all 0.3s ease;
 }
 
-/* ☀️ Light Mode 태그: 연한 파랑 배경 + 진한 파랑 글씨 */
 .main-page-wrapper.light-mode .keyword-badge {
     background-color: #E0EFFF;
-    /* keyword box */
     color: #007AFF;
 }
 
-/* 🌙 Dark Mode 태그: 투명 파랑 배경 + 밝은 파랑 글씨 */
 .main-page-wrapper.dark-mode .keyword-badge {
     background-color: rgba(49, 130, 246, 0.2);
-    /* Dark keyword box opacity 조절 */
     color: #60A5FA;
     border: 1px solid rgba(49, 130, 246, 0.3);
 }
 
-/* =========================================
-   3. 영화 리스트 (Movie Grid)
-   ========================================= */
-/* 하단 리스트 레이아웃 */
 .movie-grid-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    /* 5개 가로 배치 */
     gap: 16px;
 }
 
@@ -136,7 +103,6 @@
 .poster-wrapper {
     position: relative;
     width: 100%;
-    /* 포스터 비율 유지 (2:3) */
     aspect-ratio: 2 / 3;
     overflow: hidden;
     border-radius: 8px;
@@ -149,7 +115,6 @@
     transition: transform 0.2s;
 }
 
-/* 호버 시 포스터 확대 효과 */
 .poster-wrapper:hover img {
     transform: scale(1.05);
 }
@@ -159,42 +124,34 @@
     font-weight: 600;
     line-height: 1.3;
 
-    /* 1줄 말줄임 */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     color: inherit;
-    /* 부모 색상 따름 */
 }
 
 .movie-year {
     font-size: 12px;
     color: #9E9E9E;
-    /* Light Grey */
 }
 
-/* 📱 모바일 반응형 (화면 줄어들면 가로 스크롤로 변경) */
 @media (max-width: 768px) {
     .movie-grid-list {
         display: flex;
         overflow-x: auto;
         padding-bottom: 10px;
-        /* 스크롤바 공간 */
         scroll-snap-type: x mandatory;
     }
 
     .movie-item {
         min-width: 100px;
-        /* 최소 너비 고정 */
         scroll-snap-align: start;
     }
 }
 
 
 
-/* ★ ContentCard가 들어갈 공간 확보 */
 .movie-item-wrapper {
     width: 100%;
-    /* ContentCard 컴포넌트가 이 안에서 꽉 차게 나옵니다 */
 }

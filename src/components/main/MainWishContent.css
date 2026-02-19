@@ -1,29 +1,23 @@
 .wish-sidebar {
-    /* 스크롤 따라다니기 */
     position: sticky;
     top: 100px;
-    /* 헤더 높이만큼 띄움 */
 
     background-color: #FFFFFF;
     border-radius: 16px;
     padding: 24px;
 
-    /* 그림자 효과 (카드처럼 보이게) */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     border: 1px solid #EEEFF1;
 
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* 다크모드일 때 사이드바 스타일 */
 .main-page-wrapper.dark-mode .wish-sidebar {
     background-color: #1E293B;
-    /* 어두운 박스색 */
     border-color: #2A3648;
     box-shadow: none;
 }
 
-/* 헤더 영역 (제목 + 전체보기) */
 .sidebar-header {
     display: flex;
     justify-content: space-between;
@@ -50,7 +44,6 @@
     color: #AAA;
 }
 
-/* 찜 리스트 아이템들 */
 .sidebar-list {
     display: flex;
     flex-direction: column;
@@ -82,7 +75,6 @@
     font-weight: 600;
     line-height: 1.3;
 
-    /* 2줄 이상 되면 말줄임표 (...) */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -103,7 +95,6 @@
     border-radius: 4px;
 }
 
-/* 다크모드 태그 */
 .main-page-wrapper.dark-mode .mini-tag {
     background-color: rgba(0, 122, 255, 0.2);
     color: #60A5FA;

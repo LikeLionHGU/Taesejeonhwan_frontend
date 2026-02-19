@@ -5,7 +5,6 @@
     margin-bottom: 40px;
     transition: all 0.3s ease;
 
-    /* 디자인상 상단 배경이 자연스럽게 깔리도록 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,15 +12,12 @@
     gap: 12px;
 }
 
-/* ☀️ 라이트 모드: 화이트~블루 그라데이션 */
 .banner-container.light {
     background: linear-gradient(180deg, #EDF6FF 0%, #FFFFFF 100%);
 }
 
-/* 🌙 다크 모드: 짙은 남색 */
 .banner-container.dark {
     background: transparent;
-    /* 페이지 배경색(#0A0E27)이 그대로 보이게 */
 }
 
 .banner-container h1 {
@@ -34,7 +30,6 @@
 .banner-container p {
     font-size: 16px;
     color: #666;
-    /* 라이트모드 텍스트 */
     font-weight: 400;
 }
 
@@ -44,10 +39,8 @@
 
 .banner-container.dark p {
     color: rgba(255, 255, 255, 0.7);
-    /* 흰색 투명도 70% */
 }
 
-/* (선택) 태그 버튼들이 배너 아래에 있다면 */
 .banner-tags {
     display: flex;
     gap: 8px;
