@@ -1,9 +1,7 @@
-/* 카드 전체 컨테이너 */
 .content-card {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    /* 포스터와 텍스트 사이 간격 */
     cursor: pointer;
     transition: transform 0.2s ease;
     width: 100%;
@@ -11,19 +9,15 @@
 
 .content-card:hover {
     transform: translateY(-5px);
-    /* 살짝 떠오르는 효과 */
 }
 
-/* 1. 포스터 스타일 */
 .poster-wrapper {
     position: relative;
     width: 100%;
     aspect-ratio: 2 / 3;
-    /* 영화 포스터 표준 비율 */
     border-radius: 12px;
     overflow: hidden;
     background-color: #f0f0f0;
-    /* 로딩 전 배경색 */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -34,7 +28,6 @@
     transition: transform 0.3s ease;
 }
 
-/* 호버 시 이미지 확대 및 오버레이 */
 .content-card:hover .poster-wrapper img {
     transform: scale(1.05);
 }
@@ -66,14 +59,12 @@
     opacity: 1;
 }
 
-/* 2. 텍스트 정보 스타일 */
 .card-info-area {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-/* 상단: 제목 + 별점 (Flexbox) */
 .info-row-top {
     display: flex;
     justify-content: space-between;
@@ -84,9 +75,7 @@
     font-size: 15px;
     font-weight: 600;
     color: var(--color-text-main);
-    /* 다크모드 자동 대응 */
 
-    /* 긴 제목 말줄임 (...) */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -97,7 +86,6 @@
     font-size: 13px;
     font-weight: 700;
     color: var(--color-text-main);
-    /* 다크모드 자동 대응 */
     display: flex;
     align-items: center;
     gap: 2px;
@@ -105,11 +93,9 @@
 
 .star-icon {
     color: #FFD700;
-    /* 황금색 별 */
     font-size: 14px;
 }
 
-/* 하단: 연도 */
 .info-row-bottom {
     display: flex;
 }
@@ -117,6 +103,5 @@
 .card-year {
     font-size: 12px;
     color: #9E9E9E;
-    /* Light Grey (피그마 디자인) */
     font-weight: 400;
 }

@@ -1,28 +1,21 @@
-/* 그리드 컨테이너 */
 .content-grid-container {
     display: grid;
-    /* 최소 160px 너비를 유지하며 꽉 채우기 (반응형) */
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 24px 20px;
-    /* 세로 간격 24px, 가로 간격 20px */
     width: 100%;
     margin-top: 20px;
 }
 
-/* 데이터 없음 메시지 */
 .no-data-text {
     grid-column: 1 / -1;
-    /* 전체 너비 사용 */
     text-align: center;
     padding: 60px 0;
     color: #999;
     font-size: 14px;
 }
 
-/* 📱 모바일 화면 대응 */
 @media (max-width: 768px) {
     .content-grid-container {
-        /* 모바일에서는 2열로 고정하거나 조금 더 작게 */
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }

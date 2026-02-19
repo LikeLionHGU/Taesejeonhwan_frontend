@@ -16,7 +16,6 @@ const ContentGrid = ({ contents, pageMode, ownerId }) => {
 
     return (
         <>
-            {/* 1. 그리드 레이아웃 */}
             <div className="content-grid-container">
                 {contents && contents.length > 0 ? (
                     contents.map((item) => (
@@ -33,7 +32,6 @@ const ContentGrid = ({ contents, pageMode, ownerId }) => {
                 )}
             </div>
 
-            {/* 2. 상세 정보 모달 (조건부 렌더링) */}
             {selectedContentId && (
                 <ContentInfo
                     isOpen={isModalOpen}
