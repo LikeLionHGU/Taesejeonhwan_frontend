@@ -1,0 +1,143 @@
+/* 모달 배경 (어둡게) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 헤더(z-index:100)보다 높아야 함 */
+    z-index: 1000;
+}
+
+/* 모달 메인 박스 */
+.modal-content-box {
+    width: 900px;
+    height: 550px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 닫기 버튼 */
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #999;
+    z-index: 10;
+    cursor: pointer;
+}
+
+/* 좌측 포스터 */
+.modal-left {
+    width: 40%;
+    background-color: #f0f0f0;
+}
+
+.modal-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 우측 콘텐츠 */
+.modal-right {
+    width: 60%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* 텍스트 스타일 */
+.modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-right: 8px;
+}
+
+.modal-year {
+    font-size: 16px;
+    color: #888;
+    font-weight: 400;
+}
+
+.modal-desc {
+    margin: 20px 0;
+    line-height: 1.6;
+    color: #555;
+    font-size: 14px;
+}
+
+.modal-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.mini-tag {
+    background-color: #F0F6FF;
+    color: #007AFF;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* 찜하기 버튼 */
+.wish-btn {
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s;
+}
+
+.wish-btn:hover {
+    transform: scale(1.1);
+}
+
+/* 구분선 */
+.divider {
+    height: 1px;
+    background-color: #EEE;
+    margin: 20px 0;
+}
+
+/* 리뷰 박스 */
+.user-comment-box {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #444;
+}
+
+.user-comment-box.my-comment {
+    background-color: #E0EFFF;
+    /* 내 리뷰 강조 */
+    color: #007AFF;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import ContentInfo from '../../review/ContentInfo';
 
+// 이었던 파일이긴 한데,,, 안 써요...
 const UserContent = ({ movie, onClose }) => {
     return (
         <div className="modal-overlay">

@@ -1,0 +1,49 @@
+/* 개별 검색 결과 아이템 */
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* 호버 시 살짝 밝게 */
+}
+
+/* 이미지 스타일 */
+.search-poster {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.search-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 텍스트 스타일 */
+.search-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.search-title {
+    color: #FFF;
+    /* 어두운 배경이라 흰 글씨 */
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.search-sub {
+    color: #999;
+    font-size: 12px;
+}
