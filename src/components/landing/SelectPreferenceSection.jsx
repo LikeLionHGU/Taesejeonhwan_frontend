@@ -10,6 +10,7 @@ const SelectPreferenceSection = ({ onNext }) => {
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
     const [ratedMovies, setRatedMovies] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+
 //함수 크게 두가지로 구분(백과의 소통)
     // 1. 컴포넌트 마운트 시 초기 영화 목록(추천 또는 인기작) 불러오기
     useEffect(() => {
@@ -43,7 +44,7 @@ const SelectPreferenceSection = ({ onNext }) => {
     }
 };
 
-
+//별점 (영화, 별점, 키워드 받아옴)
     const handleRateMovie = (movieId, rating, keywords) => {
         setRatedMovies(prev => ({
             ...prev,
@@ -77,6 +78,14 @@ const SelectPreferenceSection = ({ onNext }) => {
 
     const ratedCount = Object.keys(ratedMovies).length;
     const isReady = ratedCount >= 10;
+    
+    const sortedMovies = [...movies].sort((a, b) => {
+     const aRated = ratedMovies[a.content_id];
+      const bRated = ratedMovies[b.content_id];
+
+    if (aRated && !bRated) return -1;
+    if (!aRated && bRated) return 1;
+    return 0;   });
 
     return (
         <div className="pref-section-container">
@@ -98,12 +107,14 @@ const SelectPreferenceSection = ({ onNext }) => {
 
             <div className="movie-grid">
                 {isLoading ? <p>영화를 불러오는 중...🎞️</p> : 
-            movies.map(movie => (
+        sortedMovies.map(movie => (
           <ContentCard
-           key={movie.id}
+           key={movie.content_id}
            movie={movie}
-           currentRating={ratedMovies[movie.id]?.rating || 0}
+           movieRating={ratedMovies[movie.content_id]?.rating || 0}
            onRate={handleRateMovie}
+        showRating={true}
+
           />))
             
                 }
