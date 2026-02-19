@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
@@ -11,16 +11,27 @@ import Header from './components/common/Header';
 function App() {
   const location = useLocation();
 
+  // 1. 다크모드 상태 안 되게 초기화
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // 테스트용
+
+  // 2. 로그인 상태 (초기값: 로컬 스토리지에 토큰이 있으면 true)
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return !!localStorage.getItem('accessToken');
+  });
+
+  // ★ 페이지가 이동할 때마다 토큰 확인 (로그인 직후 상태 반영을 위해)
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    setIsLoggedIn(!!token);
+  }, [location.pathname]); // 경로가 바뀔 때마다 실행
 
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
-  // 1. 헤더를 숨길 경로 (로그인 등)
-  const hideHeaderRoutes = ['/login'];
+  // 3. 헤더 숨기는 주소들 목록 (로그인, 로딩 페이지 등 필요시 추가)
+  const hideHeaderRoutes = ['/login', '/loading', '/'];
   const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
 
-  // ★ 2. 시네마 관련 페이지인지 확인 (토글 숨김 & 강제 라이트모드)
+  // 4. 토글 안 보여주고 무조건 밝은 테마로 가는 주소들 목록 (시네마 페이지 같은 거!)
   const isCinemaPage = ['/my-cinema', '/user', '/opposite'].some(path =>
     location.pathname.startsWith(path)
   );
@@ -29,27 +40,32 @@ function App() {
     <>
       {shouldShowHeader && (
         <Header
-          // 시네마 페이지면 강제로 라이트모드(false), 아니면 상태값 따름
           isDarkMode={isCinemaPage ? false : isDarkMode}
           toggleMode={toggleDarkMode}
           isLoggedIn={isLoggedIn}
-          // ★ 시네마 페이지면 토글 스위치 숨김
           showToggle={!isCinemaPage}
         />
       )}
 
       <Routes>
+        {/* 랜딩 페이지 (사이트 진입 시 뜰 화면) - 한나 */}
         <Route path="/" element={<LandingPage />} />
+
+        {/* 로그인 페이지 - 한나 */}
         <Route path="/login" element={<Login />} />
 
-        {/* 메인 페이지 (다크모드 가능) */}
+        {/* 로딩 페이지 (구글 로그인 후 돌아오는 곳) - 한나 > 유원 */}
+        <Route path="/loading" element={<Loading />} />
+
+        {/* 메인 페이지 (다크모드 = 반대 취향) - 유원 */}
         <Route path="/main" element={<MainPage isDarkMode={isDarkMode} />} />
 
-        {/* 시네마 페이지 (다크모드 제거 -> props 전달 안 함) */}
+        {/* 시네마 페이지 - 유원 */}
         <Route path="/my-cinema" element={<CinemaPage pageMode="MY" />} />
         <Route path="/user/:userId" element={<CinemaPage pageMode="USER" />} />
         <Route path="/opposite" element={<CinemaPage pageMode="OPPOSITE" />} />
 
+        {/* 찜한 목록 - 한나 */}
         <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
     </>
