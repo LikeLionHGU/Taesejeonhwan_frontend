@@ -10,12 +10,12 @@ const SelectPreferenceSection = ({ onNext }) => {
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
     const [ratedMovies, setRatedMovies] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-
+//함수 크게 두가지로 구분(백과의 소통)
     // 1. 컴포넌트 마운트 시 초기 영화 목록(추천 또는 인기작) 불러오기
     useEffect(() => {
         const fetchInitialMovies = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}users/contents`);
+                const response = await axios.get(`${import.meta.env.VITE_SERVICE_API_URL}/users/contents`);
                 setMovies(response.data); 
             } catch (error) {
                 console.error("영화 로드 실패:", error);
@@ -28,19 +28,21 @@ const SelectPreferenceSection = ({ onNext }) => {
 
     // 2. 검색어 입력 시 백엔드 검색 API 호출
     const handleSearch = async (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
+    const value = e.target.value;
+    setSearchTerm(value);
 
-        if (value.trim().length > 0) {
-            try {
-                //검색(api g확인 매서드get    feeds/search-content)
-                const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}feeds/search-content?q=${keyword}`);
-                setMovies(response.data);
-            } catch (error) {
-                console.error("검색 오류:", error);
-            }
-        }
-    };
+    if (value.trim().length === 0) return;
+
+  try {
+     const response = await axios.get(`${import.meta.env.VITE_SERVICE_API_URL}/feeds/search-content`,
+            {params: { keyword: value }} //-> 키워드 밸류 주기
+        );
+        setMovies(response.data);
+    } catch (error) {
+        console.error("검색 오류:", error);
+    }
+};
+
 
     const handleRateMovie = (movieId, rating, keywords) => {
         setRatedMovies(prev => ({
@@ -58,13 +60,14 @@ const SelectPreferenceSection = ({ onNext }) => {
                 rating: data.rating,
             }));
 
-            await axios.post(`${import.meta.env.VITE_APP_HOST_URL}users/onboarding`, { 
+            await axios.post(`${import.meta.env.VITE_SERVICE_API_URL}/users/onboarding`, { 
                 ratings: payload 
             }, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
 
-            if (onNext) onNext();
+            if (onNext) {
+                    onNext();}
             else navigate('/main');
         } catch (error) {
             alert("저장에 실패했습니다. 다시 시도해주세요.");
@@ -95,14 +98,15 @@ const SelectPreferenceSection = ({ onNext }) => {
 
             <div className="movie-grid">
                 {isLoading ? <p>영화를 불러오는 중...🎞️</p> : 
-                 movies.map(movie => (
-             <content-card
-                 key={movie.id} 
-                 movie={movie} 
-                currentRating={ratedMovies[movie.id]?.rating || 0}
-                onRate={handleRateMovie}
-            />
-                ))}
+            movies.map(movie => (
+          <ContentCard
+           key={movie.id}
+           movie={movie}
+           currentRating={ratedMovies[movie.id]?.rating || 0}
+           onRate={handleRateMovie}
+          />))
+            
+                }
             </div>
 
             <div className="pref-floating-bar">
