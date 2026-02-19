@@ -1,24 +1,17 @@
 :root {
-    /* 🎨 [Color Palette] */
     --color-primary: #007AFF;
-    /* 메인 파랑 */
     --color-hover: #0056b3;
-    /* 버튼 호버 */
 
     --color-text-main: #363636;
-    /* 검정 텍스트 */
     --color-text-sub: #9E9E9E;
-    /* 회색 텍스트 */
 
     --bg-light: #FFFFFF;
     --bg-dark: #0A0E27;
-    /* 다크모드 배경 */
 
     --border-light: #F0F0F0;
     --border-dark: #2A3648;
 }
 
-/* 기본 리셋 */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -30,7 +23,6 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 버튼 기본 스타일 제거 */
 button {
     cursor: pointer;
     font-family: inherit;

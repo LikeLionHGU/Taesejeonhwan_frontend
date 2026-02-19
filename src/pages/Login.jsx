@@ -23,7 +23,15 @@ const Login = () => {
   //  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI}&response_type=code&scope=email profile`;
 
   return (
-      <LoginBtn src={LoginBtnimg} alt="" onClick={handleGoogleLogin} />
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+      {/* styled-components 대신 일반 img 태그 사용 */}
+      <img
+        src={LoginBtnimg}
+        alt="Google Login"
+        onClick={handleGoogleLogin}
+        style={{ cursor: 'pointer', width: '200px' }} // 크기는 적당히 조절
+      />
+    </div>
   );
 };
 
