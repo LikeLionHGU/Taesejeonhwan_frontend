@@ -15,9 +15,11 @@ const ProfileSettingSection = ({ onNext }) => {
     const [nickname, setNickname] = useState('');
     const [selectedImgId, setSelectedImgId] = useState(null);//이미지 선택
     const [checkStatus, setCheckStatus] = useState('none'); //중복 체크
+    const maxLength = 8;
 
     const handleNicknameChange = (e) => {
-        setNickname(e.target.value);
+        const nicknamerule = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+        setNickname(nicknamerule);//위에서 제한값 받아오기
         setCheckStatus('none');
     };
 
@@ -26,7 +28,7 @@ const ProfileSettingSection = ({ onNext }) => {
             return alert("닉네임을 입력해 주세요.");
         }
         //-> 여기 api 통신 코드 넣기
-        setCheckStatus('available');
+        setCheckStatus('available');//중복확인완료
     };
 
     const handleSubmit = () => {// 다음 버튼 클릭
@@ -36,6 +38,11 @@ const ProfileSettingSection = ({ onNext }) => {
         if (checkStatus !== 'available') {//닉네임확인 안했을 경우
             return alert("닉네임 중복 확인을 해주세요.");
         }
+            if (nickname.length > maxLength) {
+        return alert("닉네임은 8자 이하여야 합니다!");
+
+       }
+       
 
         const userProfileData = {//선택한 정보들 유저 프로픽 박스에 저장
             profileImageIndex: selectedImgId, // 1~5 중 하나
@@ -46,7 +53,8 @@ const ProfileSettingSection = ({ onNext }) => {
         localStorage.setItem('userProfile',JSON.stringify(userProfileData));
         console.log("저장 완료!", userProfileData);
 
-        onNext(); 
+        onNext?.();
+
     };
 
     return (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import './SelectPreferenceSection.css';
+import ContentCard from '../content/ContentCard';
 
 const SelectPreferenceSection = ({ onNext }) => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const SelectPreferenceSection = ({ onNext }) => {
 
         if (value.trim().length > 0) {
             try {
-                //검색(매서드get    feeds/search-content)
+                //검색(api g확인 매서드get    feeds/search-content)
                 const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}feeds/search-content?q=${keyword}`);
                 setMovies(response.data);
             } catch (error) {
@@ -93,14 +94,14 @@ const SelectPreferenceSection = ({ onNext }) => {
             </div>
 
             <div className="movie-grid">
-                {isLoading ? <p>불러오는 중...</p> : 
+                {isLoading ? <p>영화를 불러오는 중...🎞️</p> : 
                  movies.map(movie => (
-                    <MovieCard 
-                        key={movie.id} 
-                        movie={movie} 
-                        currentRating={ratedMovies[movie.id]?.rating || 0}
-                        onRate={handleRateMovie}
-                    />
+             <content-card
+                 key={movie.id} 
+                 movie={movie} 
+                currentRating={ratedMovies[movie.id]?.rating || 0}
+                onRate={handleRateMovie}
+            />
                 ))}
             </div>
 

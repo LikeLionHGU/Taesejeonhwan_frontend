@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
+import './ShowResultSection.css';
+//나중에 얘도 css 분리하기...
 
 const ShowResultSection = () => {
     const navigate = useNavigate();
