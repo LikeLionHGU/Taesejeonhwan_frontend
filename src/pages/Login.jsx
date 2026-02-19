@@ -1,4 +1,4 @@
-import.meta.env.VITE_APP_GOOGLE_AUTH_REDIRECT_URI
+// import.meta.env.VITE_APP_GOOGLE_AUTH_REDIRECT_URI
 // import styled from "styled-components";
 import LoginBtnimg from "../assets/LoginBtn.svg";
 

@@ -36,7 +36,7 @@ const Loading = () => {
         localStorage.setItem("userId", "1"); // 1번 유저라고 가정됨
 
         alert("서버 연결에 실패했지만, 개발 모드로 진입합니다! 🚀");
-        navigate("/home");
+        navigate("/main");
       }
     };
 
