@@ -1,21 +1,27 @@
 import React from 'react';
 import ContentCard from './ContentCard';
 
-// 백엔드에서 받아온 콘텐츠 정보로 그리드 띄우는 컴포넌트
-// 찜한 콘텐츠랑 시네마에서 사용..? 예정
+import React from 'react';
+import ContentCard from './ContentCard';
+import './ContentGrid.css';
+
 const ContentGrid = ({ movies, onMovieClick }) => {
-    // movies가 없거나 비어있을 때 처리를 어떻게 할지도 생각해 보면 좋을 듯! 약간 귀여운 문구 넣어도 되고 ㅋㅋㅋ
+    // movies가 없거나 비어있을 때 처리
     if (!movies || movies.length === 0) {
-        return <div className="empty-message">콘텐츠가 없습니다... 얼른 이용해라..!</div>;
+        return (
+            <div className="empty-message">
+콘텐츠가 없어요..😭 정말 이용하지 않으실 건가요..?😢😢
+            </div>
+        );
     }
 
     return (
         <div className="content-grid-container">
             {movies.map((movie) => (
-                <ContentCard
-                    key={movie.content_id}
-                    movie={movie}
-                    onClick={() => onMovieClick(movie)}
+                <ContentCard 
+                    key={movie.id || movie.content_id}
+                    movie={movie} 
+                    onClick={onMovieClick} 
                 />
             ))}
         </div>
