@@ -1,0 +1,125 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { contentApi } from '../../api/api';
+import SearchContents from './SearchContents';
+import SearchUsers from './SearchUsers';
+import ContentInfo from '../review/ContentInfo'; 
+import './SearchBar.css';
+
+const SearchBar = () => {
+    const navigate = useNavigate();
+    const [keyword, setKeyword] = useState('');
+    const [results, setResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false); 
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [selectedContentId, setSelectedContentId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (keyword.trim()) {
+                handleSearch(keyword);
+            } else {
+                setResults([]);
+                setShowDropdown(false);
+            }
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [keyword]);
+
+    const handleSearch = async (query) => {
+        setIsSearching(true);
+        try {
+            let res;
+            // '@'로 시작하면 유저 검색
+            if (query.startsWith('@')) {
+                const realKeyword = query.slice(1); // '@' 제거
+                if (realKeyword.trim().length === 0) {
+                    setResults([]);
+                    return;
+                }
+                res = await contentApi.searchUser(realKeyword);
+            } else {
+                res = await contentApi.searchContent(query);
+            }
+
+            // API 명세서에 따라 결과 배열 설정 (results 키 확인 필요)
+            if (res.data && res.data.results) {
+                setResults(res.data.results);
+                setShowDropdown(true);
+            } else {
+                setResults([]);
+            }
+        } catch (err) {
+            console.error("검색 실패:", err);
+            setResults([]);
+        } finally {
+            setIsSearching(false);
+        }
+    };
+    const handleItemClick = (id) => {
+        if (keyword.startsWith('@')) {
+            navigate(`/user/${id}`);
+            setShowDropdown(false);
+            setKeyword(''); 
+        } else {
+            setSelectedContentId(id);
+            setIsModalOpen(true);
+            setShowDropdown(false);
+        }
+    };
+
+    return (
+        <div className="search-bar-wrapper">
+            <div className="search-input-box">
+                <span className="search-icon">🔍</span>
+                <input
+                    type="text"
+                    placeholder="작품, 제목, @유저 검색"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                    onFocus={() => keyword && setShowDropdown(true)}
+                />
+            </div>
+
+            {showDropdown && (
+                <div className="search-dropdown">
+                    {isSearching ? (
+                        <div className="search-msg">검색중...</div>
+                    ) : results.length > 0 ? (
+                        results.map((item, index) => (
+                            keyword.startsWith('@') ? (
+                                <SearchUsers
+                                    key={item.user_id || index}
+                                    data={item}
+                                    onClick={handleItemClick}
+                                />
+                            ) : (
+                                <SearchContents
+                                    key={item.content_id || index}
+                                    data={item}
+                                    onClick={handleItemClick}
+                                />
+                            )
+                        ))
+                    ) : (
+                        <div className="search-msg">검색 결과가 없습니다.</div>
+                    )}
+                </div>
+            )}
+
+            {selectedContentId && (
+                <ContentInfo
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    contentId={selectedContentId}
+                    pageMode="MAIN" 
+                    ownerId={null}  
+                />
+            )}
+        </div>
+    );
+};
+
+export default SearchBar;

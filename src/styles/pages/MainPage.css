@@ -1,0 +1,41 @@
+.main-page-wrapper {
+    min-height: 100vh;
+    padding-bottom: 80px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-page-wrapper.light-mode {
+    background-color: #FFFFFF;
+    color: var(--color-text-main);
+}
+
+.main-page-wrapper.dark-mode {
+    background-color: #0A0E27;
+    color: #FFFFFF;
+}
+
+.main-content-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    display: flex;
+    gap: 40px;
+    position: relative;
+}
+
+.left-section {
+    flex: 1;
+    min-width: 0;
+}
+
+.right-section {
+    width: 320px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+    .right-section {
+        display: none;
+    }
+}

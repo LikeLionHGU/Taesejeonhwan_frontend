@@ -1,18 +1,16 @@
-import React from 'react';
+import './MainWishContent.css';
 
 const MainWishContent = () => {
-    // 메인에 띄울 위시 리스트라 수량 정해놓고 최신순으로 띄우기
-    const wishList = [];
-
+    // TODO: 찜한 목록 API 호출
     return (
-        <div className="main-wish-section">
-            <h3>찜한 콘텐츠</h3>
-            <div className="horizontal-scroll">
-                {wishList.map(item => (
-                    <div key={item.id} className="mini-card">{item.title}</div>
-                ))}
+        <div className="wish-sidebar">
+            <div className="sidebar-header">
+                <h3>찜한 작품 ()</h3>
+                <button>전체 보기</button>
             </div>
+            {/* 리스트 아이템들... */}
         </div>
     );
 };
+
 export default MainWishContent;

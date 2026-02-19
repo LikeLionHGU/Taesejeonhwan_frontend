@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './SearchItem.css';
 
-const SearchUsers = ({ onSelect }) => {
-    const [query, setQuery] = useState('');
-
-    const handleSearch = () => {
-        // 구현해야 하는데... 귀찮네...
-    };
-
+const SearchUsers = ({ data, onClick }) => {
     return (
-        <div className="search-box">
-            <input placeholder="유저 이름을 검색하세요" onChange={(e) => setQuery(e.target.value)} />
-            <button onClick={handleSearch}>검색</button>
+        <div className="search-item" onClick={() => onClick(data.user_id)}>
+            <img
+                src={data.profile_img || "https://via.placeholder.com/50"}
+                alt={data.nickname}
+                className="search-profile-img"
+            />
+            <div className="search-info">
+                <p className="search-title">{data.nickname}</p>
+                <p className="search-sub">@{data.nickname}</p>
+            </div>
         </div>
     );
 };
+
 export default SearchUsers;

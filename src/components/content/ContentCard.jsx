@@ -1,26 +1,38 @@
-
 import React from 'react';
 import './ContentCard.css';
 
-const ContentCard = ({ movie, onClick }) => {
+const ContentCard = ({ content, onClick }) => {
+    if (!content) return null;
+
     return (
-        // 카드를 클릭하면 이 영화의 전체 정보를 부모에게 넘겨줍니다.
-        <div className="content-card" onClick={() => onClick(movie)}>
+        <div className="content-card" onClick={() => onClick(content.content_id)}>
             <div className="poster-wrapper">
-                <img src={movie.poster || movie.img}/>{/*일단은 더미데이터를 띄움, 나중에 뒷부분삭제 */}
+                <img
+                    src={content.poster || "https://via.placeholder.com/200x300"}
+                    alt={content.title}
+                    loading="lazy"
+                />
+                <div className="card-overlay">
+                    <span>상세보기</span>
+                </div>
             </div>
-            
-            <div className="card-info">
-                <p className="card-title">{movie.title}</p>
-                
-        <div className="card-sub-info">
-         <span className="card-year">{movie.year}</span>
-         {/* 별점이 있다면 표시하고 아니면 없게하기*/}
-     {movie.rating && (<span className="card-rating"> ⭐ {movie.rating} </span>
-      )}
-     </div>
-    </div>
-    </div>
+
+            <div className="card-info-area">
+                <div className="info-row-top">
+                    <span className="card-title">{content.title}</span>
+                    {content.rating && (
+                        <span className="card-rating">
+                            <span className="star-icon">★</span>
+                            {content.rating}
+                        </span>
+                    )}
+                </div>
+
+                <div className="info-row-bottom">
+                    <span className="card-year">{content.year || "2024"}</span>
+                </div>
+            </div>
+        </div>
     );
 };
 

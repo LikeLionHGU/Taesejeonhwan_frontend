@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ContentInfo from '../../review/ContentInfo'; 
 
 // 내 영화관일 때 사용하는 콘텐츠 모달
+// 이었던 파일이긴 한데,,, 안 써요...
 const MyContent = ({ movie, onClose }) => {
     // 별점이랑 코멘트 일단 더미로 넣어두고 나중에 백에서 가져오기
     const [myRating, setMyRating] = useState(movie?.rating || 0);

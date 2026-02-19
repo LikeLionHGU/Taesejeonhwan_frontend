@@ -1,0 +1,48 @@
+.cinema-page-wrapper {
+    min-height: 100vh;
+    padding-bottom: 80px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cinema-page-wrapper.light-mode {
+    background-color: #FFFFFF;
+    color: var(--color-text-main);
+}
+
+.cinema-content-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.grid-section {
+    margin-top: 40px;
+}
+
+.filter-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.add-content-btn {
+    background-color: #007AFF;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-content-btn:hover {
+    background-color: #0056b3;
+}

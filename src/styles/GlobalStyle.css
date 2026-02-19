@@ -1,0 +1,31 @@
+:root {
+    --color-primary: #007AFF;
+    --color-hover: #0056b3;
+
+    --color-text-main: #363636;
+    --color-text-sub: #9E9E9E;
+
+    --bg-light: #FFFFFF;
+    --bg-dark: #0A0E27;
+
+    --border-light: #F0F0F0;
+    --border-dark: #2A3648;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+}
+
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    background: none;
+}
