@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToggleSwitch from './ToggleSwitch';
-import SearchBar from '../search/SearchBar'; // ★ 추가
+import SearchBar from '../search/SearchBar';
 
 const Header = ({ isDarkMode, toggleMode, isLoggedIn, showToggle = true }) => {
     const navigate = useNavigate();
@@ -19,19 +19,16 @@ const Header = ({ isDarkMode, toggleMode, isLoggedIn, showToggle = true }) => {
             backdropFilter: 'blur(5px)',
             borderBottom: isDarkMode ? 'none' : '1px solid #F0F0F0'
         }}>
-            {/* 1. 로고 */}
             <div
                 className="logo"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/main')}
                 style={{ cursor: 'pointer', fontSize: '24px', fontWeight: '800', color: '#007AFF' }}
             >
                 Otte
             </div>
 
-            {/* 2. 중앙 검색창 (로그인 했을 때만 보이게 하려면 조건 추가) */}
             {isLoggedIn && <SearchBar />}
 
-            {/* 3. 우측 메뉴 */}
             <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                 {isLoggedIn ? (
                     <>
