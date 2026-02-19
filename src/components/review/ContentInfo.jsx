@@ -3,10 +3,10 @@ import { contentApi } from '../../api/api';
 import AddReview from './AddReview';
 import AllReviewsModal from './AllReviewsModal';
 import './ContentInfo.css';
-import '../../styles/Common.css'; // 버튼 스타일 불러오기
+import '../../styles/Common.css'; 
 
 const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
-    const [viewMode, setViewMode] = useState('INFO'); // INFO, REVIEWS, WRITE
+    const [viewMode, setViewMode] = useState('INFO'); 
     const [data, setData] = useState(null);
     const [myId] = useState(localStorage.getItem('userId') || 1);
 
@@ -14,7 +14,6 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
         if (isOpen && contentId) {
             fetchDetail();
         }
-        // 닫힐 때 상태 초기화
         return () => {
             setViewMode('INFO');
             setData(null);
@@ -23,7 +22,6 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
 
     const fetchDetail = async () => {
         try {
-            // pageMode가 'MY'면 내 ID, 아니면 ownerId(카드 주인 or 페이지 주인)
             const targetId = pageMode === 'MY' ? myId : ownerId;
             const res = await contentApi.getDetail(targetId, contentId);
             setData(res.data);
@@ -48,7 +46,6 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
 
     if (!isOpen || !data) return null;
 
-    // --- 렌더링 헬퍼 ---
     const renderInfoView = () => (
         <>
             <div className="modal-header-row">
@@ -78,7 +75,6 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
 
             <div className="divider" />
 
-            {/* 하단 분기: 내꺼면 수정/작성, 남의꺼면 읽기만 */}
             {pageMode === 'MY' ? (
                 data.comment ? (
                     <div className="review-display-area">
@@ -124,11 +120,10 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
                         <AddReview
                             contentId={contentId}
                             movieTitle={data.title}
-                            // 수정 시 기존 데이터 전달
                             initialData={data.comment ? { rating: data.rating, comment: data.comment } : null}
                             onBack={() => setViewMode('INFO')}
                             onSuccess={() => {
-                                fetchDetail(); // 데이터 갱신
+                                fetchDetail(); 
                                 setViewMode('INFO');
                             }}
                         />

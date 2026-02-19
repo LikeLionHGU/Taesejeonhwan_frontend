@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import api from '../../api/sendAccessTokenToBackend';
-//api 파일명 변경했어요! -> sendAccessTokenToBackend
-
 import { contentApi } from '../../api/api';
-import '../../styles/Common.css'; // 버튼 스타일
+import '../../styles/Common.css';
 
 const AddReview = ({ contentId, movieTitle, initialData, onBack, onSuccess }) => {
     const isEdit = !!initialData;
     const [rating, setRating] = useState(initialData?.rating || 0);
     const [comment, setComment] = useState(initialData?.comment || "");
 
-    // 로컬스토리지에서 내 ID 가져오기 (없으면 1)
     const [myId] = useState(localStorage.getItem('userId') || 1);
 
-    // 별점이 선택되었는지 확인 (0점 초과면 선택됨)
     const isRatingSelected = rating > 0;
 
     const handleSubmit = async () => {
@@ -37,7 +32,7 @@ const AddReview = ({ contentId, movieTitle, initialData, onBack, onSuccess }) =>
                 await contentApi.createReview(payload);
                 alert("등록되었습니다.");
             }
-            onSuccess(); // 부모 데이터 갱신
+            onSuccess(); 
         } catch (err) {
             console.error("리뷰 저장 실패", err);
             alert("오류가 발생했습니다.");
@@ -52,7 +47,6 @@ const AddReview = ({ contentId, movieTitle, initialData, onBack, onSuccess }) =>
 
             <h3 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '30px' }}>{movieTitle}</h3>
 
-            {/* 별점 영역 */}
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                 <p style={{ marginBottom: '10px', color: '#007AFF', fontWeight: '600' }}>
                     {isRatingSelected ? "별점을 선택하셨네요!" : "이 작품, 어떠셨나요?"}
@@ -75,7 +69,6 @@ const AddReview = ({ contentId, movieTitle, initialData, onBack, onSuccess }) =>
                 </div>
             </div>
 
-            {/* 입력창 (별점 선택 시 등장) */}
             {isRatingSelected && (
                 <div className="input-area fade-in" style={{ animation: 'fadeIn 0.5s' }}>
                     <textarea

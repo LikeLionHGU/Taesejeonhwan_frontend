@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReviewItem from './ReviewItem';
-// import { contentApi } from '../../api/api';
+import { contentApi } from '../../api/api';
 
 const AllReviewsModal = ({ contentId, onBack }) => {
     const [reviews, setReviews] = useState([]);
