@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // 1. 환경 변수 가져오기 (없을 경우를 대비해 OR 연산자 사용)
 // .env에 있는 VITE_SERVICE_API_URL 우선적으로 사용합니다.
-const BASE_URL = import.meta.env.VITE_SERVICE_API_URL || 'https://43.201.11.179:3306/taesae';
+const BASE_URL = import.meta.env.VITE_SERVICE_API_URL || 'https://43.201.11.179:8443/taesae';
 
 // =====================================================
 // 2. 로그인/회원가입용 Axios (토큰 없이 요청)
