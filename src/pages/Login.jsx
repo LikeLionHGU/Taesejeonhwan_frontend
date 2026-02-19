@@ -1,5 +1,5 @@
 import.meta.env.VITE_APP_GOOGLE_AUTH_REDIRECT_URI
-import styled from "styled-components";
+// import styled from "styled-components";
 import LoginBtnimg from "../assets/LoginBtn.svg";
 
 
@@ -29,13 +29,13 @@ const Login = () => {
 
 export default Login;
 
-//여기에 스타일 넣기 -> 현수님
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// //여기에 스타일 넣기 -> 현수님
+// const Wrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
-const LoginBtn = styled.img`
-  cursor: pointer;
-`;
+// const LoginBtn = styled.img`
+//   cursor: pointer;
+// `;

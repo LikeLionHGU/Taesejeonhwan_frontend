@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './SearchItem.css';
 
-const SearchContents = ({ onSelect }) => {
-    const [query, setQuery] = useState('');
-
-    const handleSearch = () => {
-        // 구현해야 하는데... 귀찮네...
-    };
-
+const SearchContents = ({ data, onClick }) => {
     return (
-        <div className="search-box">
-            <input placeholder="작품 제목을 검색하세요" onChange={(e) => setQuery(e.target.value)} />
-            <button onClick={handleSearch}>검색</button>
+        <div className="search-item" onClick={() => onClick(data.content_id)}>
+            <img
+                src={data.poster || "https://via.placeholder.com/50x70"}
+                alt={data.title}
+                className="search-poster"
+            />
+            <div className="search-info">
+                <p className="search-title">{data.title}</p>
+                <p className="search-sub">{data.year}</p>
+            </div>
         </div>
     );
 };
+
 export default SearchContents;

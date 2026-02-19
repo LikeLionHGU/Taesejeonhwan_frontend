@@ -1,0 +1,101 @@
+.wish-sidebar {
+    position: sticky;
+    top: 100px;
+
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #EEEFF1;
+
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.main-page-wrapper.dark-mode .wish-sidebar {
+    background-color: #1E293B;
+    border-color: #2A3648;
+    box-shadow: none;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.view-all-btn {
+    font-size: 13px;
+    color: #666;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.main-page-wrapper.dark-mode .view-all-btn {
+    color: #AAA;
+}
+
+.sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sidebar-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.sidebar-poster {
+    width: 60px;
+    height: 86px;
+    border-radius: 4px;
+    object-fit: cover;
+    background-color: #ddd;
+}
+
+.sidebar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.mini-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    background-color: #F0F6FF;
+    color: #007AFF;
+    border-radius: 4px;
+}
+
+.main-page-wrapper.dark-mode .mini-tag {
+    background-color: rgba(0, 122, 255, 0.2);
+    color: #60A5FA;
+}

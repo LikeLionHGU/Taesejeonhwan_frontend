@@ -1,39 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReviewItem from './ReviewItem';
-import AddReview from './AddReview';
+import { contentApi } from '../../api/api';
 
-const AllReviewsModal = ({ isOpen, onClose, contentId }) => {
-    const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
+const AllReviewsModal = ({ contentId, onBack }) => {
+    const [reviews, setReviews] = useState([]);
 
-    const reviews = [];
+    useEffect(() => {
+        // TODO: API 연결 시 fetchReviews 호출
+        // contentApi.getAllReviews(contentId).then(...);
 
-    if (!isOpen) return null;
+        // [더미 데이터]
+        setReviews([
+            { id: 1, nickname: 'movie_lover', rating: 5, comment: '정말 인생 영화입니다 ㅠㅠ' },
+            { id: 2, nickname: 'critic_kim', rating: 3.5, comment: '영상미는 좋았으나 스토리가 아쉽네요.' },
+            { id: 3, nickname: 'popcorn', rating: 4, comment: '가볍게 보기 좋은 영화!' },
+        ]);
+    }, [contentId]);
 
     return (
-        <div className="modal-overlay z-index-2000">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <button onClick={onClose}>&lt; 뒤로가기 버튼입니다ㅏ</button>
-                    <h3>전체 리뷰임.</h3>
-                </div>
-
-                <div className="review-scroll-container">
-                    {reviews.map(review => (
-                        <ReviewItem key={review.id} review={review} />
-                    ))}
-                </div>
-
-                <button className="write-btn" onClick={() => setIsAddReviewOpen(true)}>
-                    리뷰 등록하기
+        <div className="all-reviews-container" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                <button onClick={onBack} style={{ cursor: 'pointer', fontSize: '14px', color: '#666' }}>
+                    &larr; 돌아가기
                 </button>
+                <h3 style={{ marginLeft: '15px', fontSize: '18px', fontWeight: 'bold' }}>전체 리뷰 ({reviews.length})</h3>
+            </div>
 
-                {isAddReviewOpen && (
-                    <AddReview
-                        isOpen={isAddReviewOpen}
-                        onClose={() => setIsAddReviewOpen(false)}
-                        contentId={contentId}
-                    />
-                )}
+            <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '12px', paddingRight: '5px' }}>
+                {reviews.map(review => (
+                    <ReviewItem key={review.id} review={review} />
+                ))}
             </div>
         </div>
     );

@@ -1,0 +1,107 @@
+.content-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    width: 100%;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+}
+
+.poster-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.poster-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.content-card:hover .poster-wrapper img {
+    transform: scale(1.05);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card-overlay span {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid white;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.content-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.card-info-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-main);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+}
+
+.card-rating {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.star-icon {
+    color: #FFD700;
+    font-size: 14px;
+}
+
+.info-row-bottom {
+    display: flex;
+}
+
+.card-year {
+    font-size: 12px;
+    color: #9E9E9E;
+    font-weight: 400;
+}

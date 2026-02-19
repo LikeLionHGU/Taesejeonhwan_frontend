@@ -1,13 +1,47 @@
 import React, { useState, useEffect } from 'react';
-//import ToggleSwitch from '../components/common/ToggleSwitch';
-//import MainBanner from '../components/main/MainBanner';
-//import UserGrid from '../components/main/UserGrid'; 
+import MainBanner from '../components/main/MainBanner';
+import UserGrid from '../components/main/UserGrid';
+import MainWishContent from '../components/main/MainWishContent';
+import { contentApi } from '../api/api';
 
-// 메인 페이지
-const MainPage = () => {
-    const [feeds, setFeeds] = useState([]);
-    // 페이지 파람으로 무한 스크롤 구현 필요함
+const MainPage = ({ isDarkMode }) => {
+    const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await contentApi.getMainFeeds();
+                console.log("서버 응답 데이터:", res.data);
+                setUsers(res.data.results || res.data);
+            } catch (err) {
+                console.error("데이터 로딩 실패:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+        <div className={`main-page-wrapper ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+            <MainBanner isDarkMode={isDarkMode} />
+
+            <div className="main-content-area">
+                <div className="left-section">
+                    {isLoading ? (
+                        <div>로딩 중입니다... 기다려줘어ㅓㅓ어ㅓㅓㅓ⏳</div>
+                    ) : (
+                        <UserGrid users={users} />
+                    )}
+                </div>
+                <div className="right-section">
+                    <MainWishContent />
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default MainPage;

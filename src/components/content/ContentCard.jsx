@@ -1,16 +1,39 @@
 import React from 'react';
+import './ContentCard.css';
 
-// 콘텐츠 하나를 나타내는 컴포넌트 -> 이게 반복되어서 그리드 형식으로 나오게 해야 함
-const ContentCard = ({ movie, onClick }) => {
+const ContentCard = ({ content, onClick }) => {
+    if (!content) return null;
+
     return (
-        <div className="content-card" onClick={onClick}>
-            <img src={movie.poster} alt={movie.title} />
-            <div className="card-overlay">
-                <span>{movie.title}</span>
-                {/* 별점이 있다면 표시하고 아니면 없게해야 할 듯 (찜하기에서는 안 떠야 해서..!) */}
-                {movie.rating && <span>⭐ {movie.rating}</span>}
-            </div>26
+        <div className="content-card" onClick={() => onClick(content.content_id)}>
+            <div className="poster-wrapper">
+                <img
+                    src={content.poster || "https://via.placeholder.com/200x300"}
+                    alt={content.title}
+                    loading="lazy"
+                />
+                <div className="card-overlay">
+                    <span>상세보기</span>
+                </div>
+            </div>
+
+            <div className="card-info-area">
+                <div className="info-row-top">
+                    <span className="card-title">{content.title}</span>
+                    {content.rating && (
+                        <span className="card-rating">
+                            <span className="star-icon">★</span>
+                            {content.rating}
+                        </span>
+                    )}
+                </div>
+
+                <div className="info-row-bottom">
+                    <span className="card-year">{content.year || "2024"}</span>
+                </div>
+            </div>
         </div>
     );
 };
+
 export default ContentCard;

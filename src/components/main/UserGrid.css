@@ -1,0 +1,11 @@
+.user-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.no-data-msg {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import sendAccessTokenToBackend from "../api/sendAccessTokenToBackend";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 
@@ -58,10 +58,10 @@ const Loading = () => {
 
 export default Loading;
 
-const LoginLoading = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  margin-top: 100px;
-`;
+// const LoginLoading = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 30px;
+//   margin-top: 100px;
+// `;

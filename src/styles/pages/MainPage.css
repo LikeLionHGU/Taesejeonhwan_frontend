@@ -1,0 +1,55 @@
+/* 전체 페이지 래퍼 */
+.main-page-wrapper {
+    min-height: 100vh;
+    padding-bottom: 80px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ☀️ 라이트 모드 */
+.main-page-wrapper.light-mode {
+    background-color: #FFFFFF;
+    /* 또는 var(--bg-light) */
+    color: var(--color-text-main);
+}
+
+/* 🌙 다크 모드 */
+.main-page-wrapper.dark-mode {
+    background-color: #0A0E27;
+    /* 디자인에 있는 짙은 남색 */
+    color: #FFFFFF;
+}
+
+/* 중앙 정렬 및 좌우 배치 컨테이너 */
+.main-content-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    display: flex;
+    gap: 40px;
+    /* 좌우 사이 간격 */
+    position: relative;
+}
+
+/* 왼쪽: 유저 추천 리스트 (넓게) */
+.left-section {
+    flex: 1;
+    /* 남은 공간 다 차지 */
+    min-width: 0;
+    /* Flexbox 내부 줄바꿈 이슈 방지 */
+}
+
+/* 오른쪽: 찜한 작품 사이드바 (좁게) */
+.right-section {
+    width: 320px;
+    /* 고정 너비 */
+    flex-shrink: 0;
+}
+
+/* 반응형: 화면이 좁아지면 사이드바 숨기거나 아래로 내리기 */
+@media (max-width: 1024px) {
+    .right-section {
+        display: none;
+        /* 태블릿 이하에서는 일단 숨김 (추후 디자인에 따라 변경) */
+    }
+}
