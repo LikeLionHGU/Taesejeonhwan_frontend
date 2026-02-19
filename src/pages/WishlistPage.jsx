@@ -2,10 +2,11 @@ import React from 'react';
 import ContentGrid from '../components/content/ContentGrid';
 
 // 테스트용 더미 이미지
+/*
 import m1 from '../assets/landing/m1.png';
 import m2 from '../assets/landing/m2.png';
 import m3 from '../assets/landing/m3.png';
-
+*/
 /*
 찜한 영화 페이지
 ContentGrid 사용하면 됨!
@@ -17,11 +18,11 @@ ContentGrid 사용하면 됨!
 */
 const WishlistPage = () => {
     // 찜한 영화 목록 API 호출 기능 추가해야 햄 -> 
-    const wishMovies = [
+    /*const wishMovies = [
         { id: 1, title: '어바웃타임', year: 2024, img: m1, rating: 5.0 },
         { id: 2, title: '대도시의 사랑법', year: 2024, img: m2, rating: 5.0 },
         { id: 3, title: '그린북', year: 2024, img: m3, rating: 5.0 },
-    ];
+    ];*/
     return (
         <div className="wishlist-page">
             

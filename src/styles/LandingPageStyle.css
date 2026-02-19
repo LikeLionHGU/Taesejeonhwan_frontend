@@ -5,6 +5,7 @@
 
 .intro-section{
  text-align: center;
+ /*드래그 방지 -> 나중에 합치고 더 상위에 적용*/
   -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;

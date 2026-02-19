@@ -1,39 +1,46 @@
-import React, { useState } from 'react';
-import './SelectPreferenceSection.css'; // CSS 분리
-
-// 더미 이미지들 (경로를 맞춰주세요)
-import m1 from '../../assets/landing/m1.png';
-import m2 from '../../assets/landing/m2.png';
-import m3 from '../../assets/landing/m3.png';
-import m4 from '../../assets/landing/m4.png';
-import m5 from '../../assets/landing/m5.png';
-import m6 from '../../assets/landing/m6.png';
-import m7 from '../../assets/landing/m7.png';
-import m8 from '../../assets/landing/m8.png';
-import m9 from '../../assets/landing/m9.png';
-import m10 from '../../assets/landing/m10.png';
-import m11 from '../../assets/landing/m11.png';
-import m12 from '../../assets/landing/m12.png';
-
-//더미 데이터
-const DUMMY_MOVIES = [
-    { id: 1, title: '올드보이', year: 2024, img: m1, keywords: ['스릴러', '드라마'] },
-    { id: 2, title: '어바웃타임', year: 2024, img: m2, keywords: ['로맨스', '코미디'] },
-    { id: 3, title: '그린북', year: 2019, img: m3, keywords: ['드라마', '음악'] },
-    { id: 4, title: '에밀리 파리에 가다', year: 2023, img: m4, keywords: ['로맨스', '코미디'] },
-    { id: 5, title: '30일', year: 2023, img: m5, keywords: ['코미디', '로맨스'] },
-    { id: 6, title: '라라랜드', year: 2018, img: m6, keywords: ['뮤지컬', '로맨스'] },
-    { id: 7, title: '극한직업', year: 2024, img: m7, keywords: ['코미디', '액션'] },
-    { id: 8, title: '브리저튼', year: 2022, img: m8, keywords: ['로맨스', '시대극'] },
-    { id: 9, title: '킬러의 보디가드', year: 2024, img: m9, keywords: ['액션', '코미디'] },
-    { id: 10, title: '원더', year: 2024, img: m10, keywords: ['가족', '드라마'] },
-    { id: 11, title: '더 글로리', year: 2024, img: m11, keywords: ['스릴러', '드라마'] },
-    { id: 12, title: '신세계', year: 2024, img: m12, keywords: ['범죄', '액션'] },
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+import './SelectPreferenceSection.css';
 
 const SelectPreferenceSection = ({ onNext }) => {
-   
+    const navigate = useNavigate();
+    const [movies, setMovies] = useState([]); // 백엔드에서 받은 영화 목록
+    const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
     const [ratedMovies, setRatedMovies] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
+    // 1. 컴포넌트 마운트 시 초기 영화 목록(추천 또는 인기작) 불러오기
+    useEffect(() => {
+        const fetchInitialMovies = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}users/contents`);
+                setMovies(response.data); 
+            } catch (error) {
+                console.error("영화 로드 실패:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchInitialMovies();
+    }, []);
+
+    // 2. 검색어 입력 시 백엔드 검색 API 호출
+    const handleSearch = async (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+
+        if (value.trim().length > 0) {
+            try {
+                //검색(매서드get    feeds/search-content)
+                const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}feeds/search-content?q=${keyword}`);
+                setMovies(response.data);
+            } catch (error) {
+                console.error("검색 오류:", error);
+            }
+        }
+    };
+
     const handleRateMovie = (movieId, rating, keywords) => {
         setRatedMovies(prev => ({
             ...prev,
@@ -46,24 +53,22 @@ const SelectPreferenceSection = ({ onNext }) => {
 
         try {
             const payload = Object.entries(ratedMovies).map(([id, data]) => ({
-                movieId: id,
+                movieId: parseInt(id),
                 rating: data.rating,
-                keywords: data.keywords
             }));
 
-            await fetch('/users/onboarding', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ratings: payload })
+            await axios.post(`${import.meta.env.VITE_APP_HOST_URL}users/onboarding`, { 
+                ratings: payload 
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
-            onNext();
+
+            if (onNext) onNext();
+            else navigate('/main');
         } catch (error) {
+            alert("저장에 실패했습니다. 다시 시도해주세요.");
             console.error("제출 실패:", error);
         }
-      
-
-        console.log("제출된 데이터:", ratedMovies);
-        onNext(); 
     };
 
     const ratedCount = Object.keys(ratedMovies).length;
@@ -79,67 +84,36 @@ const SelectPreferenceSection = ({ onNext }) => {
             </div>
 
             <div className="pref-search-bar">
-            <input type="text" placeholder="제목을 검색해 주세요." />
+                <input 
+                    type="text" 
+                    placeholder="제목을 검색해 주세요." 
+                    value={searchTerm}
+                    onChange={handleSearch}
+                />
             </div>
 
             <div className="movie-grid">
-                {DUMMY_MOVIES.map(movie => (
-                 <MovieCard 
-                 key={movie.id} 
-                 movie={movie} 
-                 currentRating={ratedMovies[movie.id]?.rating || 0}
-                onRate={handleRateMovie}
+                {isLoading ? <p>불러오는 중...</p> : 
+                 movies.map(movie => (
+                    <MovieCard 
+                        key={movie.id} 
+                        movie={movie} 
+                        currentRating={ratedMovies[movie.id]?.rating || 0}
+                        onRate={handleRateMovie}
                     />
                 ))}
             </div>
 
             <div className="pref-floating-bar">
                 <button 
-                 className={`pref-submit-btn ${isReady ? 'active' : ''}`} 
-                 onClick={handleComplete}
-                disabled={!isReady}
+                    className={`pref-submit-btn ${isReady ? 'active' : ''}`} 
+                    onClick={handleComplete}
+                    disabled={!isReady}
                 >
-              등록하기
-               </button>
+                    등록하기
+                </button>
             </div>
         </div>
     );
 };
-
-//영화 카드 컴포넌트 ->css확정하고 분리/별 이미지 확인하기
-const MovieCard = ({ movie, currentRating, onRate }) => {
-    const [isHovered, setIsHovered] = useState(false);
-    const [hoverRating, setHoverRating] = useState(0);
-
-    return (
-        <div 
-            className="movie-card"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => { setIsHovered(false); setHoverRating(0); }}
-        >
-        <div className="poster-wrapper">
-            <img src={movie.img} alt={movie.title} />
-                
-        {isHovered && (
-        <div className="hover-overlay">
-            <div className="stars">
-             {[1, 2, 3, 4, 5].map(star => (
-                    <span 
-                    key={star}
-                     className={`star ${star <= (hoverRating || currentRating) ? 'filled' : 'empty'}`}
-                     onMouseEnter={() => setHoverRating(star)}
-                 onClick={() => onRate(movie.id, star, movie.keywords)} >
-                         ★
-                     </span>
-                ))}</div></div>
-                )}
-            </div>
-            <div className="movie-info">
-                <p className="title">{movie.title}</p>
-                <p className="year">{movie.year}</p>
-            </div>
-        </div>
-    );
-};
-
 export default SelectPreferenceSection;

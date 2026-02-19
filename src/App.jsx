@@ -8,6 +8,7 @@ import CinemaPage from './pages/CinemaPage';
 import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
 import ProfileSettingSection from './components/landing/ProfileSettingSection';
+import SelectPreferenceSection from './components/landing/SelectPreferenceSection';
 
 function App() {
   const location = useLocation();
@@ -29,7 +30,9 @@ function App() {
         <Route path="/user/:userId" element={<CinemaPage pageMode="USER" />} />
         <Route path="/opposite" element={<CinemaPage pageMode="OPPOSITE" />} />
        <Route path="/wishlist" element={<WishlistPage />} /> 
+       {/*경로가 작동이 안됨..*/}
        <Route path="/profile" element={<ProfileSettingSection />} />
+       <Route path="/users/contents" element={<SelectPreferenceSection />} />
       </Routes>
       
     </>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './profile.css';
 
 //더미데이터(프사
+
 import profileImg1 from '../../assets/landing/profile1.svg';
 import profileImg2 from '../../assets/landing/profile2.svg';
 import profileImg3 from '../../assets/landing/profile3.svg';
@@ -51,7 +52,7 @@ const ProfileSettingSection = ({ onNext }) => {
     return (
         <div className="profile-setup-container">
     <h1 className="title">
-    <br>반가워요! 👋</br>
+    반가워요! 👋<br/>
     먼저 프로필을 설정해볼까요? </h1>
       
       <div className="avatar-list">
@@ -90,7 +91,6 @@ const ProfileSettingSection = ({ onNext }) => {
                 )}
             </div>
 
-            {/* 3. 다음 버튼 */}
             <button className="next-btn" onClick={handleSubmit}>
                 다음 &gt;
             </button>

@@ -1,9 +1,16 @@
+ /*전부 디테일 수정해야 함 -> 버튼 만든거나 이미지 불러온 것들도 디자이너님과 얘기해서 통일*/
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none;
+  user-select: none;
+}
 .profile-setup-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 60px 20px;
-    font-family: 'Pretendard', sans-serif; /* 폰트는 프로젝트에 맞게 변경 */
+    font-family: 'Pretendard', sans-serif; /* 폰트 굵기물어보기*/
 }
 .title {
     font-size: 24px;
@@ -24,7 +31,7 @@
     position: relative;
     width: 90px;
     height: 90px;
-    background-color: #F5F5F5;
+    background-color: #edf1f3;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -33,7 +40,7 @@
     transition: transform 0.2s;
 }
 .avatar-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
 }
 .avatar-item img {
     width: 70%;
