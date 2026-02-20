@@ -1,3 +1,6 @@
+.poster-wrapper {
+  position: relative;
+}
 .content-card {
     display: flex;
     flex-direction: column;
@@ -6,16 +9,13 @@
     transition: transform 0.2s ease;
     width: 100%;
 }
-
 .content-card:hover {
     transform: translateY(-5px);
 }
-
 .poster-wrapper {
     position: relative;
     width: 100%;
     aspect-ratio: 2 / 3;
-    border-radius: 12px;
     overflow: hidden;
     background-color: #f0f0f0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@
     font-weight: 600;
     border: 1px solid white;
     padding: 6px 12px;
-    border-radius: 20px;
+
 }
 
 .content-card:hover .card-overlay {
@@ -82,20 +82,6 @@
     max-width: 80%;
 }
 
-.card-rating {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-text-main);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.star-icon {
-    color: #FFD700;
-    font-size: 14px;
-}
-
 .info-row-bottom {
     display: flex;
 }
@@ -104,4 +90,103 @@
     font-size: 12px;
     color: #9E9E9E;
     font-weight: 400;
+}
+.rating-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+  display: flex;
+  align-items: flex-end; 
+  justify-content: center;
+  padding-bottom: 20px; 
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.content-card:hover .rating-overlay,
+.rating-overlay.has-rating {
+    opacity: 1;
+}
+
+.content-card:hover .rating-overlay {
+    opacity: 1;
+}
+
+.star-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px; 
+  cursor: pointer;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 32px;
+  line-height: 1;
+  user-select: none;
+}
+
+
+.star-fill {
+  color: #FFD158;
+}
+
+.star-half {
+ background: linear-gradient(to right, #FFD158 50%, #E6E8EA 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.star-empty {
+  color: #E6E8EA; 
+}
+.half {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  z-index: 2; 
+}
+.half.left {
+  left: 0;
+}
+
+.half.right {
+  right: 0;
+}
+.pref-floating-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  background-color: white;
+  padding: 15px 15px;
+  border-top: 1px solid #f0f0f0; 
+  z-index: 100;
+}
+.pref-submit-btn {
+  display: inline-flex;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  margin-right: 20px;
+  color: #888;
+  font-size: 16px;
+  font-weight: bold;
+text-align: right;
+white-space: nowrap;
+}
+
+.pref-submit-btn.active {
+  background-color: #0066FF;
+  color: white;
+  cursor: pointer;
 }

@@ -1,119 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
-import './SelectPreferenceSection.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./SelectPreferenceSection.css";
+import ContentCard from "../content/ContentCard";
+import { contentApi } from '../../api/api';
+
+//import { useNavigate } from "react-router-dom";
+
+
 
 const SelectPreferenceSection = ({ onNext }) => {
-    const navigate = useNavigate();
-    const [movies, setMovies] = useState([]); // 백엔드에서 받은 영화 목록
-    const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
-    const [ratedMovies, setRatedMovies] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
+  //메인 갈때 쓴 임시루트 주석const navigate = useNavigate();
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [ratedMovies, setRatedMovies] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-    // 1. 컴포넌트 마운트 시 초기 영화 목록(추천 또는 인기작) 불러오기
-    useEffect(() => {
-        const fetchInitialMovies = async () => {
-            try {
-                const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}users/contents`);
-                setMovies(response.data); 
-            } catch (error) {
-                console.error("영화 로드 실패:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchInitialMovies();
-    }, []);
+  useEffect(() => {
+    fetchInitialMovies();
+  }, []);
 
-    // 2. 검색어 입력 시 백엔드 검색 API 호출
-    const handleSearch = async (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
+  const fetchInitialMovies = async () => {
+    try {
+    //직접 호출하지 말고, api,js 통해서 호출하기->최적화
+    const responseMovie = await contentApi.getOnboardingContents()
+    
 
-        if (value.trim().length > 0) {
-            try {
-                //검색(매서드get    feeds/search-content)
-                const response = await axios.get(`${import.meta.env.VITE_APP_HOST_URL}feeds/search-content?q=${keyword}`);
-                setMovies(response.data);
-            } catch (error) {
-                console.error("검색 오류:", error);
-            }
-        }
-    };
+   setMovies(responseMovie.data); 
+    } catch (err) {
+      console.error("초기 영화 리스트 호출 실패:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+//위쪽 수정 완료
 
-    const handleRateMovie = (movieId, rating, keywords) => {
-        setRatedMovies(prev => ({
-            ...prev,
-            [movieId]: { rating, keywords }
-        }));
-    };
 
-    const handleComplete = async () => {
-        if (Object.keys(ratedMovies).length < 10) return;
 
-        try {
-            const payload = Object.entries(ratedMovies).map(([id, data]) => ({
-                movieId: parseInt(id),
-                rating: data.rating,
-            }));
 
-            await axios.post(`${import.meta.env.VITE_APP_HOST_URL}users/onboarding`, { 
-                ratings: payload 
-            }, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+  const handleSearch = async (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);//유저의 입력값을 받기
 
-            if (onNext) onNext();
-            else navigate('/main');
-        } catch (error) {
-            alert("저장에 실패했습니다. 다시 시도해주세요.");
-            console.error("제출 실패:", error);
-        }
-    };
+    if (!value.trim()) {//입력값 비어있으면 다시 영화api호출
+      fetchInitialMovies();
+      return;
+    }
 
-    const ratedCount = Object.keys(ratedMovies).length;
-    const isReady = ratedCount >= 10;
+    try {
+    const searchMovie =await contentApi.searchContent(value);
+    
+    setMovies(searchMovie.data.results);
 
-    return (
-        <div className="pref-section-container">
-            <header className="pref-header">Otte</header>
+    } 
+    catch (err){console.error("검색 실패:", err);
+    }
+  };
 
-            <div className="pref-title-area">
-                <h2>인상 깊게 본 작품이 있나요?</h2>
-                <p>10개를 골라주시면, 흩어진 취향을 모아 정리해드릴게요 ({ratedCount}/10)</p>
-            </div>
 
-            <div className="pref-search-bar">
-                <input 
-                    type="text" 
-                    placeholder="제목을 검색해 주세요." 
-                    value={searchTerm}
-                    onChange={handleSearch}
-                />
-            </div>
 
-            <div className="movie-grid">
-                {isLoading ? <p>불러오는 중...</p> : 
-                 movies.map(movie => (
-                    <MovieCard 
-                        key={movie.id} 
-                        movie={movie} 
-                        currentRating={ratedMovies[movie.id]?.rating || 0}
-                        onRate={handleRateMovie}
-                    />
-                ))}
-            </div>
+  
+  const handleRateMovie = (movie, rating) => {
+    setRatedMovies((prev) => ({
+      ...prev,
+      [movie.content_id]: { rating, movie },
+    }));
+  };
 
-            <div className="pref-floating-bar">
-                <button 
-                    className={`pref-submit-btn ${isReady ? 'active' : ''}`} 
-                    onClick={handleComplete}
-                    disabled={!isReady}
-                >
-                    등록하기
-                </button>
-            </div>
+
+
+
+
+  const handleComplete = async () => {
+    if (Object.keys(ratedMovies).length < 10) return;
+
+    try {
+      const payload = Object.entries(ratedMovies).map(([id, data]) => ({
+        content_id: parseInt(id),
+        rating: data.rating,
+      }));
+/*온보딩 리스트 받는 코드
+      await axios.post(`${API_URL}/users/onboarding`,
+        { 
+            user_id: Number(id),
+            nickname: String(), 
+            user_contents: userContentsPayload,
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      );
+     /*메인가는임시루트 onNext ? onNext() : navigate("/main");*/
+     
+      const currentUserId = localStorage.getItem("userId") || 10;
+      const currentNickname = localStorage.getItem("nickname") || "임시닉네임";
+
+      //포스트 데이터: 유저 아이디, 닉네임, 컨텐츠(10개)
+      const postData = {
+        user_id: Number(currentUserId),
+        nickname: currentNickname,
+        user_contents: payload
+      };
+      const response = await contentApi.getOnboardingKeywords(postData);
+      console.log("포스트 성공, 백엔드에서 준값:", response.data);
+
+      //장르만 뽑아오기
+      const genreArray = response.data.top5_genres || [];
+      const tags = genreArray.map((item) => item.genre_name); 
+
+      //로컬에 태그 저장
+      localStorage.setItem("userTags", JSON.stringify(tags));
+      if (onNext) onNext();
+   
+
+    } catch (error) {
+      alert("저장 실패, 다시 시도해주세요.");
+      console.error("제출 실패:", error);
+    }
+  };
+
+
+
+
+  const ratedCount = Object.keys(ratedMovies).length;
+  const selectedMoviesList = Object.values(ratedMovies);
+  const isReady = ratedCount >= 10;
+
+  return (
+    <div className="pref-section-container">
+      <header className="pref-header">Otte</header>
+
+      <div className="pref-title-area">
+        <h2>인상 깊게 본 작품이 있나요?</h2>
+        <p>
+          10개를 골라주시면, 흩어진 취향을 모아 정리해드릴게요. ({ratedCount}/10)
+        </p>
+      </div>
+
+      {selectedMoviesList.length > 0 && (
+        <div className="selected-movies-area">
+          <div className="selected-movies-list">
+            {selectedMoviesList.map(({ movie, rating }) => (
+              <div key={movie.content_id} className="selected-movie-item">
+                <img
+                 src={movie.poster} 
+                alt={movie.title} />
+              </div>
+            ))}
+          </div>
         </div>
-    );
+      )}
+
+      <div className="pref-search-bar">
+        <input
+          type="text"
+          placeholder="🔎  제목을 검색해 주세요."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+
+      <div className="movie-grid">
+        {isLoading ? (
+          <p>영화를 불러오는 중... 🎞️</p>
+        ) : (
+          movies?.map((movie) => (
+            <ContentCard
+              key={movie.content_id}
+              movie={movie}
+              movieRating={ratedMovies[movie.content_id]?.rating || 0}
+              onRate={handleRateMovie}
+              showRating={true}
+            />
+          ))
+        )}
+      </div>
+
+      <div className="pref-floating-bar">
+        <button
+          className={`pref-submit-btn ${isReady ? "active" : ""}`}
+          onClick={handleComplete}
+          disabled={!isReady}
+        >
+          등록하기
+        </button>
+      </div>
+    </div>
+  );
 };
+
 export default SelectPreferenceSection;
