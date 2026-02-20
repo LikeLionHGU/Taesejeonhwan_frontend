@@ -1,7 +1,6 @@
 import React from 'react';
 import './ContentCard.css';
 import ContentStar from './contentStar';
-
 const ContentCard = ({
   movie,
   movieRating = 0,
@@ -22,7 +21,7 @@ const ContentCard = ({
         {showRating && (
           <div className="rating-overlay">
             <ContentStar
-              value={movieRating}
+              value={movieRating} // 상태 연결!
               onChange={(newValue) => {
                 if (onRate) {
                   onRate(movie.content_id, newValue);

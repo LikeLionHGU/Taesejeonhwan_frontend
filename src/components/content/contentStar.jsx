@@ -2,14 +2,15 @@ import { useState } from "react";
 import "./ContentCard.css";
 
 function ContentStar({ value = 0, onChange }) {
-  const [hoverRating, setHoverRating] = useState(0); // 호버용 상태만 남김
+  const [hoverRating, setHoverRating] = useState(0); // 호버 상태만 관리
 
   const handleMouse = (val) => setHoverRating(val);
   const handleLeave = () => setHoverRating(0);
   const handleClick = (val) => {
-    if (onChange) onChange(val); 
+    if (onChange) onChange(val); // 클릭 시 부모(SelectPreferenceSection)로 값 전달
   };
 
+  // 마우스가 올라가 있으면 호버 값을, 아니면 실제 저장된 별점을 보여줌
   const displayRating = hoverRating > 0 ? hoverRating : value;
 
   return (
