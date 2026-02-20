@@ -32,11 +32,11 @@ const SearchBar = () => {
         setIsSearching(true);
         try {
             let res;
-            // '@'로 시작하면 유저 검색
             if (query.startsWith('@')) {
-                const realKeyword = query.slice(1); // '@' 제거
+                const realKeyword = query.slice(1); 
                 if (realKeyword.trim().length === 0) {
                     setResults([]);
+                    setIsSearching(false);
                     return;
                 }
                 res = await contentApi.searchUser(realKeyword);
@@ -44,20 +44,26 @@ const SearchBar = () => {
                 res = await contentApi.searchContent(query);
             }
 
-            // API 명세서에 따라 결과 배열 설정 (results 키 확인 필요)
-            if (res.data && res.data.results) {
-                setResults(res.data.results);
+            console.log("검색 API 응답 데이터:", res.data);
+
+            const searchData = res.data?.results || res.data?.data || res.data;
+
+            if (Array.isArray(searchData) && searchData.length > 0) {
+                setResults(searchData);
                 setShowDropdown(true);
             } else {
                 setResults([]);
+                setShowDropdown(true); 
             }
         } catch (err) {
             console.error("검색 실패:", err);
             setResults([]);
+            setShowDropdown(true);
         } finally {
             setIsSearching(false);
         }
     };
+
     const handleItemClick = (id) => {
         if (keyword.startsWith('@')) {
             navigate(`/user/${id}`);
