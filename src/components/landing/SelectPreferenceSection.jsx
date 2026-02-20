@@ -70,9 +70,16 @@ const SelectPreferenceSection = ({ onNext }) => {
     });
   }, [movies, ratedMovies]);
 
-  /* =======================
-     COMPLETE
-  ======================== */
+
+
+
+
+
+
+
+
+
+
   const handleComplete = async () => {
     const ratedCount = Object.keys(ratedMovies).length;
     if (ratedCount < 10) return;
@@ -103,9 +110,7 @@ const SelectPreferenceSection = ({ onNext }) => {
   const ratedCount = Object.keys(ratedMovies).length;
   const isReady = ratedCount >= 10;
 
-  /* =======================
-     RENDER
-  ======================== */
+
   return (
     <div className="pref-section-container">
       <header className="pref-header">Otte</header>
@@ -113,7 +118,7 @@ const SelectPreferenceSection = ({ onNext }) => {
       <div className="pref-title-area">
         <h2>인상 깊게 본 작품이 있나요?</h2>
         <p>
-          10개를 골라주세요 ({ratedCount}/10)
+          10개를 골라주시면, 흩어진 취향을 모아 정리해드릴게요. ({ratedCount}/10)
         </p>
       </div>
 
