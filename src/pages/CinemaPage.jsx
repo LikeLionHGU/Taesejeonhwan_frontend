@@ -1,85 +1,98 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { userApi, contentApi } from '../api/api';
 import UserInfo from '../components/cinema/UserInfo';
-import ContentGrid from '../components/content/ContentGrid';
+import ContentGrid from '../components/content/ContentGrid'; 
+import ProfileEditor from '../components/user/ProfileEditor';
+import KeywordEditor from '../components/user/KeywordEditor';
+import AddReview from '../components/review/AddReview';
+import ContentInfo from '../components/review/ContentInfo';
+
 import '../styles/pages/CinemaPage.css';
 
-// 더미 데이터
-import movie1 from '../assets/movie1.png';
-import movie2 from '../assets/movie2.png';
-import movie3 from '../assets/movie3.png';
-import movie4 from '../assets/movie4.png';
-import movie5 from '../assets/movie5.png';
-import profileImg from '../assets/profile.png';
+const CinemaPage = ({ pageMode }) => {
+    const { userId: urlUserId } = useParams();
+    const myUserId = localStorage.getItem('userId');
 
-// pageMode: 'MY' (나의 영화관), 'USER' (타인 영화관)
-const CinemaPage = ({ pageMode = 'MY' }) => {
-    const { userId } = useParams();
+    const isMyCinema = pageMode === 'MY' || String(urlUserId) === String(myUserId);
+
+    const targetUserId = isMyCinema ? myUserId : urlUserId;
+
+    const [profile, setProfile] = useState(null);
     const [contents, setContents] = useState([]);
-    const [userData, setUserData] = useState(null);
-
-    const fetchUserData = useCallback(async () => {
-        console.log("데이터를 불러옵니다...");
-
-        // 더미 데이터........
-        setUserData({
-            user_id: userId || 1,
-            nickname: pageMode === 'MY' ? "happyday" : "@moovie7",
-            profile_img: profileImg,
-            follower_count: 134,
-            following_count: 10,
-            genre_keywords: ["로맨스", "가족", "드라마", "코미디", "액션"]
-        });
-
-        setContents([
-            { content_id: 1, title: "나우유씨미", poster: movie1, rating: 5.0, year: "2024" },
-            { content_id: 2, title: "원더", poster: movie2, rating: 5.0, year: "2023" },
-            { content_id: 3, title: "그린북", poster: movie3, rating: 5.0, year: "2018" },
-            { content_id: 4, title: "어바웃타임", poster: movie4, rating: 5.0, year: "1997" },
-            { content_id: 5, title: "대도시의 사랑법", poster: movie5, rating: 4.5, year: "2023" },
-            { content_id: 6, title: "폴아웃", poster: movie1, rating: 4.8, year: "2024" },
-            { content_id: 7, title: "킬러의 보디가드", poster: movie2, rating: 4.2, year: "2017" },
-            { content_id: 8, title: "곡성", poster: movie3, rating: 5.0, year: "2016" },
-            { content_id: 9, title: "국제시장", poster: movie4, rating: 4.5, year: "2014" },
-            { content_id: 10, title: "검은 사제들", poster: movie5, rating: 4.0, year: "2015" },
-        ]);
-    }, [pageMode, userId]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [activeModal, setActiveModal] = useState(null);
+    const [selectedContentId, setSelectedContentId] = useState(null);
 
     useEffect(() => {
-        fetchUserData();
-    }, [fetchUserData]);
+        const fetchCinemaData = async () => {
+            if (!targetUserId) {
+                console.error("유저 없는디유...");
+                return;
+            }
+            setIsLoading(true);
+            try {
+                const profileRes = await userApi.getUserProfile(targetUserId);
+                setProfile(profileRes.data);
 
-    if (!userData) return null;
+                const contentRes = await contentApi.getUserContents(targetUserId);
+                setContents(contentRes.data.feeds || contentRes.data);
+            } catch (error) {
+                console.error("영화관 데이터를 불러오는데 실패했습니다.", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
+        fetchCinemaData();
+    }, [targetUserId]);
+
+    const closeModal = () => {
+        setActiveModal(null);
+        setSelectedContentId(null);
+    }
+
+    const handleContentClick = (contentId) => {
+        setSelectedContentId(contentId);
+        setActiveModal('contentDetail'); 
+    };
+
+    if (isLoading) return <div>영화관 입장 중... 팝콘팡팡🍿</div>;
     return (
         <div className="cinema-page-wrapper">
-            <div className="cinema-content-area">
-
-                {pageMode === 'USER' && (
-                    <h2 className="page-title">{userData.nickname}님의 영화관</h2>
-                )}
-                {pageMode === 'MY' && (
-                    <h2 className="page-title">나의 영화관</h2>
-                )}
-
+            {profile && (
                 <UserInfo
-                    user={userData}
-                    isMyPage={pageMode === 'MY'}
-                    onUpdate={fetchUserData}
+                    profile={profile}
+                    isMyPage={isMyCinema}
+                    onOpenProfileEdit={() => setActiveModal('profile')}
+                    onOpenKeywordEdit={() => setActiveModal('keyword')}
                 />
+            )}
 
-                <div className="grid-section">
-                    <div className="filter-row">
-                        <button className="add-content-btn">+ 등록하기</button>
-                    </div>
-
-                    <ContentGrid
-                        contents={contents}
-                        pageMode={pageMode}
-                        ownerId={userData.user_id}
-                    />
+            {isMyCinema && (
+                <div className="cinema-actions">
+                    <button onClick={() => setActiveModal('review')}>+ 리뷰 작성하기</button>
                 </div>
-            </div>
+            )}
+
+            <ContentGrid contents={contents} onContentClick={handleContentClick} />
+
+            {/* 모달 창 */}
+            {activeModal === 'profile' && <ProfileEditor profile={profile} onClose={closeModal} />}
+            {activeModal === 'keyword' && (
+                <KeywordEditor
+                    currentGenres={profile.table ? profile.table.map(item => item.keyword) : []}
+                    onClose={closeModal}
+                />
+            )}
+            {activeModal === 'review' && <AddReview onClose={closeModal} />}
+            {activeModal === 'contentDetail' && selectedContentId && (
+                <ContentInfo
+                    contentId={selectedContentId}
+                    targetUserId={targetUserId} 
+                    onClose={closeModal}
+                />
+            )}
         </div>
     );
 };

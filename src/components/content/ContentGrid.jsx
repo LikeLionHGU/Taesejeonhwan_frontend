@@ -1,47 +1,30 @@
-import React, { useState } from 'react';
-import ContentCard from './ContentCard';
-import ContentInfo from '../review/ContentInfo';
+import React from 'react';
 import './ContentGrid.css';
 
-const ContentGrid = ({ contents, pageMode, ownerId }) => {
-    // 모달 상태 관리
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedContentId, setSelectedContentId] = useState(null);
-
-    // 카드 클릭 시 모달 열기
-    const handleCardClick = (contentId) => {
-        setSelectedContentId(contentId);
-        setIsModalOpen(true);
-    };
+const ContentGrid = ({ contents }) => {
+    if (!contents || contents.length === 0) {
+        return (
+            <div className="empty-cinema" style={{ textAlign: 'center', color: '#888', padding: '50px' }}>
+                아직 영화관에 등록된 작품이 없습니다. 리뷰를 등록해 주세요!
+            </div>
+        );
+    }
 
     return (
-        <>
-            <div className="content-grid-container">
-                {contents && contents.length > 0 ? (
-                    contents.map((item) => (
-                        <ContentCard
-                            key={item.content_id}
-                            content={item}
-                            onClick={handleCardClick}
-                        />
-                    ))
-                ) : (
-                    <div className="no-data-text">
-                        등록된 콘텐츠가 없습니다.
+        <div className="content-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px', padding: '20px' }}>
+            {contents.map((item, index) => (
+                <div key={item.content_id || index} className="content-card" onClick={() => onContentClick(item.content_id)} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+                    <img
+                        src={item.poster}
+                        alt={item.title}
+                        style={{ width: '100%', borderRadius: '8px', objectFit: 'cover' }}
+                    />
+                    <div className="content-title" style={{ color: 'black', marginTop: '10px', fontSize: '14px', textAlign: 'center' }}>
+                        {item.title}
                     </div>
-                )}
-            </div>
-
-            {selectedContentId && (
-                <ContentInfo
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    contentId={selectedContentId}
-                    pageMode={pageMode}  // 'MY', 'USER', 'MAIN'
-                    ownerId={ownerId}    // 카드 주인 ID
-                />
-            )}
-        </>
+                </div>
+            ))}
+        </div>
     );
 };
 

@@ -19,6 +19,8 @@ const sendIdTokenToBackend = async (idToken) => {
     );
 
     console.log("Login successful:", response.data);
+    localStorage.setItem('accessToken', response.data.token); 
+    localStorage.setItem('userId', response.data.user_id);
     return response.data;
   } catch (error) {
     console.error("Login failed:", error);

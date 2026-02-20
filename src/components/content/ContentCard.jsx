@@ -8,7 +8,7 @@ const ContentCard = ({ content, onClick }) => {
         <div className="content-card" onClick={() => onClick(content.content_id)}>
             <div className="poster-wrapper">
                 <img
-                    src={content.poster || "https://via.placeholder.com/200x300"}
+                    src={content.poster}
                     alt={content.title}
                     loading="lazy"
                 />
