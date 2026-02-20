@@ -18,13 +18,13 @@ const ContentCard = ({
           loading="lazy"
         />
 
-        {showRating && (
-          <div className="rating-overlay">
+      {showRating && (
+          <div className={`rating-overlay ${movieRating > 0 ? "has-rating" : ""}`}>
             <ContentStar
-              value={movieRating} // 상태 연결!
+              value={movieRating}
               onChange={(newValue) => {
                 if (onRate) {
-                  onRate(movie.content_id, newValue);
+                  onRate(movie, newValue); 
                 }
               }}
             />

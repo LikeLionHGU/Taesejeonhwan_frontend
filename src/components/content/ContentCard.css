@@ -16,7 +16,6 @@
     position: relative;
     width: 100%;
     aspect-ratio: 2 / 3;
-    border-radius: 12px;
     overflow: hidden;
     background-color: #f0f0f0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -53,7 +52,7 @@
     font-weight: 600;
     border: 1px solid white;
     padding: 6px 12px;
-    border-radius: 20px;
+
 }
 
 .content-card:hover .card-overlay {
@@ -94,7 +93,7 @@
 }
 .rating-overlay {
   position: absolute;
-  top: 0%;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -103,8 +102,13 @@
   align-items: flex-end; 
   justify-content: center;
   padding-bottom: 20px; 
-  opacity: 0; 
+  opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.content-card:hover .rating-overlay,
+.rating-overlay.has-rating {
+    opacity: 1;
 }
 
 .content-card:hover .rating-overlay {
@@ -154,4 +158,35 @@
 
 .half.right {
   right: 0;
+}
+.pref-floating-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  background-color: white;
+  padding: 15px 15px;
+  border-top: 1px solid #f0f0f0; 
+  z-index: 100;
+}
+.pref-submit-btn {
+  display: inline-flex;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  margin-right: 20px;
+  color: #888;
+  font-size: 16px;
+  font-weight: bold;
+text-align: right;
+white-space: nowrap;
+}
+
+.pref-submit-btn.active {
+  background-color: #0066FF;
+  color: white;
+  cursor: pointer;
 }

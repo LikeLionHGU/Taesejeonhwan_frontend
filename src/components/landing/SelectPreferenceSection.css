@@ -88,3 +88,37 @@
     background-color: #0066FF;
     color: white; 
     cursor: pointer; }
+ 
+.selected-movies-area {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px; 
+}
+.selected-movies-list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.selected-movies-list::-webkit-scrollbar {
+  height: 6px;
+}
+.selected-movies-list::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.selected-movie-item {
+  position: relative;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.selected-movie-item img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}

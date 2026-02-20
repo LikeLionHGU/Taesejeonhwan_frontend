@@ -76,6 +76,14 @@ export const contentApi = {
 
     searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
     searchUser: (keyword) => serviceApi.get(`/feeds/search-user/${keyword}`),
+
+    //추가:나한나
+
+//유저 초기값 설정용 영화 목록(유저/온보딩)
+    getOnboardingContents: () => serviceApi.get('/users/contents'), 
+    
+    getOnboardingKeywords: () => serviceApi.get('/users/onboarding'),
+
 };
 
 // [유저 정보 관련 API]
@@ -91,6 +99,9 @@ export const userApi = {
     updateProfileImg: (userId, imgUrl) => serviceApi.post(`/users/profile-img`, { user_id: userId, profile_img: imgUrl }),
 
     updateGenres: (userId, genreList) => serviceApi.put(`/feeds/${userId}/genre`, { genre_name: genreList }),
+
+
+
 };
 
 // 기본 export는 serviceApi (대부분의 컴포넌트에서 사용)
