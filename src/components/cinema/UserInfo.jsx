@@ -22,7 +22,7 @@ const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit }) =
 
                 <div className="genre-keywords">
                     {profile.table?.map((item, index) => (
-                        <span key={index} className="keyword-badge" style={{ marginRight: '5px', backgroundColor: '#333', padding: '5px 10px', borderRadius: '15px' }}>
+                        <span key={index} className="keyword-badge" style={{ marginRight: '5px', backgroundColor: '#faf5f5ff', padding: '5px 10px', borderRadius: '15px' }}>
                             #{item.keyword}
                         </span>
                     ))}
