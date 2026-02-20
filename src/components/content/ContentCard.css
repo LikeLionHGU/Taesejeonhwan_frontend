@@ -1,3 +1,6 @@
+.poster-wrapper {
+  position: relative;
+}
 .content-card {
     display: flex;
     flex-direction: column;
@@ -82,20 +85,6 @@
     max-width: 80%;
 }
 
-.card-rating {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-text-main);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.star-icon {
-    color: #FFD700;
-    font-size: 14px;
-}
-
 .info-row-bottom {
     display: flex;
 }
@@ -104,4 +93,42 @@
     font-size: 12px;
     color: #9E9E9E;
     font-weight: 400;
+}
+.rating-overlay {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 20;
+
+
+}
+
+.star {
+  font-size: 24px; 
+  color: #e4e5e9; 
+  cursor: pointer;
+}
+
+.star:hover {
+  transform: scale(1.1); 
+}
+
+.star:active {
+  transform: scale(0.95); 
+}
+.star.filled {
+  color: #ffc107; 
+}
+
+.selected-area {
+  margin-bottom: 24px;
+}
+
+.selected-area h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
 }
