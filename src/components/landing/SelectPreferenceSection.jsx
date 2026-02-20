@@ -48,8 +48,9 @@ const SelectPreferenceSection = ({ onNext }) => {
 
     try {
     const searchMovie =await contentApi.searchContent(value);
-    setMovies(searchMovie.value.results);
     
+    setMovies(searchMovie.data.results);
+
     } 
     catch (err){console.error("검색 실패:", err);
     }
@@ -77,7 +78,6 @@ const SelectPreferenceSection = ({ onNext }) => {
         content_id: parseInt(id),
         rating: data.rating,
       }));
-      
 /*온보딩 리스트 받는 코드
       await axios.post(`${API_URL}/users/onboarding`,
         { 
@@ -92,26 +92,23 @@ const SelectPreferenceSection = ({ onNext }) => {
       const currentUserId = localStorage.getItem("userId") || 10;
       const currentNickname = localStorage.getItem("nickname") || "임시닉네임";
 
-      // 💡 1. 보낼 데이터 포장
+      //포스트 데이터: 유저 아이디, 닉네임, 컨텐츠(10개)
       const postData = {
         user_id: Number(currentUserId),
         nickname: currentNickname,
         user_contents: payload
       };
-
-      // 💡 2. api.js를 통해 전송! (토큰은 알아서 들어감)
       const response = await contentApi.getOnboardingKeywords(postData);
+      console.log("포스트 성공, 백엔드에서 준값:", response.data);
 
-      // 💡 3. F12 콘솔에서 백엔드가 태그를 어떻게 주는지 확인!
-      console.log("POST 성공! 백엔드가 준 결과:", response.data);
+      //장르만 뽑아오기
+      const genreArray = response.data.top5_genres || [];
+      const tags = genreArray.map((item) => item.genre_name); 
 
-      // 💡 4. 받은 태그를 다음 화면을 위해 로컬 스토리지에 저장합니다.
-      // (백엔드가 배열을 어떻게 주는지에 따라 response.data.keywords 는 바뀔 수 있음)
-      const tags = response.data.keywords || response.data || [];
+      //로컬에 태그 저장
       localStorage.setItem("userTags", JSON.stringify(tags));
-
-      // 5. 다음 단계(결과창)로 부드럽게 이동!
       if (onNext) onNext();
+   
 
     } catch (error) {
       alert("저장 실패, 다시 시도해주세요.");

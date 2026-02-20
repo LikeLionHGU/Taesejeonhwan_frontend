@@ -83,7 +83,7 @@ export const contentApi = {
     getOnboardingContents: () => serviceApi.get('/users/contents'), 
     
     //데이터를 포스트 하면 리퀘스트로 장르 상위 태그 5개가 들어옴
-    getOnboardingKeywords: (date) => serviceApi.post('/users/onboarding'),
+    getOnboardingKeywords: (data) => serviceApi.post('/users/onboarding' ,data),
 
 
 
