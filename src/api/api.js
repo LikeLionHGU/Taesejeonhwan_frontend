@@ -56,6 +56,16 @@ export const contentApi = {
     searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
     searchUser: (keyword) => serviceApi.get(`/feeds/search-user/${keyword}`),
 
+    //추가:나한나
+
+//유저 초기값 설정용 영화 목록(유저/온보딩)
+    getOnboardingContents: () => serviceApi.get('/users/contents'), 
+    
+    //데이터를 포스트 하면 리퀘스트로 장르 상위 태그 5개가 들어옴
+    getOnboardingKeywords: (data) => serviceApi.post('/users/onboarding' ,data),
+
+
+
     getUserContents: (targetUserId) => serviceApi.get(`/feeds/${targetUserId}/contents`),
     getAllGenres: () => serviceApi.get('/feeds/genre'),
 };

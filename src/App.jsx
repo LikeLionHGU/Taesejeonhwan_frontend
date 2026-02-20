@@ -9,6 +9,7 @@ import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
 import ProfileSettingSection from './components/landing/ProfileSettingSection';
 import SelectPreferenceSection from './components/landing/SelectPreferenceSection';
+import ShowResultSection from './components/landing/ShowResultSection';
 
 function App() {
   const location = useLocation();
@@ -52,6 +53,7 @@ function App() {
       <Routes>
         {/* 랜딩 페이지 (사이트 진입 시 뜰 화면) - 한나 */}
         <Route path="/" element={<LandingPage />} />
+        
 
         {/* 로그인 페이지 - 한나 */}
         <Route path="/login" element={<Login />} />

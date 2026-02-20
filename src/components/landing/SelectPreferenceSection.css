@@ -1,64 +1,124 @@
-/*.pref-section-container {
-    
+.pref-section-container {
+    padding: 40px 80px;
+    font-family: sans-serif;
+    position: relative;
+    padding-bottom: 120px;
 }
 
 .pref-header { 
-  
+    color: #0066FF ;
+    font-size: 24px;
+     font-weight: bold;
+      margin-bottom: 40px;
      }
 
 .pref-title-area h2 { 
-   
+    font-size: 24px; 
+    margin-bottom: 10px; 
 }
 .pref-title-area p {
-    ; 
+     color: #666;
+      margin-bottom: 30px; 
     }
 
 .pref-search-bar input {
-  
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border: 1px solid #ddd;
+     border-radius: 8px; 
+     margin-bottom: 40px;
 }
 .movie-grid {
-   
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 30px;
 }
 .movie-card { 
-  
+    cursor: pointer;
  }
 .poster-wrapper { 
-
-    }
+    position: relative; 
+    border-radius: 8px; 
+    overflow: hidden; 
+}
 .poster-wrapper img {
-   }
+    width: 100%; 
+    display: block; 
+    object-fit: cover; }
 
 .hover-overlay {
-    
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.6); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
 }
 
-.stars { 
-    
- }
-.star { 
-   }
-.star.filled { 
-   
-}
 
 .movie-info { 
-
- }
-.movie-info .title { 
-
- }
-.movie-info .year { 
-
+    margin-top: 10px; 
 }
+.movie-info .title {
 
-.pref-floating-bar {
-   
-}
+     font-weight:bold; 
+     font-size: 15px; 
+     margin-bottom: 5px;
+    
+    }
+
 
 .pref-submit-btn {
-    
+    padding: 15px 30px;
+    text-align:left;
+    align-items: left; 
+    font-size: 16px; 
+    border: none;
+    border-radius: 8px;
+    background-color: #E0E0E0; 
+    color: #888; 
+    transition: all 0.3s;
 }
 
-.pref-submit-btn.active {
+.pref-submit-btn.active { 
+    background-color: #0066FF;
+    color: white; 
+    cursor: pointer; }
+ 
+.selected-movies-area {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px; 
+}
+.selected-movies-list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
 
- }
+.selected-movies-list::-webkit-scrollbar {
+  height: 6px;
+}
+.selected-movies-list::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.selected-movie-item {
+  position: relative;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.selected-movie-item img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
