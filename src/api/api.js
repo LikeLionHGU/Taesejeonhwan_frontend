@@ -82,7 +82,10 @@ export const contentApi = {
 //유저 초기값 설정용 영화 목록(유저/온보딩)
     getOnboardingContents: () => serviceApi.get('/users/contents'), 
     
-    getOnboardingKeywords: () => serviceApi.get('/users/onboarding'),
+    //데이터를 포스트 하면 리퀘스트로 장르 상위 태그 5개가 들어옴
+    getOnboardingKeywords: (date) => serviceApi.post('/users/onboarding'),
+
+
 
 };
 

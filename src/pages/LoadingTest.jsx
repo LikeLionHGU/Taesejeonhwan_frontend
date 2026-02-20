@@ -25,8 +25,7 @@ const Loading = () => {
           const token = responseData.accessToken || responseData.token;
           if (token) localStorage.setItem("accessToken", token);
           if (responseData.userId) localStorage.setItem("userId", responseData.userId);
-          navigate("/main");
-        }
+         navigate("/", { state: { step: 1 } });        }
 
       } catch (error) {
         console.error("서버 연결 실패 (개발 모드 우회 중...):", error);

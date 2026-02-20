@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-//import { useNavigate } from "react-router-dom";
 import "./SelectPreferenceSection.css";
 import ContentCard from "../content/ContentCard";
-import { contentApi } from "../../api/api";
+import { contentApi } from '../../api/api';
+
+//import { useNavigate } from "react-router-dom";
+
+
 
 const SelectPreferenceSection = ({ onNext }) => {
   //메인 갈때 쓴 임시루트 주석const navigate = useNavigate();
@@ -21,7 +24,8 @@ const SelectPreferenceSection = ({ onNext }) => {
     //직접 호출하지 말고, api,js 통해서 호출하기->최적화
     const responseMovie = await contentApi.getOnboardingContents()
     
-   setMovies(responseMovie.data.List); 
+
+   setMovies(responseMovie.data); 
     } catch (err) {
       console.error("초기 영화 리스트 호출 실패:", err);
     } finally {
@@ -44,7 +48,7 @@ const SelectPreferenceSection = ({ onNext }) => {
 
     try {
     const searchMovie =await contentApi.searchContent(value);
-    setMovies(searchMovie.data.results);
+    setMovies(searchMovie.value.results);
     
     } 
     catch (err){console.error("검색 실패:", err);
@@ -52,7 +56,7 @@ const SelectPreferenceSection = ({ onNext }) => {
   };
 
 
-//검새 수정 완료
+
   
   const handleRateMovie = (movie, rating) => {
     setRatedMovies((prev) => ({
@@ -64,23 +68,15 @@ const SelectPreferenceSection = ({ onNext }) => {
 
 
 
+
   const handleComplete = async () => {
-    const ratedCount = Object.keys(ratedMovies).length;
-    if (ratedCount < 10) return;
+    if (Object.keys(ratedMovies).length < 10) return;
 
     try {
-      const userContentsPayload = Object.entries(ratedMovies).map(([id, data]) => ({
-        content_id: Number(id),
+      const payload = Object.entries(ratedMovies).map(([id, data]) => ({
+        content_id: parseInt(id),
         rating: data.rating,
       }));
-
-//임시 호출
-const topKeywords = await contentApi.getOnboardingKeywords();
-
-
-      onNext(topKeywords.data);
-/*
-       const topKeywords =await contentApi.getOnboardingKeywords()
       
 /*온보딩 리스트 받는 코드
       await axios.post(`${API_URL}/users/onboarding`,
@@ -93,10 +89,33 @@ const topKeywords = await contentApi.getOnboardingKeywords();
       );
      /*메인가는임시루트 onNext ? onNext() : navigate("/main");*/
      
-     onNext();
-    } catch (err) {
-      alert("저장 실패. 다시 시도해주세요.");
-      console.error("유저 정보 제출 실패:", err);
+      const currentUserId = localStorage.getItem("userId") || 10;
+      const currentNickname = localStorage.getItem("nickname") || "임시닉네임";
+
+      // 💡 1. 보낼 데이터 포장
+      const postData = {
+        user_id: Number(currentUserId),
+        nickname: currentNickname,
+        user_contents: payload
+      };
+
+      // 💡 2. api.js를 통해 전송! (토큰은 알아서 들어감)
+      const response = await contentApi.getOnboardingKeywords(postData);
+
+      // 💡 3. F12 콘솔에서 백엔드가 태그를 어떻게 주는지 확인!
+      console.log("POST 성공! 백엔드가 준 결과:", response.data);
+
+      // 💡 4. 받은 태그를 다음 화면을 위해 로컬 스토리지에 저장합니다.
+      // (백엔드가 배열을 어떻게 주는지에 따라 response.data.keywords 는 바뀔 수 있음)
+      const tags = response.data.keywords || response.data || [];
+      localStorage.setItem("userTags", JSON.stringify(tags));
+
+      // 5. 다음 단계(결과창)로 부드럽게 이동!
+      if (onNext) onNext();
+
+    } catch (error) {
+      alert("저장 실패, 다시 시도해주세요.");
+      console.error("제출 실패:", error);
     }
   };
 
@@ -145,7 +164,7 @@ const topKeywords = await contentApi.getOnboardingKeywords();
         {isLoading ? (
           <p>영화를 불러오는 중... 🎞️</p>
         ) : (
-          movies.map((movie) => (
+          movies?.map((movie) => (
             <ContentCard
               key={movie.content_id}
               movie={movie}

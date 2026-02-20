@@ -53,9 +53,7 @@ function App() {
       <Routes>
         {/* 랜딩 페이지 (사이트 진입 시 뜰 화면) - 한나 */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/profile" element={<ProfileSettingSection />} />
-        <Route path="/contents" element={<SelectPreferenceSection/>}/>
-        <Route path="/users/onboarding" element={<ShowResultSection/>}/>
+        
 
         {/* 로그인 페이지 - 한나 */}
         <Route path="/login" element={<Login />} />
