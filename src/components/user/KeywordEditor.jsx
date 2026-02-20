@@ -1,64 +1,113 @@
-import React, { useState } from 'react';
-import { userApi } from '../../api/api';
-import './UserEditor.css';
+import React, { useState, useEffect } from 'react';
+import { userApi, contentApi } from '../../api/api';
 
-const KeywordEditor = ({ userId, initialKeywords, onClose, onSave }) => {
-    const [selectedTags, setSelectedTags] = useState(initialKeywords || []);
+const KeywordEditor = ({ currentGenres, onClose }) => {
+    const [selectedGenres, setSelectedGenres] = useState(currentGenres || []);
+    const [allGenres, setAllGenres] = useState([]);
+    const myUserId = localStorage.getItem('userId');
 
-    const ALL_GENRES = [
-        "로맨스", "다큐", "가족", "코미디", "액션",
-        "역사", "오컬트", "전쟁", "드라마", "미스터리",
-        "서부", "판타지", "연속극", "키즈", "연극/뮤지컬",
-        "음악", "애니메이션", "모험", "범죄", "뉴스"
-    ];
+    useEffect(() => {
+        const fetchGenres = async () => {
+            try {
+                console.log("🔍 전체 장르 목록 요청 시작...");
+                const res = await contentApi.getAllGenres();
 
-    const toggleTag = (tag) => {
-        if (selectedTags.includes(tag)) {
-            setSelectedTags(selectedTags.filter(t => t !== tag));
+                console.log("🎬 장르 목록 응답 전체 데이터:", res.data);
+
+                const fetchedGenres = res.data.genre || res.data.result || res.data || [];
+
+                setAllGenres(fetchedGenres);
+
+                if (fetchedGenres.length === 0) {
+                    console.warn("⚠️ 장르 목록이 비어있습니다. 백엔드에서 빈 배열을 보냈거나 키 이름이 다릅니다.");
+                }
+            } catch (error) {
+                console.error("❌ 전체 키워드 로딩 실패 에러:", error);
+            }
+        };
+        fetchGenres();
+    }, []);
+
+    const toggleGenre = (genreName) => {
+        if (selectedGenres.includes(genreName)) {
+            setSelectedGenres(selectedGenres.filter(g => g !== genreName));
         } else {
-            if (selectedTags.length >= 5) {
-                alert("장르는 최대 5개까지 선택 가능합니다.");
+            if (selectedGenres.length >= 5) {
+                alert("키워드는 정확히 5개만 선택할 수 있습니다. 다른 키워드를 해제하고 선택해주세요.");
                 return;
             }
-            setSelectedTags([...selectedTags, tag]);
+            setSelectedGenres([...selectedGenres, genreName]);
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSave = async () => {
+        if (selectedGenres.length !== 5) {
+            alert(`키워드를 정확히 5개 선택해주세요. (현재 ${selectedGenres.length}개 선택됨)`);
+            return;
+        }
+
         try {
-            await userApi.updateGenres(userId, selectedTags);
-            alert("취향 키워드가 저장되었습니다.");
-            onSave();
+            console.log("🚀 [백엔드 전송 장르 배열]:", selectedGenres);
+
+            await userApi.updateGenre(myUserId, selectedGenres);
+
+            alert("취향 키워드가 성공적으로 변경되었습니다!");
+            window.location.reload();
             onClose();
-        } catch (err) {
-            console.error(err);
-            alert("저장 실패");
+        } catch (error) {
+            console.error("장르 업데이트 실패", error);
+            alert("키워드 수정에 실패했습니다.");
         }
     };
 
     return (
-        <div className="editor-overlay">
-            <div className="editor-box keyword-box">
-                <div className="editor-header">
-                    <h3>관심 장르 수정하기</h3>
-                    <button className="close-btn-simple" onClick={onClose}>×</button>
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content keyword-editor" onClick={e => e.stopPropagation()}>
+                <h3>나의 취향 수정</h3>
+                {/* 🚨 [수정 3] 안내 문구 변경 */}
+                <p style={{ color: '#888', marginBottom: '20px', fontSize: '14px' }}>
+                    선호하는 장르 키워드를 <strong>정확히 5개</strong> 선택해주세요. ({selectedGenres.length}/5)
+                </p>
+
+                <div className="genre-grid" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    {allGenres.map((genre, idx) => {
+                        const genreName = genre.genre_name;
+                        const isSelected = selectedGenres.includes(genreName);
+
+                        return (
+                            <button
+                                key={idx}
+                                onClick={() => toggleGenre(genreName)}
+                                style={{
+                                    padding: '8px 16px',
+                                    borderRadius: '20px',
+                                    border: isSelected ? '1px solid #007AFF' : '1px solid #444',
+                                    backgroundColor: isSelected ? '#007AFF' : 'transparent',
+                                    color: isSelected ? 'white' : '#ccc',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                #{genreName}
+                            </button>
+                        );
+                    })}
                 </div>
 
-                <div className="tags-grid">
-                    {ALL_GENRES.map((tag) => (
-                        <button
-                            key={tag}
-                            className={`tag-btn ${selectedTags.includes(tag) ? 'active' : ''}`}
-                            onClick={() => toggleTag(tag)}
-                        >
-                            #{tag}
-                        </button>
-                    ))}
+                <div className="modal-actions" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '30px' }}>
+                    <button className="btn-secondary" onClick={onClose} style={{ padding: '10px 20px', cursor: 'pointer' }}>취소</button>
+                    <button
+                        className="btn-primary"
+                        onClick={handleSave}
+                        style={{
+                            padding: '10px 20px', cursor: 'pointer', border: 'none',
+                            backgroundColor: selectedGenres.length === 5 ? '#e50914' : '#555',
+                            color: 'white'
+                        }}
+                    >
+                        저장완료
+                    </button>
                 </div>
-
-                <p className="limit-text">장르는 최대 5개 선택 가능해요.</p>
-
-                <button className="save-btn" onClick={handleSubmit}>저장하기</button>
             </div>
         </div>
     );

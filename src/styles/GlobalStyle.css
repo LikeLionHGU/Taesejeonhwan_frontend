@@ -1,31 +1,124 @@
-:root {
-    --color-primary: #007AFF;
-    --color-hover: #0056b3;
+/* @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"); */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap');
 
-    --color-text-main: #363636;
-    --color-text-sub: #9E9E9E;
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+    --color-main: #0066FF;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+
+    --color-text-dark: #1D1D1D;
+    --color-text-base: #31302F;
+    --color-text-gray: #8B95A1;
 
     --bg-light: #FFFFFF;
-    --bg-dark: #0A0E27;
+    --bg-gray: #F5F5F5;
 
-    --border-light: #F0F0F0;
-    --border-dark: #2A3648;
+    --bg-dark-main: #0F172A;
+    --bg-dark-card: #1E293B;
+    --color-text-dark-mode: #FAFAFA;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 }
 
 body {
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    color: var(--color-text-base);
+    background-color: var(--bg-light);
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 button {
     cursor: pointer;
     font-family: inherit;
-    border: none;
-    background: none;
+}
+
+
+.font-header-1 {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 33px;
+    line-height: 40px;
+}
+
+.font-header-2 {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 38px;
+}
+
+.font-card-title {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 30px;
+    letter-spacing: 0.04em;
+}
+
+.font-movie-title {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.01em;
+}
+
+.font-year {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: var(--color-text-gray);
+}
+
+.font-user-name {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.font-keyword {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+}
+
+.font-label {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.font-button {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.font-inter-heavy {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 35px;
+    line-height: 63px;
 }

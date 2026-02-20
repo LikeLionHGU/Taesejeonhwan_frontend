@@ -1,6 +1,6 @@
 .search-bar-wrapper {
     position: relative;
-    width: 300px;
+    width: 377px;
 }
 
 .search-input-box {
@@ -15,8 +15,8 @@
 
 .search-input-box:focus-within {
     background-color: #FFF;
-    border-color: #007AFF;
-    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+    border-color: #0066FF;
+    box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.1);
 }
 
 .search-icon {
@@ -36,18 +36,36 @@
 
 .search-dropdown {
     position: absolute;
-    top: 45px;
+    top: 50px;
     left: 0;
-    width: 100%;
-    max-height: 400px;
+    width: 377px;
+    max-height: 535px;
     overflow-y: auto;
 
-    background-color: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    background: #FAFAFA;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    padding: 32px 29px;
+    box-sizing: border-box;
     z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.dark-mode .search-dropdown {
+    background: #1E293B;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(180, 180, 180, 0.5);
+    border-radius: 3px;
 }
 
 .search-msg {

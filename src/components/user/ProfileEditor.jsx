@@ -1,105 +1,148 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { userApi } from '../../api/api';
-import './UserEditor.css'; 
+import './UserEditor.css';
 
-const ProfileEditor = ({ userId, initialData, onClose, onSave }) => {
-    const [nickname, setNickname] = useState(initialData?.nickname || '');
-    const [selectedImg, setSelectedImg] = useState(initialData?.profile_img || '');
-    const [isChecked, setIsChecked] = useState(true); // 닉네임 변경 시 false로 바뀜
+const ProfileEditor = ({ profile, onClose }) => {
+    const [nickname, setNickname] = useState(profile?.nickname || '');
+    const [selectedImg, setSelectedImg] = useState(profile?.profile_img || '');
+    const [availableImages, setAvailableImages] = useState([]);
+    const [isNicknameChecked, setIsNicknameChecked] = useState(true);
+    const [checkMessage, setCheckMessage] = useState('');
+    const myUserId = localStorage.getItem('userId');
 
-    const profilePresets = [
-        { id: 1, url: "https://via.placeholder.com/80/FF5733/FFFFFF?text=1", label: "버럭" },
-        { id: 2, url: "https://via.placeholder.com/80/28B463/FFFFFF?text=2", label: "소심" },
-        { id: 3, url: "https://via.placeholder.com/80/FFC0CB/FFFFFF?text=3", label: "러블리" }, 
-        { id: 4, url: "https://via.placeholder.com/80/3498DB/FFFFFF?text=4", label: "슬픔" },
-        { id: 5, url: "https://via.placeholder.com/80/F1C40F/FFFFFF?text=5", label: "기쁨" },
-    ];
-
-    const handleNicknameChange = (e) => {
-        setNickname(e.target.value);
-        setIsChecked(e.target.value === initialData.nickname); 
-    };
-
-    // 중복 확인
-    const handleCheckDuplicate = async () => {
-        if (!nickname.trim()) return;
-        try {
-            const res = await userApi.checkNickname(nickname);
-            if (res.data.is_available) {
-                alert("사용 가능한 닉네임입니다.");
-                setIsChecked(true);
-            } else {
-                alert("이미 사용 중인 닉네임입니다.");
-                setIsChecked(false);
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                const res = await userApi.getAvailableProfileImages();
+                setAvailableImages(res.data.images || res.data || []);
+            } catch (error) {
+                console.error("프로필 이미지 목록 로딩 실패... 직접 채워넣어버리자...", error);
+                setAvailableImages([
+                    'https://taesae.s3.ap-northeast-2.amazonaws.com/1.png',
+                    'https://taesae.s3.ap-northeast-2.amazonaws.com/2.png',
+                    'https://taesae.s3.ap-northeast-2.amazonaws.com/3.png',
+                    'https://taesae.s3.ap-northeast-2.amazonaws.com/4.png',
+                    'https://taesae.s3.ap-northeast-2.amazonaws.com/5.png'
+                ]);
             }
-        } catch (err) {
-            console.error(err);
-            alert("중복 확인 중 오류가 발생했습니다.");
-        }
-    };
+        };
+        fetchImages();
+    }, []);
 
-    // 저장하기
-    const handleSubmit = async () => {
-        if (!isChecked) {
-            alert("닉네임 중복 확인을 해주세요.");
+    const handleNicknameCheck = async () => {
+        if (!nickname.trim()) {
+            setCheckMessage("닉네임을 입력해주세요.");
+            return;
+        }
+        if (nickname === profile.nickname) {
+            setCheckMessage("현재 사용 중인 닉네임입니다.");
+            setIsNicknameChecked(true);
             return;
         }
 
         try {
-            // 1. 프로필 이미지 변경 
-            if (selectedImg !== initialData.profile_img) {
-                await userApi.updateProfileImg(userId, selectedImg);
+            const res = await userApi.checkNickname(nickname);
+            if (res.data.available === true) {
+                setCheckMessage("사용 가능한 닉네임입니다!");
+                setIsNicknameChecked(true);
+            } else {
+                setCheckMessage("이미 사용 중인 닉네임입니다.");
+                setIsNicknameChecked(false);
             }
-            // 2. 닉네임 변경 
-            if (nickname !== initialData.nickname) {
-                await userApi.updateNickname(userId, nickname);
+        } catch (err) {
+            console.error("중복 확인 에러", err);
+            setCheckMessage("중복 확인에 실패했습니다.");
+            setIsNicknameChecked(false);
+        }
+    };
+
+    const handleSave = async () => {
+        if (!isNicknameChecked) {
+            alert("닉네임 중복 확인을 해주셔야 합니다!");
+            return;
+        }
+
+        if (!myUserId || isNaN(Number(myUserId))) {
+            alert("유저 아이디를 찾을 수 없습니다. 다시 로그인 해주세요.");
+            return;
+        }
+
+        try {
+
+            if (nickname !== profile.nickname) {
+                await userApi.updateNickname(myUserId, nickname);
             }
 
-            alert("프로필이 수정되었습니다!");
-            onSave();
-            onClose(); 
-        } catch (err) {
-            console.error(err);
-            alert("저장 실패");
+            if (selectedImg !== profile.profile_img) {
+                await userApi.updateProfileImg(myUserId, selectedImg);
+            }
+
+            alert("프로필이 성공적으로 수정되었습니다!");
+            window.location.reload();
+            onClose();
+        } catch (error) {
+            console.error("프로필 수정 실패 전체 에러 객체:", error);
+
+            if (error.response && error.response.data) {
+                console.error("백 에러 뭐게:", error.response.data);
+                alert(`저장 실패: ${JSON.stringify(error.response.data)}`);
+            } else {
+                console.error("수정에 실패... 콘솔창 확인해ㅅㅓ 얼른 고치기를...", error.response.data);
+            }
         }
     };
 
     return (
-        <div className="editor-overlay">
-            <div className="editor-box profile-box">
-                <button className="close-btn" onClick={onClose}>×</button>
-                <h3>프로필 수정하기</h3>
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content profile-editor" onClick={e => e.stopPropagation()}>
+                <h3>프로필 수정</h3>
 
-                <div className="profile-presets">
-                    {profilePresets.map((img) => (
-                        <div
-                            key={img.id}
-                            className={`preset-item ${selectedImg === img.url ? 'selected' : ''}`}
-                            onClick={() => setSelectedImg(img.url)}
-                        >
-                            <img src={img.url} alt={img.label} />
-                            {selectedImg === img.url && <div className="check-mark">✔</div>}
-                        </div>
-                    ))}
+                <div className="image-selection" style={{ margin: '20px 0' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>프로필 이미지 선택</p>
+                    <div className="image-grid" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                        {availableImages.map((img, idx) => {
+                            const imgUrl = img.profile_img; 
+                            return (
+                                <img
+                                    key={idx}
+                                    src={imgUrl}
+                                    onClick={() => setSelectedImg(imgUrl)}
+                                    style={{
+                                        width: '60px', height: '60px', borderRadius: '50%', cursor: 'pointer',
+                                        border: selectedImg === imgUrl ? '3px solid #007AFF' : '2px solid transparent'
+                                    }}
+                                />
+                            )
+                        })}
+                    </div>
                 </div>
 
-                <div className="nickname-input-group">
-                    <input
-                        type="text"
-                        value={nickname}
-                        onChange={handleNicknameChange}
-                        placeholder="닉네임을 입력하세요"
-                    />
-                    <button
-                        className={`check-btn ${isChecked ? 'checked' : ''}`}
-                        onClick={handleCheckDuplicate}
-                        disabled={nickname === initialData.nickname}
-                    >
-                        {isChecked && nickname === initialData.nickname ? "확인완료" : "중복확인"}
-                    </button>
+                <div className="nickname-section" style={{ margin: '20px 0' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>닉네임</p>
+                    <div className="input-group" style={{ display: 'flex', gap: '10px' }}>
+                        <input
+                            type="text"
+                            value={nickname}
+                            onChange={(e) => {
+                                setNickname(e.target.value);
+                                setIsNicknameChecked(false); 
+                                setCheckMessage('');
+                            }}
+                            style={{ flex: 1, padding: '10px', borderRadius: '5px' }}
+                        />
+                        <button onClick={handleNicknameCheck} style={{ padding: '10px', cursor: 'pointer' }}>중복확인</button>
+                    </div>
+                    {checkMessage && (
+                        <p style={{ color: isNicknameChecked ? '#28a745' : '#dc3545', fontSize: '12px', marginTop: '5px' }}>
+                            {checkMessage}
+                        </p>
+                    )}
                 </div>
 
-                <button className="save-btn" onClick={handleSubmit}>저장하기</button>
+                <div className="modal-actions" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
+                    <button className="btn-secondary" onClick={onClose} style={{ padding: '10px 20px', cursor: 'pointer' }}>취소</button>
+                    <button className="btn-primary" onClick={handleSave} style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: '#e50914', color: 'white', border: 'none' }}>저장완료</button>
+                </div>
             </div>
         </div>
     );
