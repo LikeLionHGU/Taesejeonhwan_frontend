@@ -40,7 +40,9 @@ serviceApi.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             console.warn("로그인 세션이 만료되었습니다.");
-            // 필요 시 localStorage.clear(); window.location.href = '/login';
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userId');
+            localStorage.clear(); window.location.href = '/login';
         }
         return Promise.reject(error);
     }
@@ -62,8 +64,7 @@ export const authRequest = {
 
 // [콘텐츠 관련 API]
 export const contentApi = {
-    // [추가] 메인 페이지 피드 목록 가져오기 (API 명세서 확인 필요: 예시 URL)
-    // 백엔드에게 "메인 피드 조회 URL이 뭔가요?" 물어보고 수정하세요!
+    // 메인 페이지 피드 목록 가져오기 
     getMainFeeds: (mode, userId, page = 1) =>
         serviceApi.get(`/feeds/${mode}/${userId}?page=${page}`),
 
@@ -76,22 +77,41 @@ export const contentApi = {
 
     searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
     searchUser: (keyword) => serviceApi.get(`/feeds/search-user/${keyword}`),
+
+    // [추가] 특정 유저의 영화관(피드) 목록 가져오기 (🚨 주소 확인 필요)
+    getUserContents: (targetUserId) => serviceApi.get(`/feeds/${targetUserId}/contents`),
+    getAllGenres: () => serviceApi.get('/feeds/genres'),
 };
 
 // [유저 정보 관련 API]
 export const userApi = {
-    // [추가] 내 프로필 정보 가져오기
     getMyProfile: () => serviceApi.get('/users/profile'),
+    getUserProfile: (targetUserId) => serviceApi.get(`/users/profile/${targetUserId}`),
+    checkNickname: (nickname) =>
+        serviceApi.get(`/users/check-nickname?nickname=${nickname}`),
+    // 🚨 [복구] 아까 실수로 빼먹었던 부분! (에러 1번 원인 해결)
+    getAvailableProfileImages: () => serviceApi.get('/users/profile-img'),
 
-    checkNickname: (nickname) => serviceApi.get(`/users/check-nickname`, { params: { nickname } }),
-    updateNickname: (userId, nickname) => serviceApi.post(`/users/nickname`, { user_id: userId, nickname }),
+    // user_id를 숫자(Number)로 변환
+    updateNickname: (userId, nickname) =>
+        serviceApi.post(`/users/nickname`, {
+            user_id: Number(userId),
+            nickname: nickname
+        }),
 
-    // 온보딩 명세서에 따르면 프로필 이미지는 리스트 조회(GET)와 설정(POST)이 다를 수 있음.
-    // 일단 기존에 작성하신 코드를 유지합니다.
-    updateProfileImg: (userId, imgUrl) => serviceApi.post(`/users/profile-img`, { user_id: userId, profile_img: imgUrl }),
+    // user_id를 숫자(Number)로 변환
+    updateProfileImg: (userId, imgUrl) =>
+        serviceApi.post(`/users/profile-img`, {
+            user_id: Number(userId),
+            profile_img: imgUrl
+        }),
 
-    updateGenres: (userId, genreList) => serviceApi.put(`/feeds/${userId}/genre`, { genre_name: genreList }),
+    // 취향 키워드
+    updateGenre: (userId, oldGenre, newGenre) =>
+        serviceApi.put(`/feeds/${userId}/genre`, {
+            genre_name: oldGenre,
+            changed_genre: newGenre
+        }),
 };
 
-// 기본 export는 serviceApi (대부분의 컴포넌트에서 사용)
 export default serviceApi;
