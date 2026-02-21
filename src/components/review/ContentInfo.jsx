@@ -7,7 +7,9 @@ import '../../styles/Common.css';
 
 const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
     const [viewMode, setViewMode] = useState('INFO');
-    const [data, setData] = useState(null);
+
+    const [data, setData] = useState(null);//여기서 찜/찜하지 않은 상태 -> 기본값 찜한 상태
+    
     const [isLoading, setIsLoading] = useState(false); 
     const [myId] = useState(localStorage.getItem('userId') || 1);
 

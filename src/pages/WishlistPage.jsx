@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContentGrid from '../components/content/ContentGrid';
+import ContentInfo from '../../src/components/review/ContentInfo';
+
+//
 
 // 테스트용 더미 이미지
 /*
@@ -16,16 +19,45 @@ ContentGrid 사용하면 됨!
 2. 후기 작성 모달 받아와서 수정
 3. 모달 완료하면 이미지 이동하게
 */
-const WishlistPage = () => {
+    
+const  WishlistPage= () =>{
+const [setData, unsetData] =useState();
+useEffect(()=>{
+
+    const getWishlist = async() => {
+
+try 
+{
+const uesrWish = localStorage.getItem("userId");
+if(!uesrWish) return;
+
     // 찜한 영화 목록 API 호출 기능 추가해야 햄 -> 
-    /*const wishMovies = [
-        { id: 1, title: '어바웃타임', year: 2024, img: m1, rating: 5.0 },
-        { id: 2, title: '대도시의 사랑법', year: 2024, img: m2, rating: 5.0 },
-        { id: 3, title: '그린북', year: 2024, img: m3, rating: 5.0 },
-    ];*/
+const response = await contentApi.getWishlist(uesrWish);
+unsetData(response.data); 
+
+console.log("위시리스트 영화 데이터:", response.data);
+
+const Wishlist =response.data;//만약 배열값이면[]변경
+
+setWishMovies(Wishlist);
+
+    }
+
+    catch(err) {
+        console.log("위시리스트 불러오기 실패", err)
+    }
+    
+
+
+};
+getWishlist();
+
+
+
+},[]);
+
     return (
         <div className="wishlist-page">
-            
             <div className="page-content">
                 <div className="wishlist-header">
              <h1>찜한 작품 <span className="count">({wishMovies.length})</span></h1>
@@ -33,7 +65,8 @@ const WishlistPage = () => {
          </div>
 
     <ContentGrid
-         movies={wishMovies}
+         movies={setData}
+
         onMovieClick={(movie) => console.log("영화 정보를 더 상세히 보시겠어요?😍", movie)}/>
             </div></div>
     );
