@@ -29,10 +29,15 @@ const AddReview = ({ contentId, movieTitle, initialData, onBack, onSuccess }) =>
                 await contentApi.updateReview(payload);
                 alert("수정되었습니다.");
             } else {
-                await contentApi.createReview(payload);
-                alert("등록되었습니다.");
-            }
-            onSuccess(); 
+            await contentApi.createReview(payload);
+            await contentApi.deleteWish(myId, contentId); 
+            alert("리뷰가 나의 영화관에 등록되었어요!🎬");
+        }
+        
+        window.dispatchEvent(new CustomEvent('wishlistChanged'));
+        onSuccess();
+          
+
         } catch (err) {
             console.error("리뷰 저장 실패", err);
             alert("오류가 발생했습니다.");

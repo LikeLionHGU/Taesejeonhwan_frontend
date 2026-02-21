@@ -1,7 +1,7 @@
 import React from 'react';
 import './ContentGrid.css';
 
-const ContentGrid = ({ contents }) => {
+const ContentGrid = ({ contents,onContentClick }) => {
     if (!contents || contents.length === 0) {
         return (
             <div className="empty-cinema" style={{ textAlign: 'center', color: '#888', padding: '50px' }}>
@@ -13,7 +13,8 @@ const ContentGrid = ({ contents }) => {
     return (
         <div className="content-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px', padding: '20px' }}>
             {contents.map((item, index) => (
-                <div key={item.content_id || index} className="content-card" onClick={() => onContentClick(item.content_id)} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+                <div key={item.content_id || index} className="content-card" onClick={() => onContentClick?.(item.content_id)}  style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+                                        
                     <img
                         src={item.poster}
                         alt={item.title}

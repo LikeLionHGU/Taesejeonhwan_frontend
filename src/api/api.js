@@ -52,9 +52,10 @@
         createReview: (data) => serviceApi.post('/feeds/reviews', data),
         updateReview: (data) => serviceApi.put('/feeds/reviews', data),
 
+        //찜하기 관련
         addWish: (userId, contentId) => serviceApi.post('/feeds/wish', { user_id: userId, content_id: contentId }),
         deleteWish: (userId, contentId) => serviceApi.delete('/feeds/wish', { data: { user_id: userId, content_id: contentId } }),
-        getWish: (userId) => serviceApi.get(`/feeds/${userId}}/wish`)
+        getWish: (userId) => serviceApi.get(`/feeds/${userId}/wish`),
 
 
         searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
@@ -63,9 +64,9 @@
         //추가:나한나
         //유저 초기값 설정용 영화 목록(유저/온보딩)
         getOnboardingContents: () => serviceApi.get(`/users/contents`), 
-        
         //데이터를 포스트 하면 리퀘스트로 장르 상위 태그 5개가 들어옴
         getOnboardingKeywords: (data) => serviceApi.post(`/users/onboarding`,data),
+       
         getUserContents: (targetUserId) => serviceApi.get(`/feeds/${targetUserId}/contents`),
         getAllGenres: () => serviceApi.get('/feeds/genre'),
     };
