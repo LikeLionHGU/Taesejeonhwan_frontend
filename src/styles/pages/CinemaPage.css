@@ -1,48 +1,31 @@
-.cinema-page-wrapper {
+/* src/styles/pages/CinemaPage.css */
+
+.cinema-page {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 148px 81px 158px;
+    background-color: #FFFFFF;
     min-height: 100vh;
-    padding-bottom: 80px;
+    box-sizing: border-box;
+    position: relative;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.cinema-page-wrapper.light-mode {
-    background-color: #FFFFFF;
-    color: var(--color-text-main);
+/* 다크 모드 배경색 반전 */
+.cinema-page.dark-mode {
+    background-color: #111827;
 }
 
-.cinema-content-area {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
+.cinema-page-title {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 33px;
+    line-height: 40px;
+    color: #000000;
+    margin-bottom: 47px;
 }
 
-.page-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
-.grid-section {
-    margin-top: 40px;
-}
-
-.filter-row {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-}
-
-.add-content-btn {
-    background-color: #007AFF;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.add-content-btn:hover {
-    background-color: #0056b3;
+.cinema-page.dark-mode .cinema-page-title {
+    color: #FFFFFF;
 }

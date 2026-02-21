@@ -1,109 +1,153 @@
-
-.user-info-card {
-    border-radius: 20px;
-    padding: 30px 40px;
+.profile-card {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    transition: background-color 0.3s ease;
+    position: relative;
+    width: 100%;
+    height: 198px;
+    background-color: #F9F9F9;
+    border-radius: 24px;
+    padding: 0 64px;
+    box-sizing: border-box;
+    margin-bottom: 100px;
 }
 
-.user-info-card.light {
-    background-color: #F8F9FA;
+.dark-mode .profile-card {
+    background-color: #1E293B;
 }
 
-.profile-left {
+.profile-info-wrapper {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 34px;
 }
 
 .profile-avatar {
-    width: 80px;
-    height: 80px;
+    width: 124px;
+    height: 124px;
+    background-color: #FEA1CD;
     border-radius: 50%;
+    border: 4px solid #000000;
     object-fit: cover;
-    background-color: #FFC0CB;
-    border: 2px solid white;
+    cursor: pointer;
 }
 
-.profile-details {
+.profile-text-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 17px;
 }
 
-.profile-name-row {
+.profile-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 7px;
 }
 
 .profile-nickname {
-    font-size: 20px;
-    font-weight: 700;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 22.75px;
+    color: #1D1D1D;
 }
 
-.follow-action-btn {
-    background-color: #007AFF;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    padding: 4px 12px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.edit-icon-btn {
-    background: none;
-    border: none;
-    color: #999;
-    cursor: pointer;
-    font-size: 16px;
+.dark-mode .profile-nickname {
+    color: #FFFFFF;
 }
 
 .profile-stats {
-    font-size: 14px;
-    color: #666;
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 38px;
 }
 
-.user-info-card.dark .profile-stats {
-    color: #AAA;
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
 }
 
-.divider {
-    color: #DDD;
+.dark-mode .stat-item {
+    color: #FFFFFF;
 }
 
 .profile-genres {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 4px;
+    gap: 24px;
 }
 
 .genre-label {
-    font-size: 13px;
-    font-weight: 600;
-    margin-right: 4px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #000000;
+}
+
+.dark-mode .genre-label {
+    color: #FFFFFF;
+}
+
+.genre-tags {
+    display: flex;
+    gap: 10px;
 }
 
 .genre-tag {
-    font-size: 12px;
-    background-color: #E0EFFF;
-    color: #007AFF;
-    padding: 4px 8px;
-    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 16px;
+    background-color: #EBEBEB;
+    border-radius: 8.4px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 14.5px;
+    color: #0066FF;
 }
 
-.more-genres-btn {
-    font-size: 12px;
-    color: #999;
+.dark-mode .genre-tag {
+    background-color: rgba(49, 130, 246, 0.35);
+    color: #FAFAFA;
+}
+
+.edit-genre-btn {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #9E9E9E;
+    cursor: pointer;
     background: none;
     border: none;
+}
+
+.action-btn {
+    position: absolute;
+    top: 32px;
+    right: 64px;
+    width: 123px;
+    height: 44px;
+    background-color: #0066FF;
+    border-radius: 9px;
+    border: none;
+    color: #FFFFFF;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
     cursor: pointer;
-    margin-left: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-btn.follow {
+    width: 95px;
+    height: 29px;
+    border-radius: 8px;
+    position: relative;
+    top: 0;
+    right: 0;
 }

@@ -13,11 +13,10 @@ import '../styles/pages/CinemaPage.css';
 const CinemaPage = ({ pageMode }) => {
     const { userId: urlUserId } = useParams();
     const myUserId = localStorage.getItem('userId');
-
     const isMyCinema = pageMode === 'MY' || String(urlUserId) === String(myUserId);
-
     const targetUserId = isMyCinema ? myUserId : urlUserId;
-
+    const isDarkMode = false;
+    
     const [profile, setProfile] = useState(null);
     const [contents, setContents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +58,10 @@ const CinemaPage = ({ pageMode }) => {
 
     if (isLoading) return <div>영화관 입장 중... 팝콘팡팡🍿</div>;
     return (
-        <div className="cinema-page-wrapper">
+        <div className={`cinema-page ${isDarkMode ? 'dark-mode' : ''}`}>
+            <div className="cinema-page-title">
+                {isMyCinema ? '나의 영화관' : `@${profile?.nickname}님의 영화관`}
+            </div>
             {profile && (
                 <UserInfo
                     profile={profile}
@@ -89,7 +91,7 @@ const CinemaPage = ({ pageMode }) => {
             {activeModal === 'contentDetail' && selectedContentId && (
                 <ContentInfo
                     contentId={selectedContentId}
-                    targetUserId={targetUserId} 
+                    targetUserId={targetUserId}
                     onClose={closeModal}
                 />
             )}
