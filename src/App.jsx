@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
-import Loading from './pages/LoadingTest';
+// import Loading from './pages/LoadingTest';
 import CinemaPage from './pages/CinemaPage';
 import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
@@ -31,7 +31,7 @@ function App() {
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   // 3. 헤더 숨기는 주소들 목록 (로그인, 로딩 페이지 등 필요시 추가)
-  const hideHeaderRoutes = ['/login', '/loading', '/'];
+  const hideHeaderRoutes = ['/login', '/'];
   const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
 
   // 4. 토글 안 보여주고 무조건 밝은 테마로 가는 주소들 목록 (시네마 페이지 같은 거!)
@@ -56,10 +56,10 @@ function App() {
         
 
         {/* 로그인 페이지 - 한나 */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LandingPage />} />
 
         {/* 로딩 페이지 (구글 로그인 후 돌아오는 곳) - 한나 > 유원 */}
-        <Route path="/loading" element={<Loading />} />
+        {/* <Route path="/loading" element={<Loading />} /> */}
 
         {/* 메인 페이지 (다크모드 = 반대 취향) - 유원 */}
         <Route path="/main" element={<MainPage isDarkMode={isDarkMode} />} />

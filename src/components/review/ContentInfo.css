@@ -129,3 +129,74 @@
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
 }
+
+.review-form-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.back-header,
+.back-btn {
+    cursor: pointer;
+    color: #999;
+    margin-bottom: 20px;
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.rating-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.star-icon {
+    font-size: 40px;
+    cursor: pointer;
+    color: #E0E0E0;
+    transition: color 0.2s;
+}
+
+.star-icon.selected {
+    color: #FFD700;
+}
+
+.review-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    resize: none;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.status-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.all-reviews-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.reviews-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 5px;
+}
