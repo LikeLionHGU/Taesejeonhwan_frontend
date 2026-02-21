@@ -4,10 +4,13 @@ import AddReview from './AddReview';
 import AllReviewsModal from './AllReviewsModal';
 import './ContentInfo.css';
 import '../../styles/Common.css';
-
-const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
+//is_wished가 백엔드가 주는 이름과 달라서 수정 ->wished
+//onWishChange 변수명 추가/ 위시리스트 상태 갱신
+const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChange  }) => {
     const [viewMode, setViewMode] = useState('INFO');
-    const [data, setData] = useState(null);
+
+    const [data, setData] = useState(null);//여기서 찜/찜하지 않은 상태 -> 기본값 찜한 상태
+    
     const [isLoading, setIsLoading] = useState(false); 
     const [myId] = useState(localStorage.getItem('userId') || 1);
 
@@ -43,19 +46,26 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
             setIsLoading(false); // 로딩 종료
         }
     };
-
     const handleToggleWish = async () => {
-        if (!data) return;
+        if (!data||!myId) return;
         try {
-            if (data.is_wished) {
+            if (data.wished) {
                 await contentApi.deleteWish(myId, contentId);
-                setData(prev => ({ ...prev, is_wished: false }));
+                setData(prev => ({ ...prev, wished: false }));
+                alert("찜한 영화가 제거되었습니다!🗑️")
             } else {
                 await contentApi.addWish(myId, contentId);
-                setData(prev => ({ ...prev, is_wished: true }));
+                setData(prev => ({ ...prev, wished: true }));
+                alert("영화가 찜 목록으로 이동했어요!⭐")
+
             }
+
+        window.dispatchEvent(new CustomEvent('wishlistChanged'));
+
+            if (onWishChange) onWishChange(); 
+
         } catch (err) {
-            console.error("찜하기 오류", err);
+            console.error("찜하기 오류", data, err);
         }
     };
 
@@ -68,10 +78,10 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId }) => {
                     {data.title} <span className="modal-year">{data.year}</span>
                 </h2>
                 <button
-                    className={`wish-btn ${data.is_wished ? 'active' : ''}`}
+                    className={`wish-btn ${data.wished ? 'active' : ''}`}
                     onClick={handleToggleWish}
                 >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill={data.is_wished ? "#007AFF" : "none"} stroke={data.is_wished ? "#007AFF" : "#ccc"} strokeWidth="2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill={data.wished ? "#0066FF" : "none"} stroke={data.wished ? "#0066FF" : "#ccc"} strokeWidth="2">
                         <path d="M19 21L12 16L5 21V5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V21Z" />
                     </svg>
                 </button>

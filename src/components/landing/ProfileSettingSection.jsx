@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './profile.css';
 
+
 //더미데이터(프사
 
 import profileImg1 from '../../assets/landing/profile1.svg';
