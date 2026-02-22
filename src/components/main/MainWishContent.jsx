@@ -1,36 +1,10 @@
 import React from 'react';
 import './MainWishContent.css';
-import { WishApi } from '../../api/api'
-import ContentInfo from '../review/ContentInfo';
-import WishlistPage from '../../pages/WishlistPage';
-import ContentGrid from '../content/ContentGrid';
-
-
-//에이피아이랑 네비게이트 추가하고/ 불러오고/ 갱신하고/ 버튼에 이벤트 연결
-//각자 객체 주소 지정하기
-
-//이펙트로 메인 로딩 시 현재 목록 로딩
-//스테이스로 저장,넘기기
 
 // 임시로 해둠
 import dummyPoster from '../../assets/movie1.png';
 
 const MainWishContent = () => {
-//기존 토글값+뉴 토글값
-    const [On,Off] = useState(); // 위시리스트, 콘텐츠그리드, 콘텐츠인포에서 토글 on 상태값 받아오기
-
-
-
-try {
-
-
-
-}
-
-// getWish: (userId) => serviceApi.get(`/feeds/${userId}/wish`),
-
-
-
     // API 연결하면 바꿀 거임...
     const wishMovies = [
         {
@@ -64,7 +38,7 @@ try {
             <div className="wish-header">
                 <div className="wish-title-area">
                     <span className="wish-title">찜한 작품</span>
-                    <span className="wish-count">({setData.length})</span> {/* API에서 받아온 찜한 작품 수로 대체해야 함 */}
+                    <span className="wish-count">(12)</span> {/* API에서 받아온 찜한 작품 수로 대체해야 함 */}
                 </div>
                 <div className="wish-view-all">
                     <span>전체 보기</span>
