@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import IntroSection from '../components/landing/IntroSection';
 import ProfileSettingSection from '../components/landing/ProfileSettingSection';
@@ -8,8 +8,13 @@ import ShowResultSection from '../components/landing/ShowResultSection';
 const LandingPage = () => {
     const location = useLocation(); 
     
-    // 💡 Loading에서 state: { step: 1 } 로 보냈으면 1단계부터 시작!
     const [step, setStep] = useState(location.state?.step || 0);
+
+    useEffect(() => {
+        if (location.state?.step !== undefined) {
+            setStep(location.state.step);
+        }
+    }, [location.state]);
 
     const nextStep = () => setStep(prev => prev + 1);
 

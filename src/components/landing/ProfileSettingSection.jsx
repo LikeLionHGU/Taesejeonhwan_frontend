@@ -1,101 +1,165 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { userApi } from '../../api/api'; 
 import './profile.css';
 
-//더미데이터(프사
-
-import profileImg1 from '../../assets/landing/profile1.svg';
-import profileImg2 from '../../assets/landing/profile2.svg';
-import profileImg3 from '../../assets/landing/profile3.svg';
-import profileImg4 from '../../assets/landing/profile4.svg';
-import profileImg5 from '../../assets/landing/profile5.svg';
-
 const ProfileSettingSection = ({ onNext }) => {
-    const images = [profileImg1, profileImg2, profileImg3, profileImg4, profileImg5];
-
+    const [images, setImages] = useState([]);
     const [nickname, setNickname] = useState('');
-    const [selectedImgId, setSelectedImgId] = useState(null);//이미지 선택
-    const [checkStatus, setCheckStatus] = useState('none'); //중복 체크
+    const [selectedImgUrl, setSelectedImgUrl] = useState(null); 
+    const [checkStatus, setCheckStatus] = useState('none');
+    const [formatError, setFormatError] = useState(false);
     const maxLength = 8;
 
+    useEffect(() => {
+        const fetchProfileImages = async () => {
+            try {
+                const response = await userApi.getAvailableProfileImages();
+                if (response.data && Array.isArray(response.data)) {
+                    setImages(response.data.map(item => item.profile_img));
+                }
+            } catch (error) {
+                console.error("프로필 이미지 목록을 불러오는데 실패했습니다.", error);
+            }
+        };
+
+        fetchProfileImages();
+    }, []);
+
     const handleNicknameChange = (e) => {
-        const nicknamerule = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-        setNickname(nicknamerule);//위에서 제한값 받아오기
+        const rawValue = e.target.value;
+
+        if (/[^a-zA-Z0-9]/.test(rawValue)) {
+            setFormatError(true); // 에러 켜기
+        } else {
+            setFormatError(false); //끄기
+        }
+        let filteredValue = rawValue.replace(/[^a-zA-Z0-9]/g, '');
+        if (filteredValue.length > maxLength) {
+            filteredValue = filteredValue.slice(0, maxLength);
+        }
+        setNickname(filteredValue);
         setCheckStatus('none');
     };
 
-    const handleCheckDuplicate = () => {
+    const handleCheckDuplicate = async () => {
         if (!nickname.trim()) {
             return alert("닉네임을 입력해 주세요.");
         }
-        //-> 여기 api 통신 코드 넣기
-        setCheckStatus('available');//중복확인완료
+
+        setFormatError(false);
+
+        try {
+            const response = await userApi.checkNickname(nickname);
+            if (response.data.available === true) {
+                setCheckStatus('available');
+            } else {
+                setCheckStatus('unavailable');
+            }
+        } catch (error) {
+            console.error("닉네임 중복 확인 실패:", error);
+            if (error.response?.status === 409 || error.response?.data?.available === false) {
+                setCheckStatus('unavailable');
+            } else {
+                alert("중복 확인 중 서버에 문제가 발생했습니다. 다시 시도해주세요.");
+            }
+        }
     };
 
-    const handleSubmit = () => {// 다음 버튼 클릭
-        if (selectedImgId === null) {//이미지 눌일 경우
+    const handleSubmit = async () => {
+        if (!selectedImgUrl) {
             return alert("프로필 캐릭터를 선택해주세요.");
         }
-        if (checkStatus !== 'available') {//닉네임확인 안했을 경우
-            return alert("닉네임 중복 확인을 해주세요.");
+        if (checkStatus !== 'available') {
+            return alert("닉네임 중복 확인을 완료해주세요.");
         }
-            if (nickname.length > maxLength) {
-        return alert("닉네임은 8자 이하여야 합니다!");
+        const rawUserId = localStorage.getItem('userId');
+        const userId = Number(rawUserId);
+        if (!userId) {
+            return alert("사용자 정보가 없습니다. 다시 로그인 해주세요.");
+        }
 
-       }
-       
+        try {
+            console.log("🚀 서버로 전송 시도:", { user_id: userId, profile_img: selectedImgUrl, nickname: nickname });
+            await userApi.updateProfileImg(userId, selectedImgUrl);
+            await userApi.updateNickname(userId, nickname);
 
-        const userProfileData = {//선택한 정보들 유저 프로픽 박스에 저장
-            profileImageIndex: selectedImgId, // 1~5 중 하나
-            profileImageUrl: images[selectedImgId - 1],
-            nickname: nickname
-        };
-        
-        localStorage.setItem('userProfile',JSON.stringify(userProfileData));
-        console.log("저장 완료!", userProfileData);
+            const userProfileData = {
+                profileImageUrl: selectedImgUrl,
+                nickname: nickname
+            };
+            localStorage.setItem('userProfile', JSON.stringify(userProfileData));
+            console.log("프로필 설정 서버 연동 완료!", userProfileData);
 
-        onNext?.();
+            if (onNext) onNext();
 
+        } catch (error) {
+            console.error("프로필 설정 등록 실패:", error);
+            const serverMsg = error.response?.data?.message || "서버 내부 오류(500)";
+            alert(`프로필 설정 등록 중 문제가 발생했습니다. (${serverMsg})`);
+        }
     };
 
     return (
         <div className="profile-setup-container">
-    <h1 className="title">
-    반가워요! 👋<br/>
-    먼저 프로필을 설정해볼까요? </h1>
-      
-      <div className="avatar-list">
-      {images.map((img, index) => {
-       const id = index + 1;
-       const isSelected = selectedImgId === id;
-                    
-     return (
-             <div 
-              key={id} 
-              className={`avatar-item ${isSelected ? 'selected' : ''}`}
-            onClick={() => setSelectedImgId(id)}>
-              <div className={`check-badge ${isSelected ? 'active' : ''}`}>
-                 ✔
-              </div>
-              <img src={img} alt={`profile-${id}`} />
-              </div>
-                    );
-                })}
+            <h1 className="title">
+                반가워요! 👋<br />
+                먼저 프로필을 설정해볼까요?
+            </h1>
+
+            {/* 프로필 이미지 리스트 렌더링 */}
+            <div className="avatar-list">
+                {images.length > 0 ? (
+                    images.map((imgUrl, index) => {
+                        const isSelected = selectedImgUrl === imgUrl;
+                        return (
+                            <div
+                                key={index}
+                                className={`avatar-item ${isSelected ? 'selected' : ''}`}
+                                onClick={() => setSelectedImgUrl(imgUrl)}
+                            >
+                                <div className={`check-badge ${isSelected ? 'active' : ''}`}>
+                                    ✔
+                                </div>
+                                <img src={imgUrl} alt={`profile-${index}`} />
+                            </div>
+                        );
+                    })
+                ) : (
+                    <p style={{ fontSize: '14px', color: '#888' }}>프로필 이미지를 불러오는 중입니다...</p>
+                )}
             </div>
 
             <div className="input-section">
                 <div className="input-wrapper">
-                    <input 
-                        type="text" 
-                        placeholder="닉네임을 입력해 주세요" 
+                    <input
+                        type="text"
+                        placeholder="닉네임을 입력해 주세요 (8자 이내)"
                         value={nickname}
                         onChange={handleNicknameChange}
                     />
-                    <button className="check-btn" onClick={handleCheckDuplicate}>
-                        중복확인
+                    <button
+                        className="check-btn"
+                        onClick={handleCheckDuplicate}
+                        disabled={checkStatus === 'available' || !nickname}
+                        style={{ cursor: checkStatus === 'available' ? 'not-allowed' : 'pointer' }}
+                    >
+                        {checkStatus === 'available' ? '확인완료' : '중복확인'}
                     </button>
                 </div>
                 {checkStatus === 'available' && (
-                    <p className="success-msg">사용 가능한 닉네임 입니다.</p>
+                    <p className="success-msg" style={{ color: 'green', fontSize: '0.9rem', marginTop: '5px' }}>
+                        사용 가능한 닉네임 입니다.
+                    </p>
+                )}
+                {checkStatus === 'unavailable' && (
+                    <p className="error-msg" style={{ color: 'red', fontSize: '0.9rem', marginTop: '5px' }}>
+                        이미 사용 중인 닉네임입니다.
+                    </p>
+                )}
+                {formatError && (
+                    <p className="error-msg" style={{ color: 'red', fontSize: '0.9rem', marginTop: '5px' }}>
+                        영문과 숫자만 입력 가능합니다.
+                    </p>
                 )}
             </div>
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import './MainWishContent.css';
 
+//에이피아이랑 네비게이트 추가하고/ 불러오고/ 갱신하고/ 버튼에 이벤트 연결
+//각자 객체 주소 지정하기
+
+
 // 임시로 해둠
 import dummyPoster from '../../assets/movie1.png';
 
