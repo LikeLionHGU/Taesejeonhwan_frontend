@@ -1,5 +1,6 @@
 import React from 'react';
 import './ContentGrid.css';
+import './ContentCard.css'; 
 
 const ContentGrid = ({ contents, onContentClick }) => {
     if (!contents || contents.length === 0) {
@@ -25,11 +26,18 @@ const ContentGrid = ({ contents, onContentClick }) => {
                         className="content-card"
                         onClick={() => onContentClick && onContentClick(contentId)}
                     >
-                        <img
-                            src={poster}
-                            alt={title}
-                            className="movie-poster"
-                        />
+                        <div className="poster-wrapper">
+                            <img
+                                src={poster || "https://via.placeholder.com/200x300"}
+                                alt={title}
+                                className="movie-poster"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                            <div className="card-overlay">
+                                <span>상세보기</span>
+                            </div>
+                        </div>
+
                         <div className="movie-info">
                             <div className="movie-title-row">
                                 <span className="content-title">{title}</span>

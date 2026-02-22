@@ -88,10 +88,13 @@ const CinemaPage = ({ pageMode }) => {
                 />
             )}
             {activeModal === 'review' && <AddReview onClose={closeModal} />}
+
             {activeModal === 'contentDetail' && selectedContentId && (
                 <ContentInfo
+                    isOpen={true}
+                    pageMode={isMyCinema ? 'MY' : 'USER'}
+                    ownerId={targetUserId}
                     contentId={selectedContentId}
-                    targetUserId={targetUserId}
                     onClose={closeModal}
                 />
             )}
