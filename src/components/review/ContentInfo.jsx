@@ -160,9 +160,9 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
                                     initialData={data.comment ? { rating: data.rating, comment: data.comment } : null}
                                     onBack={() => setViewMode('INFO')}
                                     onSuccess={() => {
-                                        fetchDetail();
                                         setViewMode('INFO');
                                         window.dispatchEvent(new CustomEvent('wishlistChanged'));
+                                        onClose();
                                     }}
                                 />
                             )}

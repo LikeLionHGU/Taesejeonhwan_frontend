@@ -9,7 +9,7 @@ const MainWishContent = () => {
 
   const fetchWishMovies = async () => {//에이피아이 갱신 함수
         try {
-        const myId = localStorage.getItem("myId");
+        const myId = localStorage.getItem("userId");
             if (!myId) return;
 
             // API 호출
