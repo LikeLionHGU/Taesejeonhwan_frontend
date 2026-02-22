@@ -7,6 +7,8 @@ import MainPage from './pages/MainPage';
 import CinemaPage from './pages/CinemaPage';
 import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
+import Footer  from './components/common/Footer';
+
 import ProfileSettingSection from './components/landing/ProfileSettingSection';
 import SelectPreferenceSection from './components/landing/SelectPreferenceSection';
 import ShowResultSection from './components/landing/ShowResultSection';
@@ -73,7 +75,13 @@ function App() {
         {/* 찜한 목록 - 한나 */}
         <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
+
+
+              <Footer/>
+
     </>
+
+
   );
 }
 

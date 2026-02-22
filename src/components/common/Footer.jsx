@@ -1,9 +1,13 @@
 import React from 'react';
+import '../../styles/Footer.css'
+
 
 const Footer = () => {
     return (
-        <footer>
-            <p>이게 바로 푸터긴 해~</p>
+        <footer className="footer-section line">
+            <div className="footer-logo">Otte</div>
+            <span className="otte-dot"></span>
+            <div className="footer-message">© 2025 Otte. All rights reserved</div>
         </footer>
     );
 };
