@@ -12,7 +12,7 @@ const Login = () => {
     const tokenCheck = new URLSearchParams(hash.replace("#", "?")).get("id_token");
 
     if (tokenCheck) {
-      setIsProcessing(true); 
+      setIsProcessing(true);
       processLogin(tokenCheck);
     }
   }, [navigate]);
@@ -34,8 +34,8 @@ const Login = () => {
         } else {
           console.log("기존 유저: 메인으로 이동");
           alert(`환영합니다, ${responseData.nickname}님!`);
-          //navigate("/main");
-          navigate("/", { state: { step: 3 } }); //테스트용 수정 필요
+          navigate("/main");
+          //navigate("/", { state: { step: 3 } }); //테스트용 수정 필요
         }
       }
     } catch (error) {
@@ -60,7 +60,7 @@ const Login = () => {
   if (isProcessing) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', fontSize: '18px', fontWeight: 'bold' }}>
-        로그인 처리 중--- 
+        로그인 처리 중---
       </div>
     );
   }
