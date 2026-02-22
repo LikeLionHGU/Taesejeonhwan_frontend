@@ -32,7 +32,9 @@ serviceApi.interceptors.response.use(
             localStorage.removeItem('userId');
             localStorage.clear(); window.location.href = '/login';
         }
-    );
+        return Promise.reject(error);
+    }
+);
 
 
     export const authRequest = {
