@@ -1,23 +1,10 @@
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    column-gap: 49.5px;
+    column-gap: 51px;
     row-gap: 60px;
     width: 100%;
     padding-bottom: 100px;
-}
-
-.content-card {
-    display: flex;
-    flex-direction: column;
-    width: 216px;
-    gap: 13px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.content-card:hover {
-    transform: translateY(-5px);
 }
 
 .movie-poster {

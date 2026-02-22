@@ -31,7 +31,7 @@ function App() {
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   // 3. 헤더 숨기는 주소들 목록 (로그인, 로딩 페이지 등 필요시 추가)
-  const hideHeaderRoutes = ['/login', '/'];
+  const hideHeaderRoutes = ['/login'];
   const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
 
   // 4. 토글 안 보여주고 무조건 밝은 테마로 가는 주소들 목록 (시네마 페이지 같은 거!)
@@ -41,6 +41,7 @@ function App() {
 
   return (
     <>
+      {/* 여기서 헤더 보여줄지 말지 결정하는데, 헤더는 보여주되, 기능들은 안 보이게 해야 함 -추후 수정 */}
       {shouldShowHeader && (
         <Header
           isDarkMode={isCinemaPage ? false : isDarkMode}

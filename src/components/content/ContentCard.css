@@ -1,10 +1,9 @@
 .content-card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     cursor: pointer;
     transition: transform 0.2s ease;
-    width: 100%;
+    width: 216px;
 }
 
 .content-card:hover {
@@ -14,8 +13,7 @@
 .poster-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 2 / 3;
-    border-radius: 12px;
+    aspect-ratio: 2/3;
     overflow: hidden;
     background-color: #f0f0f0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -44,6 +42,7 @@
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 10;
 }
 
 .card-overlay span {
@@ -52,17 +51,45 @@
     font-weight: 600;
     border: 1px solid white;
     padding: 6px 12px;
-    border-radius: 20px;
 }
 
 .content-card:hover .card-overlay {
     opacity: 1;
 }
 
+.rating-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.content-card:hover .rating-overlay,
+.rating-overlay.has-rating {
+    opacity: 1;
+}
+
+.rating-number {
+    color: white;
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 16px;
+}
+
 .card-info-area {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    margin-top: 10px;
 }
 
 .info-row-top {
@@ -74,26 +101,11 @@
 .card-title {
     font-size: 15px;
     font-weight: 600;
-    color: var(--color-text-main);
-
+    color: var(--color-text-base);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 80%;
-}
-
-.card-rating {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-text-main);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.star-icon {
-    color: #FFD700;
-    font-size: 14px;
+    max-width: 100%;
 }
 
 .info-row-bottom {
@@ -102,6 +114,52 @@
 
 .card-year {
     font-size: 12px;
-    color: #9E9E9E;
+    color: var(--color-text-gray);
     font-weight: 400;
+}
+
+.star-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 32px;
+    line-height: 1;
+    user-select: none;
+}
+
+.star-fill {
+    color: #FFD158;
+}
+
+.star-half {
+    background: linear-gradient(to right, #FFD158 50%, #E6E8EA 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.star-empty {
+    color: #E6E8EA;
+}
+
+.half {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    z-index: 2;
+}
+
+.half.left {
+    left: 0;
+}
+
+.half.right {
+    right: 0;
 }

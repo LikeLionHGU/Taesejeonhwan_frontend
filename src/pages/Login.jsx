@@ -34,7 +34,8 @@ const Login = () => {
         } else {
           console.log("기존 유저: 메인으로 이동");
           alert(`환영합니다, ${responseData.nickname}님!`);
-          navigate("/main");
+          //navigate("/main");
+          navigate("/", { state: { step: 1 } }); //테스트용 수정 필요
         }
       }
     } catch (error) {
