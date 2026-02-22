@@ -49,6 +49,7 @@ const CinemaPage = ({ pageMode }) => {
     const closeModal = () => {
         setActiveModal(null);
         setSelectedContentId(null);
+        setListModalType(null);
     }
 
     const handleContentClick = (contentId) => {
@@ -60,7 +61,7 @@ const CinemaPage = ({ pageMode }) => {
     return (
         <div className={`cinema-page ${isDarkMode ? 'dark-mode' : ''}`}>
             <div className="cinema-page-title">
-                {isMyCinema ? '나의 영화관' : `@${profile?.nickname}님의 영화관`}
+                {isMyCinema ? '나의 영화관' : `${profile?.nickname}님의 영화관`}
             </div>
             {profile && (
                 <UserInfo
@@ -68,6 +69,7 @@ const CinemaPage = ({ pageMode }) => {
                     isMyPage={isMyCinema}
                     onOpenProfileEdit={() => setActiveModal('profile')}
                     onOpenKeywordEdit={() => setActiveModal('keyword')}
+                    onOpenFollowModal={(type) => setListModalType(type)}
                 />
             )}
 

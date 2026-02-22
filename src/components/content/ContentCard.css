@@ -1,9 +1,10 @@
 .content-card {
     display: flex;
     flex-direction: column;
+    gap: 13px;
+    width: 100%;
     cursor: pointer;
     transition: transform 0.2s ease;
-    width: 216px;
 }
 
 .content-card:hover {
@@ -13,10 +14,11 @@
 .poster-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 2/3;
+    aspect-ratio: 216 / 310;
+    border-radius: 8px;
     overflow: hidden;
     background-color: #f0f0f0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .poster-wrapper img {
@@ -88,33 +90,56 @@
 .card-info-area {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-top: 10px;
+    gap: 2px;
+    width: 100%;
 }
 
 .info-row-top {
+    
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .card-title {
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 19px;
     font-weight: 600;
-    color: var(--color-text-base);
+    color: #000000;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    max-width: 75%;
+}
+
+.movie-rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.movie-rating .star-icon {
+    color: #FFD158;
+    font-size: 16px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
 }
 
 .info-row-bottom {
     display: flex;
+    width: 100%;
 }
 
 .card-year {
-    font-size: 12px;
-    color: var(--color-text-gray);
+    font-size: 15px;
+    line-height: 18px;
+    color: #8B95A1;
     font-weight: 400;
 }
 

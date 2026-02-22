@@ -94,6 +94,23 @@ serviceApi.interceptors.response.use(
             serviceApi.put(`/feeds/${userId}/genre`, {
                 genre_name: genresArray
             }),
+        
+        getFollowers: (userId) => serviceApi.get(`/users/follows/${userId}`),
+        getFollowings: (userId) => serviceApi.get(`/users/following/${userId}`),
+
+        followUser: (userId, followId) =>
+            serviceApi.post('/users/follow', {
+                user_id: Number(userId),
+                follow_id: Number(followId)
+            }),
+
+        unfollowUser: (userId, followId) =>
+            serviceApi.delete('/users/follow/delete', {
+                data: {
+                    user_id: Number(userId),
+                    follow_id: Number(followId)
+                }
+            }),
     };
 
     export default serviceApi;
