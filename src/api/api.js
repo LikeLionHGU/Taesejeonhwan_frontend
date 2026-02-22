@@ -55,7 +55,7 @@ serviceApi.interceptors.response.use(
         //찜하기 관련
         addWish: (userId, contentId) => serviceApi.post('/feeds/wish', { user_id: userId, content_id: contentId }),
         deleteWish: (userId, contentId) => serviceApi.delete('/feeds/wish', { data: { user_id: userId, content_id: contentId } }),
-        gerWish: (userId) => serviceApi.get(`/feeds/${userId}/wish`),
+        getWish: (userId) => serviceApi.get(`/feeds/${userId}/wish`),
 
 
         searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
