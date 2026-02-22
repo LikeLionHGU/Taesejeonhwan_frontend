@@ -167,4 +167,13 @@
 
 .dark-mode .wish-desc {
     color: var(--color-white);
+}                                
+.wish-overveiw{
+    margin-top: 10px;
+    display:-webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*line-height*/
 }
