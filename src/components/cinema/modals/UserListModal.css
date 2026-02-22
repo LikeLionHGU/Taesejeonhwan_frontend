@@ -1,0 +1,102 @@
+.list-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.list-modal-container {
+    position: relative;
+    width: 208px;
+    height: 431px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    padding: 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+}
+
+.list-modal-title {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #1D1D1D;
+}
+
+.list-content-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0 10px;
+}
+
+/* 스크롤바 숨기기 (선택 사항) */
+.list-content-area::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list-content-area::-webkit-scrollbar-thumb {
+    background: #E0E0E0;
+    border-radius: 10px;
+}
+
+.list-user-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    width: 142px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.list-user-item:hover {
+    transform: scale(1.02);
+}
+
+.list-user-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #EEEFF1;
+    object-fit: cover;
+}
+
+.list-user-nickname {
+    font-weight: 400;
+    font-size: 16.5px;
+    color: #1D1D1D;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-msg {
+    color: #8B95A1;
+    font-size: 13px;
+    margin-top: 50px;
+}
