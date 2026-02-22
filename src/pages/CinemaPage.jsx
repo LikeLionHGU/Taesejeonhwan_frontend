@@ -60,7 +60,7 @@ const CinemaPage = ({ pageMode }) => {
     return (
         <div className={`cinema-page ${isDarkMode ? 'dark-mode' : ''}`}>
             <div className="cinema-page-title">
-                {isMyCinema ? '나의 영화관' : `@${profile?.nickname}님의 영화관`}
+                {isMyCinema ? '나의 영화관' : `${profile?.nickname}님의 영화관`}
             </div>
             {profile && (
                 <UserInfo
