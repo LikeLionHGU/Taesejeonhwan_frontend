@@ -32,69 +32,66 @@ serviceApi.interceptors.response.use(
             localStorage.removeItem('userId');
             localStorage.clear(); window.location.href = '/login';
         }
-        return Promise.reject(error);
-    }
-);
+    );
 
 
-export const authRequest = {
-    googleLogin: (idToken) => authApi.post('/auth/google', { idToken }),
+    export const authRequest = {
+        googleLogin: (idToken) => authApi.post('/auth/google', { idToken }),
 
-    login: (data) => authApi.post('/auth/login', data),
-    signup: (data) => authApi.post('/auth/signup', data),
-};
+        login: (data) => authApi.post('/auth/login', data),
+        signup: (data) => authApi.post('/auth/signup', data),
+    };
 
-export const contentApi = {
-    getMainFeeds: (mode, userId, page = 1) =>
-        serviceApi.get(`/feeds/${mode}/${userId}?page=${page}`),
+    export const contentApi = {
+        getMainFeeds: (mode, userId, page = 1) =>
+            serviceApi.get(`/feeds/${mode}/${userId}?page=${page}`),
 
-    getDetail: (userId, contentId) => serviceApi.get(`/feeds/${userId}/${contentId}/review`),
-    createReview: (data) => serviceApi.post('/feeds/reviews', data),
-    updateReview: (data) => serviceApi.put('/feeds/reviews', data),
+        getDetail: (userId, contentId) => serviceApi.get(`/feeds/${userId}/${contentId}/review`),
+        createReview: (data) => serviceApi.post('/feeds/reviews', data),
+        updateReview: (data) => serviceApi.put('/feeds/reviews', data),
 
-    addWish: (userId, contentId) => serviceApi.post('/feeds/wish', { user_id: userId, content_id: contentId }),
-    deleteWish: (userId, contentId) => serviceApi.delete('/feeds/wish', { data: { user_id: userId, content_id: contentId } }),
-
-    searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
-    searchUser: (keyword) => serviceApi.get(`/feeds/search-user/${keyword}`),
-
-    //추가:나한나
-
-//유저 초기값 설정용 영화 목록(유저/온보딩)
-    getOnboardingContents: () => serviceApi.get('/users/contents'), 
-    
-    //데이터를 포스트 하면 리퀘스트로 장르 상위 태그 5개가 들어옴
-    getOnboardingKeywords: (data) => serviceApi.post('/users/onboarding' ,data),
+        //찜하기 관련
+        addWish: (userId, contentId) => serviceApi.post('/feeds/wish', { user_id: userId, content_id: contentId }),
+        deleteWish: (userId, contentId) => serviceApi.delete('/feeds/wish', { data: { user_id: userId, content_id: contentId } }),
+        getWish: (userId) => serviceApi.get(`/feeds/${userId}/wish`),
 
 
+        searchContent: (keyword) => serviceApi.get(`/feeds/search-content/${keyword}`),
+        searchUser: (keyword) => serviceApi.get(`/feeds/search-user/${keyword}`),
 
-    getUserContents: (targetUserId) => serviceApi.get(`/feeds/${targetUserId}/contents`),
-    getAllGenres: () => serviceApi.get('/feeds/genre'),
-};
+        //추가:나한나
+        //유저 초기값 설정용 영화 목록(유저/온보딩)
+        getOnboardingContents: () => serviceApi.get(`/users/contents`), 
+        //데이터를 포스트 하면 리퀘스트로 장르 상위 태그 5개가 들어옴
+        getOnboardingKeywords: (data) => serviceApi.post(`/users/onboarding`,data),
+       
+        getUserContents: (targetUserId) => serviceApi.get(`/feeds/${targetUserId}/contents`),
+        getAllGenres: () => serviceApi.get('/feeds/genre'),
+    };
 
-export const userApi = {
-    getMyProfile: () => serviceApi.get('/users/profile'),
-    getUserProfile: (targetUserId) => serviceApi.get(`/users/profile/${targetUserId}`),
-    checkNickname: (nickname) =>
-        serviceApi.get(`/users/check-nickname?nickname=${nickname}`),
-    getAvailableProfileImages: () => serviceApi.get('/users/profile-img'),
+    export const userApi = {
+        getMyProfile: () => serviceApi.get('/users/profile'),
+        getUserProfile: (targetUserId) => serviceApi.get(`/users/profile/${targetUserId}`),
+        checkNickname: (nickname) =>
+            serviceApi.get(`/users/check-nickname?nickname=${nickname}`),
+        getAvailableProfileImages: () => serviceApi.get('/users/profile-img'),
 
-    updateNickname: (userId, nickname) =>
-        serviceApi.post(`/users/nickname`, {
-            user_id: Number(userId),
-            nickname: nickname
-        }),
+        updateNickname: (userId, nickname) =>
+            serviceApi.post(`/users/nickname`, {
+                user_id: Number(userId),
+                nickname: nickname
+            }),
 
-    updateProfileImg: (userId, imgUrl) =>
-        serviceApi.post(`/users/profile-img`, {
-            user_id: Number(userId),
-            profile_img: imgUrl
-        }),
+        updateProfileImg: (userId, imgUrl) =>
+            serviceApi.post(`/users/profile-img`, {
+                user_id: Number(userId),
+                profile_img: imgUrl
+            }),
 
-    updateGenre: (userId, genresArray) =>
-        serviceApi.put(`/feeds/${userId}/genre`, {
-            genre_name: genresArray
-        }),
-};
+        updateGenre: (userId, genresArray) =>
+            serviceApi.put(`/feeds/${userId}/genre`, {
+                genre_name: genresArray
+            }),
+    };
 
-export default serviceApi;
+    export default serviceApi;
