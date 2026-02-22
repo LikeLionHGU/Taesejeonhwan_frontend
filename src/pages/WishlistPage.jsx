@@ -34,8 +34,10 @@ if(!userWish) return;
 // 찜한 영화 목록 API 호출 기능 추가해야 햄 ->네! 
 const response = await contentApi.getWish(userWish);
 
+//리뷰없는영화만 골라내기
+const wishlist = response.data.filter(movie => !movie.comment);
 
-const wishlist =(response.data);
+
 
 unsetData(wishlist);
 console.log("위시리스트 영화 데이터:", wishlist);

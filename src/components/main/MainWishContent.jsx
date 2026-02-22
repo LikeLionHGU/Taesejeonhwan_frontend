@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MainWishContent.css';
-import {WishApi} from '../../api/api';
+import serviceApi from '../../api/api';
 
 const MainWishContent = () => {
     const [wishData, setWishData] = useState([]);//받아온 데이터 배열로 저장
@@ -13,7 +13,7 @@ const MainWishContent = () => {
             if (!myId) return;
 
             // API 호출
-            const response = await WishApi.getWish(myId); 
+            const response = await serviceApi.getWish(myId); 
             
             const filteredMovies = response.data.filter(movie => !movie.comment);
             
@@ -33,23 +33,20 @@ const MainWishContent = () => {
         };
     }, []);
 
-    return (
+    return (//위시카운트변경 -> 위시데이터.길이
         <div className="main-wish-container">
             <div className="wish-header">
                 <div className="wish-title-area">
                     <span className="wish-title">찜한 작품</span>
-                    {/* 💡 5. wishData의 실제 길이 넣기 */}
                     <span className="wish-count">({wishData.length})</span> 
                 </div>
-                {/* 💡 6. 버튼에 네비게이트 이벤트 연결 */}
-                <div className="wish-view-all" style={{ cursor: 'pointer' }} onClick={() => navigate('/wishlist')}>
+                <div className="wish-view-all"onClick={( )=>navigate('/wishlist')}>
                     <span>전체 보기</span>
                     <span className="arrow-icon"></span>
                 </div>
             </div>
 
             <div className="wish-list">
-                {/* 💡 7. wishMovies 대신 wishData를 map으로 돌리기 */}
                 {wishData.length > 0 ? (
                     wishData.map((movie) => (
                         <div key={movie.content_id || movie.id} className="wish-item">
@@ -58,7 +55,6 @@ const MainWishContent = () => {
                             <div className="wish-info">
                                 <div className="wish-title-row">
                                     <span className="font-label wish-item-title">{movie.title}</span>
-                                    {/* 연도 데이터 안전하게 뽑기 */}
                                     <span className="wish-item-year">
                                         {movie.year || movie.release_date?.substring(0, 4)}
                                     </span>
