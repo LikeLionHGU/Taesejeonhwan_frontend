@@ -40,7 +40,7 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
             const detailData = res.data?.data || res.data?.result || res.data;
             setData(detailData);
         } catch (err) {
-            console.error("상세 정보 로딩 실패", err);
+            console.error("상세 정보 로딩 실패", err); 
             setData(null);
         } finally {
             setIsLoading(false); // 로딩 종료
@@ -79,7 +79,8 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
                 </h2>
                 <button
                     className={`wish-btn ${data.wished ? 'active' : ''}`}
-                    onClick={handleToggleWish}
+                    onClick={data.comment?() => alert("이미 리뷰를 작성한 영화에요!🎬") : handleToggleWish}
+                
                 >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill={data.wished ? "#0066FF" : "none"} stroke={data.wished ? "#0066FF" : "#ccc"} strokeWidth="2">
                         <path d="M19 21L12 16L5 21V5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V21Z" />
@@ -151,7 +152,8 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
                         <div className="modal-right">
                             {viewMode === 'INFO' && renderInfoView()}
 
-                            {viewMode === 'WRITE' && (
+
+                    {viewMode === 'WRITE' && (
                                 <AddReview
                                     contentId={contentId}
                                     movieTitle={data.title}
@@ -160,6 +162,7 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
                                     onSuccess={() => {
                                         fetchDetail();
                                         setViewMode('INFO');
+                                        window.dispatchEvent(new CustomEvent('wishlistChanged'));
                                     }}
                                 />
                             )}
