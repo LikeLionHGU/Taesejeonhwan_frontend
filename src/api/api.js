@@ -1,38 +1,36 @@
-    import axios from 'axios';
+import axios from 'axios';
 
-    const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://43.201.11.179:8443/';
+const BASE_URL = import.meta.env.VITE_SERVICE_API_URL || 'https://43.201.11.179:8443';
 
-    const authApi = axios.create({
-        baseURL: BASE_URL,
-        headers: { 'Content-Type': 'application/json' },
-    });
+const authApi = axios.create({
+    baseURL: BASE_URL,
+    headers: { 'Content-Type': 'application/json' },
+});
 
-    const serviceApi = axios.create({
-        baseURL: BASE_URL,
-        headers: { 'Content-Type': 'application/json' },
-    });
+const serviceApi = axios.create({
+    baseURL: BASE_URL,
+    headers: { 'Content-Type': 'application/json' },
+});
 
-    serviceApi.interceptors.request.use(
-        (config) => {
-            const token = localStorage.getItem('accessToken');
-            if (token) {
-                config.headers['Authorization'] = `Bearer ${token}`;
-            }
-            return config;
-        },
-        (error) => Promise.reject(error)
-    );
+serviceApi.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-    serviceApi.interceptors.response.use(
-        (response) => response,
-        (error) => {
-            if (error.response && error.response.status === 401) {
-                console.warn("로그인 세션이 만료되었습니다.");
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('userId');
-                localStorage.clear(); window.location.href = '/login';
-            }
-            return Promise.reject(error);
+serviceApi.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            console.warn("로그인 세션이 만료되었습니다.");
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userId');
+            localStorage.clear(); window.location.href = '/login';
         }
     );
 
