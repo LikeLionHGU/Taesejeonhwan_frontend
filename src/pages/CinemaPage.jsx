@@ -49,6 +49,7 @@ const CinemaPage = ({ pageMode }) => {
     const closeModal = () => {
         setActiveModal(null);
         setSelectedContentId(null);
+        setListModalType(null);
     }
 
     const handleContentClick = (contentId) => {
@@ -68,6 +69,7 @@ const CinemaPage = ({ pageMode }) => {
                     isMyPage={isMyCinema}
                     onOpenProfileEdit={() => setActiveModal('profile')}
                     onOpenKeywordEdit={() => setActiveModal('keyword')}
+                    onOpenFollowModal={(type) => setListModalType(type)}
                 />
             )}
 

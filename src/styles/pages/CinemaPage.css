@@ -1,31 +1,41 @@
-/* src/styles/pages/CinemaPage.css */
-
 .cinema-page {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 148px 81px 158px;
+    padding: 60px 81px 120px;
+    box-sizing: border-box;
     background-color: #FFFFFF;
     min-height: 100vh;
-    box-sizing: border-box;
-    position: relative;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* 다크 모드 배경색 반전 */
-.cinema-page.dark-mode {
-    background-color: #111827;
 }
 
 .cinema-page-title {
     font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    font-size: 33px;
-    line-height: 40px;
+    font-size: 28px;
+    font-weight: 700;
     color: #000000;
-    margin-bottom: 47px;
+    margin-bottom: 50px;
 }
 
-.cinema-page.dark-mode .cinema-page-title {
+.cinema-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.cinema-actions button {
+    background-color: var(--color-main, #0066FF);
     color: #FFFFFF;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 24px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cinema-actions button:hover {
+    background-color: #0052cc;
 }
