@@ -14,7 +14,7 @@ const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit, onO
 
                 <div className="profile-text-content">
                     <div className="profile-header">
-                        <span className="profile-nickname">@{profile.nickname}</span>
+                        <span className="profile-nickname">{profile.nickname}</span>
                         {!isMyPage && (
                             <button className="action-btn follow">+ 팔로우</button>
                         )}
