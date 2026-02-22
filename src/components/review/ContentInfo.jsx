@@ -4,13 +4,11 @@ import AddReview from './AddReview';
 import AllReviewsModal from './AllReviewsModal';
 import './ContentInfo.css';
 import '../../styles/Common.css';
-//is_wished가 백엔드가 주는 이름과 달라서 수정 ->wished
-//onWishChange 변수명 추가/ 위시리스트 상태 갱신
-const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChange  }) => {
+// is_wished가 백엔드가 주는 이름과 달라서 수정 -> wished
+// onWishChange 변수명 추가/ 위시리스트 상태 갱신
+const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChange }) => {
     const [viewMode, setViewMode] = useState('INFO');
-
-    const [data, setData] = useState(null);//여기서 찜/찜하지 않은 상태 -> 기본값 찜한 상태
-    
+    const [data, setData] = useState(null); // 여기서 찜/찜하지 않은 상태 -> 기본값 찜한 상태
     const [isLoading, setIsLoading] = useState(false); 
     const [myId] = useState(localStorage.getItem('userId') || 1);
 
@@ -29,7 +27,7 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
         try {
             const userId = pageMode === 'MY' ? myId : (ownerId || myId);
 
-            //뱍엔드 오류인지 확인용
+            // 백엔드 오류인지 확인용
             console.log(`요청 URL: /feeds/${userId}/${contentId}/review`);
             console.log("userId:", userId, "contentId:", contentId);
 
@@ -40,27 +38,27 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
             const detailData = res.data?.data || res.data?.result || res.data;
             setData(detailData);
         } catch (err) {
-            console.error("상세 정보 로딩 실패", err);
+            console.error("상세 정보 로딩 실패", err); 
             setData(null);
         } finally {
             setIsLoading(false); // 로딩 종료
         }
     };
+
     const handleToggleWish = async () => {
-        if (!data||!myId) return;
+        if (!data || !myId) return;
         try {
             if (data.wished) {
                 await contentApi.deleteWish(myId, contentId);
                 setData(prev => ({ ...prev, wished: false }));
-                alert("찜한 영화가 제거되었습니다!🗑️")
+                alert("찜한 영화가 제거되었습니다!🗑️");
             } else {
                 await contentApi.addWish(myId, contentId);
                 setData(prev => ({ ...prev, wished: true }));
-                alert("영화가 찜 목록으로 이동했어요!⭐")
-
+                alert("영화가 찜 목록으로 이동했어요!⭐");
             }
 
-        window.dispatchEvent(new CustomEvent('wishlistChanged'));
+            window.dispatchEvent(new CustomEvent('wishlistChanged'));
 
             if (onWishChange) onWishChange(); 
 
@@ -122,7 +120,7 @@ const ContentInfo = ({ isOpen, onClose, contentId, pageMode, ownerId, onWishChan
                             <div className="user-comment-box">"{data.comment}"</div>
                         </>
                     ) : (
-                        <p className="no-review-text">이 유저가 남긴 한줄평이 없습니다.</p>
+                        <p className="no-review-text">아직 남긴 리뷰가 없어요😢</p>
                     )}
                 </div>
             )}
