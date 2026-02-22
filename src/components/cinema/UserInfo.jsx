@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { userApi } from '../../api/api';
+import UserListModal from './modals/UserListModal';
 import './UserInfo.css';
 
 const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit, onOpenAddReview, onOpenFollowModal }) => {
 
     const [isFollowing, setIsFollowing] = useState(profile.is_following || false);
     const [followerCount, setFollowerCount] = useState(profile.stats?.follower_count || 0);
+    const [dropdownType, setDropdownType] = useState(null);
 
     useEffect(() => {
         setIsFollowing(profile.is_following || false);
@@ -49,7 +52,7 @@ const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit, onO
 
                 <div className="profile-text-content">
                     <div className="profile-header">
-                        <span className="profile-nickname">@{profile.nickname}</span>
+                        <span className="profile-nickname">{profile.nickname}</span>
                         {!isMyPage && (
                             <button
                                 className={`action-btn follow ${isFollowing ? 'following' : ''}`}
@@ -61,15 +64,15 @@ const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit, onO
                                     transition: 'all 0.2s ease'
                                 }}
                             >
-                                {isFollowing ? '언팔로우' : '+ 팔로우'}
+                                {isFollowing ? '팔로잉' : '+ 팔로우'}
                             </button>
                         )}
                     </div>
 
-                    <div className="profile-stats">
+                    <div className="profile-stats" style={{ position: 'relative' }}>
                         <div
                             className="stat-item"
-                            onClick={() => onOpenFollowModal && onOpenFollowModal('FOLLOWER')}
+                            onClick={() => setDropdownType('FOLLOWER')}
                             style={{ cursor: 'pointer' }}
                         >
                             <span style={{ fontWeight: 400, color: '#8B95A1' }}>팔로워</span>
@@ -77,12 +80,19 @@ const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit, onO
                         </div>
                         <div
                             className="stat-item"
-                            onClick={() => onOpenFollowModal && onOpenFollowModal('FOLLOWING')}
+                            onClick={() => setDropdownType('FOLLOWING')}
                             style={{ cursor: 'pointer' }}
                         >
                             <span style={{ fontWeight: 400, color: '#8B95A1' }}>팔로잉</span>
                             <span>{profile.stats?.following_count || 0}</span>
                         </div>
+
+                        <UserListModal
+                            isOpen={!!dropdownType}
+                            onClose={() => setDropdownType(null)}
+                            targetUserId={profile.user_id}
+                            type={dropdownType}
+                        />
                     </div>
 
                     <div className="profile-genres">
@@ -103,11 +113,11 @@ const UserInfo = ({ profile, isMyPage, onOpenProfileEdit, onOpenKeywordEdit, onO
                 </div>
             </div>
 
-            {isMyPage && (
+            {/* {isMyPage && (
                 <button className="action-btn" onClick={onOpenAddReview}>
                     + 등록하기
                 </button>
-            )}
+            )} */}
         </div>
     );
 };

@@ -33,19 +33,14 @@ const UserListModal = ({ isOpen, onClose, targetUserId, type }) => {
     if (!isOpen) return null;
 
     const handleUserClick = (userId) => {
-        onClose(); 
-        navigate(`/user/${userId}`); // 해당 유저 시네마로 이동
+        onClose();
+        navigate(`/user/${userId}`);
     };
 
     return (
-        <div className="list-modal-overlay" onClick={onClose}>
-            <div className="list-modal-container" onClick={(e) => e.stopPropagation()}>
-                <button className="list-modal-close" onClick={onClose}>✕</button>
-
-                <div className="list-modal-title">
-                    {type === 'FOLLOWER' ? '팔로워' : '팔로잉'}
-                </div>
-
+        <>
+            <div className="dropdown-overlay" onClick={onClose} />
+            <div className={`list-dropdown-container ${type === 'FOLLOWER' ? 'pos-left' : 'pos-right'}`}>
                 <div className="list-content-area">
                     {isLoading ? (
                         <div className="list-msg">로딩 중...</div>
@@ -69,7 +64,7 @@ const UserListModal = ({ isOpen, onClose, targetUserId, type }) => {
                     )}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -7,7 +7,6 @@ import ProfileEditor from '../components/user/ProfileEditor';
 import KeywordEditor from '../components/user/KeywordEditor';
 import AddReview from '../components/review/AddReview';
 import ContentInfo from '../components/review/ContentInfo';
-import UserListModal from '../components/cinema/modals/UserListModal';
 
 import '../styles/pages/CinemaPage.css';
 
@@ -23,7 +22,6 @@ const CinemaPage = ({ pageMode }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [activeModal, setActiveModal] = useState(null);
     const [selectedContentId, setSelectedContentId] = useState(null);
-    const [listModalType, setListModalType] = useState(null);
 
     useEffect(() => {
         const fetchCinemaData = async () => {
@@ -102,13 +100,6 @@ const CinemaPage = ({ pageMode }) => {
                     onClose={closeModal}
                 />
             )}
-
-            <UserListModal
-                isOpen={!!listModalType}
-                onClose={closeModal}
-                targetUserId={targetUserId}
-                type={listModalType}
-            />
         </div>
     );
 };

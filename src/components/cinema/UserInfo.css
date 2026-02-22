@@ -1,153 +1,110 @@
+/* UserInfo.css */
+
 .profile-card {
     display: flex;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    height: 198px;
-    background-color: #F9F9F9;
-    border-radius: 24px;
-    padding: 0 64px;
-    box-sizing: border-box;
-    margin-bottom: 100px;
-}
-
-.dark-mode .profile-card {
-    background-color: #1E293B;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 40px;
 }
 
 .profile-info-wrapper {
     display: flex;
     align-items: center;
-    gap: 34px;
+    gap: 35px;
 }
 
+/* 프로필 이미지 */
 .profile-avatar {
-    width: 124px;
-    height: 124px;
-    background-color: #FEA1CD;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    border: 4px solid #000000;
     object-fit: cover;
-    cursor: pointer;
+    background-color: #EEEFF1;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .profile-text-content {
     display: flex;
     flex-direction: column;
-    gap: 17px;
+    gap: 12px;
 }
 
+/* 닉네임 & 팔로우 버튼 */
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 15px;
 }
 
 .profile-nickname {
     font-family: 'Pretendard', sans-serif;
-    font-weight: 400;
-    font-size: 22.75px;
-    color: #1D1D1D;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
 }
 
-.dark-mode .profile-nickname {
-    color: #FFFFFF;
+.action-btn.follow {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
+/* 팔로워 / 팔로잉 통계 */
 .profile-stats {
     display: flex;
     align-items: center;
-    gap: 38px;
+    gap: 20px;
+    font-size: 14px;
+    color: #8B95A1;
 }
 
 .stat-item {
     display: flex;
+    gap: 6px;
     align-items: center;
-    gap: 14px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
+}
+
+.stat-item span:last-child {
+    font-weight: 700;
     color: #000000;
 }
 
-.dark-mode .stat-item {
-    color: #FFFFFF;
-}
-
+/* 관심 장르 */
 .profile-genres {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 15px;
+    margin-top: 5px;
 }
 
 .genre-label {
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 600;
     color: #000000;
-}
-
-.dark-mode .genre-label {
-    color: #FFFFFF;
 }
 
 .genre-tags {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
+/* 장르 태그 (연파랑 배경 + 파란 글씨) */
 .genre-tag {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4px 16px;
-    background-color: #EBEBEB;
-    border-radius: 8.4px;
-    font-family: 'Pretendard', sans-serif;
+    background-color: #EAF2FF; 
+    color: var(--color-main, #0066FF);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
     font-weight: 500;
-    font-size: 14.5px;
-    color: #0066FF;
-}
-
-.dark-mode .genre-tag {
-    background-color: rgba(49, 130, 246, 0.35);
-    color: #FAFAFA;
 }
 
 .edit-genre-btn {
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    color: #9E9E9E;
-    cursor: pointer;
     background: none;
     border: none;
-}
-
-.action-btn {
-    position: absolute;
-    top: 32px;
-    right: 64px;
-    width: 123px;
-    height: 44px;
-    background-color: #0066FF;
-    border-radius: 9px;
-    border: none;
-    color: #FFFFFF;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
+    color: #8B95A1;
+    font-size: 13px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.action-btn.follow {
-    width: 95px;
-    height: 29px;
-    border-radius: 8px;
-    position: relative;
-    top: 0;
-    right: 0;
 }

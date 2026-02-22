@@ -15,7 +15,7 @@ const ContentCard = ({
     if (!item) return null;
 
     const handleCardClick = () => {
-        // 별점 입력 모드가 아닐 때만 상세 보기 등의 클릭 동작
+        // 별점 입력 모드가 아닐 때만 상세 보기
         if (!isRatingMode && onClick) {
             onClick(item.content_id);
         }
@@ -25,7 +25,7 @@ const ContentCard = ({
         <div className="content-card" onClick={handleCardClick}>
             <div className="poster-wrapper">
                 <img
-                    src={item.poster || "https://via.placeholder.com/200x300"}
+                    src={item.poster}
                     alt={item.title}
                     loading="lazy"
                 />
