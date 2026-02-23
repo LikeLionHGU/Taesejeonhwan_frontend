@@ -21,7 +21,7 @@ const MainPage = ({ isDarkMode }) => {
                 const res = await contentApi.getMainFeeds(mode, userId, 1);
                 console.log(`서버 응답 데이터 (${mode}):`, res.data);
 
-                if (res.data.feeds && res.data.feeds.length > 0) {
+                if (res.data.feeds && res.data.feeds.length >= 0) {
                     setUsers(res.data.feeds);
                 } else {
                     alert("같은 취향을 찾지 못했어요...ㅠㅠ 더 많은 영화를 평가해주시면 비슷한 취향의 친구를 더 잘 찾아드릴 수 있어요!");

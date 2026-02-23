@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { contentApi } from '../../api/api';
 import SearchContents from './SearchContents';
 import SearchUsers from './SearchUsers';
-import ContentInfo from '../review/ContentInfo'; 
+import ContentInfo from '../review/ContentInfo';
 import './SearchBar.css';
 
 const SearchBar = () => {
     const navigate = useNavigate();
     const [keyword, setKeyword] = useState('');
     const [results, setResults] = useState([]);
-    const [isSearching, setIsSearching] = useState(false); 
+    const [isSearching, setIsSearching] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedContentId, setSelectedContentId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +33,7 @@ const SearchBar = () => {
         try {
             let res;
             if (query.startsWith('@')) {
-                const realKeyword = query.slice(1); 
+                const realKeyword = query.slice(1);
                 if (realKeyword.trim().length === 0) {
                     setResults([]);
                     setIsSearching(false);
@@ -44,8 +44,6 @@ const SearchBar = () => {
                 res = await contentApi.searchContent(query);
             }
 
-            console.log("검색 API 응답 데이터:", res.data);
-
             const searchData = res.data?.results || res.data?.data || res.data;
 
             if (Array.isArray(searchData) && searchData.length > 0) {
@@ -53,7 +51,7 @@ const SearchBar = () => {
                 setShowDropdown(true);
             } else {
                 setResults([]);
-                setShowDropdown(true); 
+                setShowDropdown(true);
             }
         } catch (err) {
             console.error("검색 실패:", err);
@@ -68,7 +66,7 @@ const SearchBar = () => {
         if (keyword.startsWith('@')) {
             navigate(`/user/${id}`);
             setShowDropdown(false);
-            setKeyword(''); 
+            setKeyword('');
         } else {
             setSelectedContentId(id);
             setIsModalOpen(true);
@@ -79,14 +77,14 @@ const SearchBar = () => {
     return (
         <div className="search-bar-wrapper">
             <div className="search-input-box">
-                <span className="search-icon">🔍</span>
                 <input
                     type="text"
-                    placeholder="작품, 제목, @유저 검색"
+                    placeholder="검색해 보세요. (@유저닉네임 또는 작품명)"
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
                     onFocus={() => keyword && setShowDropdown(true)}
                 />
+                <span className="search-icon">🔍</span>
             </div>
 
             {showDropdown && (
@@ -120,8 +118,8 @@ const SearchBar = () => {
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     contentId={selectedContentId}
-                    pageMode="MAIN" 
-                    ownerId={null}  
+                    pageMode="MAIN"
+                    ownerId={null}
                 />
             )}
         </div>
