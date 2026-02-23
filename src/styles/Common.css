@@ -40,3 +40,39 @@
 .full-width {
     width: 100%;
 }
+
+.logo-container {
+    position: relative;
+    width: 54.42px;
+    height: 13px;
+    display: inline-block;
+}
+
+.logo-dot {
+    position: absolute;
+    width: 3.1px;
+    height: 3.1px;
+    left: 0;
+    top: 0;
+    background: #FF0000;
+    border-radius: 50%;
+}
+
+.logo-text {
+    position: absolute;
+    width: 49px;
+    height: 13px;
+    left: 5.42px;
+    top: 0;
+
+    font-family: 'CupertinoIcons', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23.2394px;
+    line-height: 12px;
+    color: #000000;
+}
+
+.logo-container.dark .logo-text {
+    color: #FFFFFF;
+}

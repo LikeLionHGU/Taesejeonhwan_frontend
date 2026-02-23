@@ -1,59 +1,71 @@
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 62px;
+.global-header {
     position: sticky;
     top: 0;
-    z-index: 100;
+    width: 100%;
+    height: 62px;
+    z-index: 1000;
     background: #FFFFFF;
     box-shadow: 0px 4px 15px rgba(181, 181, 181, 0.1);
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.dark-mode .header-container {
+.global-header.dark {
     background: #111827;
-    box-shadow: 0px 4px 15px rgba(181, 181, 181, 0.1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-.logo-wrapper {
+.header-inner {
+    max-width: 1440px;
+    margin: 0 81px;
+    height: 100%;
     display: flex;
-    align-items: flex-start;
-    cursor: pointer;
-    gap: 2px;
+    align-items: center;
+/* padding: 0 40px; */
 }
 
-.logo-text {
-    font-family: 'Kaisei Decol', serif;
-    font-weight: 500;
-    font-size: 23.24px;
-    color: #000000;
-    line-height: 1;
+.header-left {
+    display: flex;
+    align-items: center;
 }
 
-.logo-dot {
-    width: 3.1px;
-    height: 3.1px;
-    background: #FF0000;
-    border-radius: 50%;
-    margin-top: 2px;
+.header-center {
+    flex: 1;
 }
 
-.dark-mode .logo-text {
-    color: #FFFFFF;
+.header-right {
+    display: flex;
+    align-items: center;
 }
 
-.nav-btn {
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #000000;
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.header-search-bar-wrapper {
+    width: 320px;
+}
+
+.header-link,
+.header-btn {
+    text-decoration: none;
     background: none;
     border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333333;
     cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 8px;
 }
 
-.dark-mode .nav-btn {
+.global-header.dark .header-link,
+.global-header.dark .header-btn {
     color: #FFFFFF;
+}
+
+.header-link:hover,
+.header-btn:hover {
+    color: #0066FF;
 }
