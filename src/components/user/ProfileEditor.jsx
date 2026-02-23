@@ -16,7 +16,8 @@ const ProfileEditor = ({ profile, onClose }) => {
                 const res = await userApi.getAvailableProfileImages();
                 setAvailableImages(res.data.images || res.data || []);
             } catch (error) {
-                console.error("프로필 이미지 목록 로딩 실패... 직접 채워넣어버리자...", error);
+                console.error("프로필 이미지 로딩 실패", error);
+                // 에러 시 임시 이미지 배열
                 setAvailableImages([
                     'https://taesae.s3.ap-northeast-2.amazonaws.com/1.png',
                     'https://taesae.s3.ap-northeast-2.amazonaws.com/2.png',
@@ -68,7 +69,6 @@ const ProfileEditor = ({ profile, onClose }) => {
         }
 
         try {
-
             if (nickname !== profile.nickname) {
                 await userApi.updateNickname(myUserId, nickname);
             }
@@ -82,13 +82,7 @@ const ProfileEditor = ({ profile, onClose }) => {
             onClose();
         } catch (error) {
             console.error("프로필 수정 실패 전체 에러 객체:", error);
-
-            if (error.response && error.response.data) {
-                console.error("백 에러 뭐게:", error.response.data);
-                alert(`저장 실패: ${JSON.stringify(error.response.data)}`);
-            } else {
-                console.error("수정에 실패... 콘솔창 확인해ㅅㅓ 얼른 고치기를...", error.response.data);
-            }
+            alert("저장에 실패했습니다. 다시 시도해 주세요.");
         }
     };
 
@@ -97,51 +91,53 @@ const ProfileEditor = ({ profile, onClose }) => {
             <div className="modal-content profile-editor" onClick={e => e.stopPropagation()}>
                 <h3>프로필 수정</h3>
 
-                <div className="image-selection" style={{ margin: '20px 0' }}>
-                    <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>프로필 이미지 선택</p>
-                    <div className="image-grid" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <div className="image-selection">
+                    <p>프로필 이미지 선택</p>
+                    <div className="image-grid">
                         {availableImages.map((img, idx) => {
-                            const imgUrl = img.profile_img; 
+                            const imgUrl = img.profile_img || img;
                             return (
                                 <img
                                     key={idx}
                                     src={imgUrl}
                                     onClick={() => setSelectedImg(imgUrl)}
-                                    style={{
-                                        width: '60px', height: '60px', borderRadius: '50%', cursor: 'pointer',
-                                        border: selectedImg === imgUrl ? '3px solid #007AFF' : '2px solid transparent'
-                                    }}
+                                    style={{ border: selectedImg === imgUrl ? '3px solid #0066FF' : '3px solid transparent' }}
+                                    alt="profile option"
                                 />
                             )
                         })}
                     </div>
                 </div>
 
-                <div className="nickname-section" style={{ margin: '20px 0' }}>
-                    <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>닉네임</p>
-                    <div className="input-group" style={{ display: 'flex', gap: '10px' }}>
+                <div className="nickname-section">
+                    <p>닉네임</p>
+                    <div className="input-group">
                         <input
                             type="text"
                             value={nickname}
                             onChange={(e) => {
                                 setNickname(e.target.value);
-                                setIsNicknameChecked(false); 
+                                setIsNicknameChecked(false);
                                 setCheckMessage('');
                             }}
-                            style={{ flex: 1, padding: '10px', borderRadius: '5px' }}
+                            placeholder="변경할 닉네임을 입력하세요"
                         />
-                        <button onClick={handleNicknameCheck} style={{ padding: '10px', cursor: 'pointer' }}>중복확인</button>
+                        <button onClick={handleNicknameCheck}>중복확인</button>
                     </div>
                     {checkMessage && (
-                        <p style={{ color: isNicknameChecked ? '#28a745' : '#dc3545', fontSize: '12px', marginTop: '5px' }}>
+                        <p style={{
+                            color: isNicknameChecked ? '#0066FF' : '#FF0000',
+                            fontSize: '13px',
+                            marginTop: '8px'
+                        }}>
                             {checkMessage}
                         </p>
                     )}
                 </div>
 
-                <div className="modal-actions" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
-                    <button className="btn-secondary" onClick={onClose} style={{ padding: '10px 20px', cursor: 'pointer' }}>취소</button>
-                    <button className="btn-primary" onClick={handleSave} style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: '#e50914', color: 'white', border: 'none' }}>저장완료</button>
+                <div className="modal-actions">
+                    <button className="btn-secondary" onClick={onClose}>취소</button>
+                    <button className="btn-primary" onClick={handleSave}>저장하기</button>
                 </div>
             </div>
         </div>

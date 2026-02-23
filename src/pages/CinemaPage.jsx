@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { userApi, contentApi } from '../api/api';
 import UserInfo from '../components/cinema/UserInfo';
-import ContentGrid from '../components/content/ContentGrid'; 
+import ContentGrid from '../components/content/ContentGrid';
 import ProfileEditor from '../components/user/ProfileEditor';
 import KeywordEditor from '../components/user/KeywordEditor';
 import AddReview from '../components/review/AddReview';
 import ContentInfo from '../components/review/ContentInfo';
+import SearchReviewModal from '../components/review/SearchReviewModal'; // 새로 추가할 컴포넌트
 
 import '../styles/pages/CinemaPage.css';
 
@@ -16,12 +17,13 @@ const CinemaPage = ({ pageMode }) => {
     const isMyCinema = pageMode === 'MY' || String(urlUserId) === String(myUserId);
     const targetUserId = isMyCinema ? myUserId : urlUserId;
     const isDarkMode = false;
-    
+
     const [profile, setProfile] = useState(null);
     const [contents, setContents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeModal, setActiveModal] = useState(null);
     const [selectedContentId, setSelectedContentId] = useState(null);
+    const [listModalType, setListModalType] = useState(null);
 
     useEffect(() => {
         const fetchCinemaData = async () => {
@@ -54,7 +56,7 @@ const CinemaPage = ({ pageMode }) => {
 
     const handleContentClick = (contentId) => {
         setSelectedContentId(contentId);
-        setActiveModal('contentDetail'); 
+        setActiveModal('contentDetail');
     };
 
     if (isLoading) return <div>영화관 입장 중... 팝콘팡팡🍿</div>;
@@ -75,7 +77,7 @@ const CinemaPage = ({ pageMode }) => {
 
             {isMyCinema && (
                 <div className="cinema-actions">
-                    <button onClick={() => setActiveModal('review')}>+ 리뷰 작성하기</button>
+                    <button onClick={() => setActiveModal('searchReview')}>+ 리뷰 작성하기</button>
                 </div>
             )}
 
@@ -89,8 +91,16 @@ const CinemaPage = ({ pageMode }) => {
                     onClose={closeModal}
                 />
             )}
-            {activeModal === 'review' && <AddReview onClose={closeModal} />}
 
+            {/* 리뷰 작성을 위한 검색 모달 */}
+            {activeModal === 'searchReview' && (
+                <SearchReviewModal
+                    onClose={closeModal}
+                    targetUserId={targetUserId}
+                />
+            )}
+
+            {/* 기존 ContentDetail은 유지 (Grid 클릭 시 상세 보기용) */}
             {activeModal === 'contentDetail' && selectedContentId && (
                 <ContentInfo
                     isOpen={true}
