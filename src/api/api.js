@@ -69,6 +69,8 @@ serviceApi.interceptors.response.use(
        
         getUserContents: (targetUserId) => serviceApi.get(`/feeds/${targetUserId}/contents`),
         getAllGenres: () => serviceApi.get('/feeds/genre'),
+
+        getAllReviews: (contentId) => serviceApi.get(`/feeds/${contentId}/reviews`),
     };
 
     export const userApi = {

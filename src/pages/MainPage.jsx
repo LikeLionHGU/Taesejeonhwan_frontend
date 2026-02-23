@@ -16,7 +16,7 @@ const MainPage = ({ isDarkMode }) => {
             setIsLoading(true);
             try {
                 const userId = localStorage.getItem("userId") || 1;
-                const mode = isDarkMode ? 'diff' : 'similar';
+                const mode = isDarkMode ? 'diff' : 'sim';
 
                 const res = await contentApi.getMainFeeds(mode, userId, 1);
                 console.log(`서버 응답 데이터 (${mode}):`, res.data);
@@ -24,7 +24,8 @@ const MainPage = ({ isDarkMode }) => {
                 if (res.data.feeds && res.data.feeds.length > 0) {
                     setUsers(res.data.feeds);
                 } else {
-                    console.log("서버에 아직 데이터가 없어서 더미 데이터를 띄웁니다.");
+                    alert("같은 취향을 찾지 못했어요...ㅠㅠ 더 많은 영화를 평가해주시면 비슷한 취향의 친구를 더 잘 찾아드릴 수 있어요!");
+                    console.log("같은 취향을 찾지 못해 더미 데이터를 띄웁니다.");
                     setUsers([
                         {
                             user_id: 101,
