@@ -36,8 +36,8 @@ function App() {
   const hideHeaderRoutes = ['/login'];
   const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
 
-//3-1 푸터 숨기는 주소 목록
-  const hideFooterRoutes = ['/LandingPage', '/login'];
+//3-1 푸터 숨기는 주소 목록 -> 랜딩페이지 주소 다르게 입력한 거 수정
+  const hideFooterRoutes = ['/', '/login'];
 
   // 4. 토글 안 보여주고 무조건 밝은 테마로 가는 주소들 목록 (시네마 페이지 같은 거!)
   const isCinemaPage = ['/my-cinema', '/user', '/opposite'].some(path =>
