@@ -1,24 +1,38 @@
-/*step 0: 랜딩페이지*/
-@import url('https://fonts.google.com');
-@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 
+.intro-section {
+    text-align: center;
+    user-select: none;    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16vh; 
+    box-sizing: border-box;
 
-.intro-section{
- text-align: center;
- /*드래그 방지 -> 나중에 합치고 더 상위에 적용*/
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none
+    min-height: 100vh;
+    width: 100%;
+
+    background-image: url('../assets/landing-background.svg'); 
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
 }
-.intro-Eng{
-color: #0066FF;
- font-family: 'Archivo Black',sans-serif;
 
+.intro-Eng {
+    
+    margin: 0;
+    color: #0066FF;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 65px;
+    letter-spacing: -1px;
 }
-.intro-Kor{
-    margin-top: 30px;
-    font-family: 'Pretendard';
-    font-weight: 100;
 
+.intro-Kor {
+    margin-top: 25px; 
+    margin-bottom: 60px; 
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #222; 
 }

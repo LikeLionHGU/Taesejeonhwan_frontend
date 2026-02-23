@@ -7,6 +7,8 @@ import MainPage from './pages/MainPage';
 import CinemaPage from './pages/CinemaPage';
 import WishlistPage from './pages/WishlistPage';
 import Header from './components/common/Header';
+import Footer  from './components/common/Footer';
+
 import ProfileSettingSection from './components/landing/ProfileSettingSection';
 import SelectPreferenceSection from './components/landing/SelectPreferenceSection';
 import ShowResultSection from './components/landing/ShowResultSection';
@@ -34,6 +36,9 @@ function App() {
   const hideHeaderRoutes = ['/login'];
   const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
 
+//3-1 푸터 숨기는 주소 목록
+  const hideFooterRoutes = ['/LandingPage', '/login'];
+
   // 4. 토글 안 보여주고 무조건 밝은 테마로 가는 주소들 목록 (시네마 페이지 같은 거!)
   const isCinemaPage = ['/my-cinema', '/user', '/opposite'].some(path =>
     location.pathname.startsWith(path)
@@ -50,7 +55,8 @@ function App() {
           showToggle={!isCinemaPage}
         />
       )}
-
+      <>  
+      </>
       <Routes>
         {/* 랜딩 페이지 (사이트 진입 시 뜰 화면) - 한나 */}
         <Route path="/" element={<LandingPage />} />
@@ -73,7 +79,14 @@ function App() {
         {/* 찜한 목록 - 한나 */}
         <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
+
+
+    {!hideFooterRoutes.includes(location.pathname) && <Footer />}
+
+
     </>
+
+
   );
 }
 

@@ -3,6 +3,7 @@ import ContentGrid from '../components/content/ContentGrid';
 import ContentInfo from '../../src/components/review/ContentInfo';
 import AddReview from '../../src/components/review/AddReview';
 import { contentApi } from '../api/api';
+import '../styles/pages/WishlistPage.css';
 
 /*
 찜한 영화 페이지
@@ -61,7 +62,7 @@ const WishlistPage = () => {
     return (
         <div className="wishlist-page">
             <div className="page-content">
-                <div className="wishlist-header">
+                <div className="wishlist-content">
                     <h1 className="wishHead">찜한 작품 <span className="count">({setData.length})</span></h1>
                     <p className="wishP">더 이상 미루지 말고, 오늘 바로 만나보세요</p>
                 </div>

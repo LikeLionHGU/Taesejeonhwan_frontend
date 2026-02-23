@@ -1,0 +1,27 @@
+.wishlist-page {
+    width: 100%;
+    padding: 60px 80px 120px 80px; 
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    min-height: 100vh;
+}
+
+.wishlist-content {
+    text-align: left;
+    margin-bottom: 30px; 
+}
+.wishHead {
+    margin: 0 0 10px 0; 
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500; 
+    font-size: 22px;
+    color: #222; 
+}
+
+.wishP {
+    margin: 0; 
+    font-family: 'Pretendard', sans-serif;
+    font-size: 16px; 
+    font-weight: 400;
+    color: #666; 
+}
