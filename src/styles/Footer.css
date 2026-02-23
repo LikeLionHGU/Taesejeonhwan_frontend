@@ -13,7 +13,7 @@
 .footer-logo {
     position: relative; 
     text-align: center;
-    font-size: 30px;
+    font-size: 24px;
     font-family: 'Kaisei Decol', serif; 
     font-weight: 400;
     font-style: normal;
@@ -28,8 +28,8 @@
 
 .otte-dot {
     position: absolute; 
-    top: 6px;
-    left: -10px;
+    top: 0.05px;
+    left: -5px;
     width: 3px;   
     height: 3px;
     background-color: red;
