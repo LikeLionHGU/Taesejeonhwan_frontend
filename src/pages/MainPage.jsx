@@ -16,9 +16,9 @@ const MainPage = ({ isDarkMode }) => {
             setIsLoading(true);
             try {
                 const userId = localStorage.getItem("userId") || 1;
-                const mode = isDarkMode ? 'diff' : 'sim';
+                const mode = isDarkMode ? 'diff' : 'similar';
 
-                const res = await contentApi.getMainFeeds(mode, userId, 1);
+                const res = await contentApi.getMainFeeds(mode, userId, 0);
                 console.log(`서버 응답 데이터 (${mode}):`, res.data);
 
                 if (res.data.feeds && res.data.feeds.length >= 0) {
